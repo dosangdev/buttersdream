@@ -8,7 +8,7 @@ import WhatIsButterTowerNFT from "@/components/FAQ/WhatIsButterTowerNFT";
 import HowIsButterCreated from "@/components/FAQ/HowIsButterCreated";
 import CanIDonateAnyAmount from "@/components/FAQ/CanIDonateAnyAmount";
 import WhereDoesTheDonationGo from "@/components/FAQ/WhereDoesTheDonationGo";
-import AccordionAnimation from "@/components/animation/AccordionAnimation";
+import AccordionAnimation from "@/components/animations/AccordionAnimation";
 
 const faqs = [
   {
@@ -48,7 +48,7 @@ const faqs = [
 ];
 
 export default function FAQpage() {
-  const [openIdx, setOpenIdx] = useState<number | null>(0);
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
 
   return (
     <main className="flex flex-col items-center pt-4">

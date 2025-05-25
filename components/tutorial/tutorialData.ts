@@ -1,5 +1,12 @@
+export interface TutorialImage {
+  src: string;
+  width: number;
+  height: number;
+  animationType?: string; // 예: 'fade', 'bounce', 'slide', 'custom1' 등
+}
+
 export interface TutorialData {
-  image: string;
+  images: TutorialImage[];
   title: string;
   description: string;
   speechText: {
@@ -9,12 +16,60 @@ export interface TutorialData {
   };
 }
 
-const TutorialButterBasic = "/tutorial/tutorial-butter-basic.png";
+const TutorialButterBasic = {
+  src: "/tutorial/tutorial-butter-basic.png",
+  width: 100,
+  height: 75,
+};
+
+const TutorialButterGlasses = {
+  src: "/tutorial/tutorial-butter-glasses.png",
+  width: 100,
+  height: 75,
+};
+
+const TutorialButterflyEarth = {
+  src: "/tutorial/tutorial-butterfly-earth.png",
+  width: 320,
+  height: 373,
+};
+
+const TutorialGift = {
+  src: "/tutorial/tutorial-gift.png",
+  width: 243,
+  height: 235,
+};
+
+const TutorialButterTower = {
+  src: "/tutorial/tutorial-NFT-tower.png",
+  width: 252,
+  height: 281,
+};
+
+const ButterflyBasic = {
+  src: "/butterfly-basic.png",
+  width: 55,
+  height: 42,
+};
+
+const ButterAngry = {
+  src: "/tutorial/tutorial-butter-angry.png",
+  width: 100,
+  height: 68,
+};
+
+const ButterSurprised = {
+  src: "/tutorial/tutorial-butter-surprised.png",
+  width: 88,
+  height: 72,
+};
+
 // const TutorialButterBasic = "/tutorial/www.png";
 
 export const tutorialPages: TutorialData[] = [
+  // 튜토리얼 페이지 0
   {
-    image: TutorialButterBasic,
+    images: [TutorialButterBasic],
     title: "버터의 꿈에 오신 것을 환영합니다",
     description: "버터의 꿈은 여러분의 기부로 이루어집니다.",
     speechText: {
@@ -23,8 +78,9 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-6",
     },
   },
+  // 튜토리얼 페이지 1
   {
-    image: TutorialButterBasic,
+    images: [TutorialButterBasic],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -33,8 +89,17 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 2
   {
-    image: TutorialButterBasic,
+    images: [
+      {
+        ...TutorialButterBasic,
+        animationType: "butterfly",
+      },
+      ButterflyBasic,
+      ButterflyBasic,
+      ButterflyBasic,
+    ],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -43,8 +108,9 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 3
   {
-    image: TutorialButterBasic,
+    images: [TutorialButterBasic],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -53,18 +119,9 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 4
   {
-    image: TutorialButterBasic,
-    title: "버터 타워 NFT",
-    description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
-    speechText: {
-      text: "It means, smoll action\ncan create BIG changes to the world!",
-      fontSize: "text-md",
-      lineHeight: "leading-7",
-    },
-  },
-  {
-    image: TutorialButterBasic,
+    images: [TutorialButterGlasses],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -73,8 +130,9 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 5
   {
-    image: TutorialButterBasic,
+    images: [TutorialButterBasic],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -83,8 +141,9 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 6
   {
-    image: TutorialButterBasic,
+    images: [TutorialButterBasic],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -93,8 +152,22 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 7
   {
-    image: TutorialButterBasic,
+    images: [
+      {
+        ...TutorialButterBasic,
+        animationType: "stack-butter",
+      },
+      {
+        ...ButterSurprised,
+        animationType: "stack-butter",
+      },
+      {
+        ...ButterAngry,
+        animationType: "stack-butter",
+      },
+    ],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -103,8 +176,9 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 8
   {
-    image: TutorialButterBasic,
+    images: [TutorialButterflyEarth],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -113,8 +187,9 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 9
   {
-    image: TutorialButterBasic,
+    images: [TutorialGift],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -123,18 +198,20 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 10
   {
-    image: TutorialButterBasic,
+    images: [TutorialButterBasic],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
-      text: "4. And the end of each season,\nyou will get a special gift ",
+      text: "4. And the end of each season,\nyou will get a special gift",
       fontSize: "text-xl",
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 11
   {
-    image: TutorialButterBasic,
+    images: [TutorialButterTower],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
@@ -143,8 +220,9 @@ export const tutorialPages: TutorialData[] = [
       lineHeight: "leading-7",
     },
   },
+  // 튜토리얼 페이지 12
   {
-    image: TutorialButterBasic,
+    images: [TutorialButterBasic],
     title: "버터 타워 NFT",
     description: "기부하시면 버터 타워 NFT를 받으실 수 있습니다.",
     speechText: {
