@@ -68,7 +68,10 @@ export default function NavBar() {
             priority
           />
         </div>
-        <div className="cursor-pointer" onClick={() => handleClick("/profile")}>
+        <div
+          className="cursor-pointer"
+          onClick={() => handleClick("/mybutter")}
+        >
           <Image
             src={
               pathname === "/profile"

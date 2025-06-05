@@ -16,9 +16,27 @@ const EmptyStateMessage = ({
   type: "daily" | "weekly" | "total";
 }) => {
   const messages = {
-    daily: "No donations today yet! Be the first to make someone's day! 🎉",
-    weekly: "This week's donation board is empty! Time to spread some love! 💝",
-    total: "No donations yet! Be the pioneer of kindness! 🌟",
+    daily: (
+      <>
+        No donations today yet!
+        <br />
+        Be the first to make someone's day! 🎉
+      </>
+    ),
+    weekly: (
+      <>
+        This week's donation board is empty!
+        <br />
+        Time to spread some love! 💝
+      </>
+    ),
+    total: (
+      <>
+        No donations yet!
+        <br />
+        Be the pioneer of kindness! 🌟
+      </>
+    ),
   };
 
   return (

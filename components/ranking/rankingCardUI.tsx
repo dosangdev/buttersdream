@@ -20,7 +20,6 @@ export default function RankingCardUI({
   cardType: "my" | undefined;
 }) {
   const router = useRouter();
-  const { address } = useAccount();
 
   //   console.log(address);
   //   console.log(userData?.from);
@@ -37,11 +36,10 @@ export default function RankingCardUI({
 
   return (
     <>
-      {/* {cardType === "my" ? :} */}
       {/* 기본카드 */}
       <div
         className={cn(
-          " flex items-center w-full", // 공통 클래스
+          " flex items-center w-full  rounded-2xl border-2 border-[#D6D6D6] shadow-[0_2px_2px_0_rgba(0,0,0,0.25)]", // 공통 클래스
           userData?.type === "first" && "border-4 border-[#D7AE00] rounded-2xl",
           userData?.type === "second" &&
             "border-4 border-[#6c6c6c] rounded-2xl",
@@ -57,7 +55,7 @@ export default function RankingCardUI({
       >
         <div
           className={cn(
-            "flex items-center justify-between rounded-xl px-4  h-[42px] text-black w-full text-sm",
+            "flex items-center justify-between  rounded-xl px-4  h-[50px] text-black w-full text-sm",
             userData?.type === "default" &&
               "bg-white border-1 border-[#d6d6d6] shadow-[0_2px_2px_0_rgba(0,0,0,0.25)]",
             userData?.type === "first" && "bg-[#FFF1B4]",
@@ -68,18 +66,22 @@ export default function RankingCardUI({
         >
           <div className="flex-shrink-0 basis-[40px] text-lg text-start">
             {userData?.type !== "default" ? (
-              <Image
-                src={`/ranking/ranking-${typeToImage[userData?.type]}.png`}
-                // src={`/ranking/ranking-1st.png`}
-                width={19}
-                height={26}
-                alt="ranking"
-              />
+              cardType === "my" ? (
+                <div className="pl-2 ">{userData?.ranking}</div>
+              ) : (
+                <Image
+                  src={`/ranking/ranking-${typeToImage[userData?.type]}.png`}
+                  // src={`/ranking/ranking-1st.png`}
+                  width={19}
+                  height={26}
+                  alt="ranking"
+                />
+              )
             ) : (
               <div className="pl-2 ">{userData?.ranking}</div>
             )}
           </div>
-          <div className="flex-shrink-0 basis-[52px] flex justify-center items-center w-[23px] h-[24px]">
+          <div className="flex-shrink-0 basis-[52px] flex justify-center items-center py-[7px] w-[15px] h-[15px]">
             <ButterItemComponent fill={userData?.farcasterUserData?.color} />
           </div>
           <div className="flex-1 px-2 truncate text-start">

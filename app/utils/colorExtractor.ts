@@ -8,7 +8,6 @@ import ColorThief from "color-thief-browser";
 export const walletToHex = (walletAddress: string): string => {
   // `0x` 제거 후 앞 6자리 추출
   const hex = walletAddress.replace(/^0x/, "").slice(0, 6);
-  console.log(hex);
   // 16진수에서 RGB로 변환
 
   return `#${hex}`;
