@@ -4,6 +4,8 @@ import Header from "@/components/Header";
 import { Providers } from "./Providers";
 import { Inter } from "next/font/google";
 import NavBar from "@/components/NavBar";
+import ClientSWRConfig from "./ClientSWRConfig";
+import "@rainbow-me/rainbowkit/styles.css";
 
 export const metadata: Metadata = {
   title: "Butter's Dream",
@@ -27,9 +29,11 @@ export default function RootLayout({
       >
         <Providers>
           <div className="max-w-md w-full mx-auto p-4 pb-16">
-            <Header />
-            {children}
-            <NavBar />
+            <ClientSWRConfig>
+              <Header />
+              {children}
+              <NavBar />
+            </ClientSWRConfig>
           </div>
         </Providers>
       </body>
