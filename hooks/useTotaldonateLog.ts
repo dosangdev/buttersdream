@@ -27,7 +27,6 @@ export function useTotaldonateLog() {
   );
   const { data: logs } = useSWR(`/api/get-wallet-logs`);
   const { result } = logs || {};
-  console.log(result);
 
   // 1. 1차 필터링
   const donationLogs = useMemo(() => {

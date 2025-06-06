@@ -9,6 +9,11 @@ import HowIsButterCreated from "@/components/FAQ/HowIsButterCreated";
 import CanIDonateAnyAmount from "@/components/FAQ/CanIDonateAnyAmount";
 import WhereDoesTheDonationGo from "@/components/FAQ/WhereDoesTheDonationGo";
 import AccordionAnimation from "@/components/animations/AccordionAnimation";
+import OurTeam from "@/components/FAQ/OurTeam";
+import CanIParticipateWithoutWarpcast from "@/components/FAQ/CanIParticipateWithoutWarpcast";
+import WhatAreSpecialEditionNFTs from "@/components/FAQ/WhatAreSpecialEditionNFTs";
+import WhyIsThereOperationsFee from "@/components/FAQ/WhyIsThereOperationsFee";
+import HowCanIGetInvolved from "@/components/FAQ/HowCanIGetInvolved";
 
 const faqs = [
   {
@@ -34,6 +39,26 @@ const faqs = [
   {
     question: "Where does the donation go?",
     answer: <WhereDoesTheDonationGo />,
+  },
+  {
+    question: "Can I participate without Warpcast?",
+    answer: <CanIParticipateWithoutWarpcast />,
+  },
+  {
+    question: "What are the special edition NFTs?",
+    answer: <WhatAreSpecialEditionNFTs />,
+  },
+  {
+    question: "Why is there an operations fee?",
+    answer: <WhyIsThereOperationsFee />,
+  },
+  {
+    question: "How can I get involved?",
+    answer: <HowCanIGetInvolved />,
+  },
+  {
+    question: "Our Team",
+    answer: <OurTeam />,
   },
   // {
   //   question: "Can I participate without Warpcast?",

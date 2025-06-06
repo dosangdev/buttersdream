@@ -16,6 +16,7 @@ import {
 } from "./utils/colorExtractor";
 import { useAccount } from "wagmi";
 import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const { currentAmount, targetAmount, isLoading } = useDonationProgress();
@@ -190,9 +191,24 @@ export default function Home() {
 
                 return (
                   <div key={index} className="relative -mt-[8px]">
-                    <ButterItemComponent
-                      fill={item?.farcasterUserData?.color}
-                    />
+                    <motion.div
+                      animate={
+                        isArrow
+                          ? { x: [0, index % 2 === 0 ? 4 : -4, 0] } // 조건이 true일 때
+                          : { x: 0 } // 조건이 false일 때(움직이지 않음)
+                      }
+                      transition={{
+                        duration: 2, // 한 번 왕복하는 데 걸리는 시간(초)
+                        repeat: Infinity, // 무한 반복
+                        repeatType: "loop",
+                        ease: "easeInOut",
+                        delay: index * 0.1, // 각 버터마다 살짝 딜레이 주면 자연스러움
+                      }}
+                    >
+                      <ButterItemComponent
+                        fill={item?.farcasterUserData?.color}
+                      />
+                    </motion.div>
                     {isArrow ? (
                       <div
                         className={`absolute ${
@@ -256,7 +272,7 @@ export default function Home() {
                 ? `/butterfly-basic.png`
                 : `/home/butterfly-with-folded-wings.png`
             }
-            width={isDonateInfoOpen ? 79 : 52}
+            width={isDonateInfoOpen ? 79 : 65}
             height={isDonateInfoOpen ? 56 : 58}
             alt="Where to donate info button"
           />
