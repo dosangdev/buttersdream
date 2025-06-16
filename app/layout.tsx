@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} w-full min-h-screen bg-background text-foreground  bg-[url('/cloudes.png')] bg-cover`}
+        className={`${inter.variable} w-full min-h-screen bg-background text-foreground bg-[url('/cloudes.png')] bg-cover animate-moveBackground`}
       >
         <Providers>
           <div className="max-w-md w-full mx-auto p-4 pb-16">
