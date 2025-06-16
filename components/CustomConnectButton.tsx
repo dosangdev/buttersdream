@@ -25,7 +25,7 @@ export default function CustomConnectButton() {
             src={ConnectButtonAfter}
             fill
             alt="Connect Button After"
-            className="absolute top-0 left-0 -z-10"
+            className="absolute top-0 left-0 -z-10 object-contain"
           />
         </button>
       ) : (
