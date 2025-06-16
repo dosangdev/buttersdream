@@ -71,7 +71,7 @@ export function useTotalRanking() {
   );
 
   // 4. 합치기
-  const combinedData = useMemo<ProcessedDonationLog[]>(() => {
+  const combinedData = useMemo(() => {
     if (!farcasterUserDataArray)
       return mergedDonationLogs.map((log) => ({
         ...log,
@@ -83,7 +83,7 @@ export function useTotalRanking() {
           verifications: [],
         },
         type: "default",
-      }));
+      })) as ProcessedDonationLog[];
     const combined = mergedDonationLogs.map((log, index) => {
       const farcasterData = farcasterUserDataArray[index]?.[0];
       const hasFarcasterData = !!farcasterData;

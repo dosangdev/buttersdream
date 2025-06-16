@@ -45,7 +45,7 @@ export function useMyButterDonateLog() {
           .toISOString()
           .split("T")[0],
         functionName: log.functionName,
-        hash: log.hash,
+        hash: (log as any).hash,
       }));
     return filtered;
   }, [result, address]);

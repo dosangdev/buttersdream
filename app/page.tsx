@@ -3,140 +3,19 @@
 import ProgressBar from "@/components/donate/ProgressBar";
 import { useDonationProgress } from "@/hooks/useDonationProgress";
 import Image from "next/image";
-import { useState, useMemo, useEffect } from "react";
-import useSWR from "swr";
-import { decodeEventLog, erc20Abi } from "viem";
+import { useState } from "react";
 import { butterComponents } from "./constants/butterItems";
-import { processDonationLogs } from "./utils/donation";
-import { DonationLog } from "./types/donation";
-import {
-  rgbToHex,
-  walletToHex,
-  getDominantColor,
-} from "./utils/colorExtractor";
+
 import { useAccount } from "wagmi";
 import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
 import { motion } from "framer-motion";
 
 export default function Home() {
-  const { currentAmount, targetAmount, isLoading } = useDonationProgress();
+  const { isLoading } = useDonationProgress();
   const [isDonateInfoOpen, setIsDonateInfoOpen] = useState(false);
-  // const [processedData, setProcessedData] = useState<any[]>([]);
   const { address } = useAccount();
 
   const totalDonateLog = useTotaldonateLog();
-
-  // const { data: logs } = useSWR(`/api/get-wallet-logs`);
-
-  // const { result } = logs || {};
-  // console.log("result : ", result);
-
-  // const donationLogs = useMemo(() => {
-  //   if (!result) return [];
-  //   return processDonationLogs(result);
-  // }, [result]);
-
-  // console.log("donationLogs : ", donationLogs);
-
-  // const walletAddress = "0xf636be2323C2C13a8fb84a090256B316F4392673";
-  // const { data: userData } = useSWR(
-  //   `/api/lookup-user?walletAddress=${walletAddress}`
-  // );
-  // console.log("userData : ", userData);
-
-  // const mergedDonationLogs = useMemo(() => {
-  //   // 날짜 순서대로 정렬
-  //   const sortedLogs = [...dummyDonationLogs].sort(
-  //     (a, b) =>
-  //       new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
-  //   );
-
-  // 같은 지갑 주소의 기부 내역 합치기
-  //   const mergedLogs = new Map<string, DonationLog>();
-
-  //   sortedLogs.forEach((log) => {
-  //     const existingLog = mergedLogs.get(log.from);
-  //     if (existingLog) {
-  //       // 이미 존재하는 지갑이면 value를 더하고 timestamp는 더 이른 날짜로 유지
-  //       const newValue = existingLog.value + log.value;
-  //       existingLog.value = Number(newValue.toFixed(2)); // 소수점 2자리까지 표시
-  //     } else {
-  //       // 새로운 지갑이면 그대로 추가
-  //       const newLog = { ...log };
-  //       newLog.value = Number(newLog.value.toFixed(2)); // 소수점 2자리까지 표시
-  //       mergedLogs.set(log.from, newLog);
-  //     }
-  //   });
-
-  //   return Array.from(mergedLogs.values());
-  // }, [donationLogs]);
-
-  // // 각 지갑 주소에 대한 API 호출
-  // const { data: farcasterUserDataArray } = useSWR(
-  //   mergedDonationLogs.length > 0
-  //     ? mergedDonationLogs.map(
-  //         (log) => `/api/lookup-user?walletAddress=${log.from}`
-  //       )
-  //     : null,
-  //   (urls) =>
-  //     Promise.all(urls.map((url) => fetch(url).then((res) => res.json())))
-  // );
-
-  // // mergedDonationLogs와 farcasterUserDataArray 합치기
-  // const combinedData = useMemo(() => {
-  //   if (!farcasterUserDataArray) return mergedDonationLogs;
-
-  //   return mergedDonationLogs.map((log, index) => {
-  //     const farcasterData = farcasterUserDataArray[index]?.[0];
-  //     const hasFarcasterData = !!farcasterData;
-
-  //     return {
-  //       ...log,
-  //       hasFarcasterData,
-  //       farcasterUserData: hasFarcasterData
-  //         ? {
-  //             display_name: farcasterData.display_name,
-  //             color: getDominantColor(farcasterData.pfp_url),
-  //             username: farcasterData.username,
-  //             verifications: farcasterData.verifications,
-  //           }
-  //         : {
-  //             display_name: log.from.slice(0, 6) + "..." + log.from.slice(-4),
-  //             color: walletToHex(log.from),
-  //             username: log.from.slice(0, 6) + "..." + log.from.slice(-4),
-  //             verifications: [],
-  //           },
-  //     };
-  //   });
-  // }, [mergedDonationLogs, farcasterUserDataArray]);
-
-  // // Promise 처리
-  // useEffect(() => {
-  //   const processColors = async () => {
-  //     const processed = await Promise.all(
-  //       combinedData.map(async (item) => {
-  //         if (item.hasFarcasterData) {
-  //           const color = await item.farcasterUserData.color;
-  //           return {
-  //             ...item,
-  //             farcasterUserData: {
-  //               ...item.farcasterUserData,
-  //               color: rgbToHex(...color),
-  //             },
-  //           };
-  //         }
-  //         return item;
-  //       })
-  //     );
-  //     setProcessedData(processed);
-  //   };
-
-  //   processColors();
-  // }, [combinedData]);
-
-  // console.log("mergedDonationLogs:", mergedDonationLogs);
-  // console.log("farcasterUserDataArray:", farcasterUserDataArray);
-  // console.log("processedData:", processedData);
 
   const isAllColorReady =
     totalDonateLog.length > 0 &&
@@ -206,7 +85,7 @@ export default function Home() {
                       }}
                     >
                       <ButterItemComponent
-                        fill={item?.farcasterUserData?.color}
+                        fill={item?.farcasterUserData?.color as string}
                       />
                     </motion.div>
                     {isArrow ? (

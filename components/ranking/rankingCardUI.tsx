@@ -70,7 +70,9 @@ export default function RankingCardUI({
                 <div className="pl-2 ">{userData?.ranking}</div>
               ) : (
                 <Image
-                  src={`/ranking/ranking-${typeToImage[userData?.type]}.png`}
+                  src={`/ranking/ranking-${
+                    typeToImage[userData?.type as keyof typeof typeToImage]
+                  }.png`}
                   // src={`/ranking/ranking-1st.png`}
                   width={19}
                   height={26}

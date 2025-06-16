@@ -22,7 +22,7 @@ export function MyButterDonationCard({
       <div>
         {item?.timestamp && (
           <div>
-            {item.timestamp.split("-").map((part, idx, arr) => (
+            {item.timestamp.split("-").map((part: any, idx: any, arr: any) => (
               <span key={idx}>
                 {part}
                 {idx < arr.length - 1 && <span className="mr-1">.</span>}
