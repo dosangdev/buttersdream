@@ -125,7 +125,9 @@ export function useMyButterDonateLog() {
   }, [combinedData]);
 
   // 전체 value 합산
-  const totalValue = processedData.reduce((acc, cur) => acc + cur.value, 0);
+  const totalValue = Number(
+    processedData.reduce((acc, cur) => acc + cur.value, 0).toFixed(6)
+  );
 
   return { myDonationLogs: processedData, totalValue };
 }

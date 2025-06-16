@@ -95,7 +95,7 @@ export default function FAQpage() {
                 }`}
               >
                 <Image
-                  src="/about/about-arrow-button.png"
+                  src="/FAQ/FAQ-arrow-button.png"
                   alt="arrow"
                   width={11}
                   height={8}

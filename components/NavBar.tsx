@@ -13,7 +13,7 @@ export default function NavBar() {
 
   return (
     <nav
-      className={`fixed bottom-0 left-0 right-0 z-50 flex justify-between items-center max-w-md w-full h-[47px] mx-auto bg-[url('/nav/navbar.png')] bg-contain sm:bg-cover  bg-center bg-no-repeat`}
+      className={`fixed bottom-0 left-0 right-0 z-50 flex justify-between items-center max-w-md w-full h-[47px] mx-auto bg-[url('/nav/navBar.png')] bg-contain sm:bg-cover  bg-center bg-no-repeat`}
     >
       <div className="flex justify-around w-full max-w-md items-center relative text-black">
         <div className="cursor-pointer " onClick={() => handleClick("/")}>

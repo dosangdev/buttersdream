@@ -181,7 +181,6 @@ export function WannaDonate({
       : undefined;
 
   const { writeContract, isPending, isSuccess, error } = useWriteContract();
-
   const handleDonate = () => {
     if (!donateAmount || isNaN(Number(donateAmount))) {
       alert("Please enter a valid number");
