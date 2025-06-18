@@ -9,7 +9,6 @@ import Image from "next/image";
 export default function TutorialPage() {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
-
   useEffect(() => {}, [currentPage]);
 
   const handleNext = () => {
@@ -48,10 +47,10 @@ export default function TutorialPage() {
           <br /> to start
         </div>
       )}
-      {currentPage !== tutorialPages.length - 1 && (
+      {currentPage !== tutorialPages.length && (
         <button
           onClick={handleSkip}
-          className="fixed bottom-20 left-4 bg-white rounded-3xl border border-black"
+          className="fixed bottom-20 left-4 bg-white rounded-3xl"
         >
           <div
             className="flex px-[13px] py-[6px] text-secondary text-sm gap-2 select-none"

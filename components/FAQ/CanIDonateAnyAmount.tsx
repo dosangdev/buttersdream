@@ -21,8 +21,8 @@ export default function CanIDonateAnyAmount() {
           <p>=</p>
           <p>0.1 USDC</p>
         </div>
-        <p className="text-center text-[4px] text-[#616161]">
-          * need some base usdc to buy $Butter?
+        <p className="text-center text-[8px] text-[#616161]">
+          * need some base $usdc
         </p>
       </div>
     </div>

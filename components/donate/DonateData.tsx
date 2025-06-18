@@ -90,7 +90,7 @@ export default function DonateFlow() {
       {showSkip && (
         <button
           onClick={() => setStep(8)}
-          className="fixed bottom-20 left-4 bg-white rounded-3xl border border-black z-50"
+          className="fixed bottom-20 left-4 bg-white rounded-3xl z-50"
         >
           <div
             className="flex px-[13px] py-[6px] text-secondary text-sm gap-2 select-none"

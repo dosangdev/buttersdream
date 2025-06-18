@@ -160,15 +160,14 @@ export default function Home() {
       {/* 기부처 모달 */}
       {isDonateInfoOpen && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40">
-          <div className="relative">
+          <div className="relative px-4">
             <Image
               src="/home/where-to-donate-modal.png"
               width={400}
               height={400}
               alt="Where to donate modal"
-              className=""
             />
-            <div className="absolute top-0 left-0 w-full h-full text-black text-center pt-[76px] text-xl">
+            <div className="absolute top-0 left-0 w-full h-full text-black text-center pt-[56px] text-xl">
               <p>This season,</p>
               <p className="flex justify-center items-center pt-4">
                 <span>your</span>
