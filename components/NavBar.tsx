@@ -74,7 +74,7 @@ export default function NavBar() {
         >
           <Image
             src={
-              pathname === "/profile"
+              pathname === "/mybutter"
                 ? "/nav/profile-focus.png"
                 : "/nav/profile.png"
             }

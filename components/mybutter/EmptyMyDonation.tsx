@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function EmptyMyDonation() {
   const router = useRouter();
@@ -12,13 +13,25 @@ export default function EmptyMyDonation() {
       <p>Your Butter is not founded yet.</p>
       <div className=" w-full mt-[24px]  mx-auto">
         <div className="w-full flex justify-center">
-          <Image
-            src="/mybutter/empty-my-butter.png"
-            alt="empty-my-butter"
-            width={88}
-            height={59}
-            className="block mr-5"
-          />
+          <motion.div
+            animate={{
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: 1,
+              repeat: Infinity,
+              ease: "easeInOut",
+              repeatType: "loop",
+            }}
+          >
+            <Image
+              src="/mybutter/empty-my-butter.png"
+              alt="empty-my-butter"
+              width={88}
+              height={59}
+              className="block mr-5"
+            />
+          </motion.div>
         </div>
         <div className="flex flex-col items-center">
           <Image
