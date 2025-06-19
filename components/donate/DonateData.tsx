@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import AnimatedSpeechBubbleText from "../animations/AnimatedSpeechBubbleText";
 import { useAccount, useWriteContract } from "wagmi";
@@ -14,7 +15,13 @@ import {
   rgbToHex,
   walletToHex,
 } from "@/app/utils/colorExtractor";
-import { butterComponents } from "@/app/constants/butterItems";
+import Angry from "@/app/constants/butterItems/Angry";
+import Confused from "@/app/constants/butterItems/Confused";
+import Happy from "@/app/constants/butterItems/Happy";
+import Neutral from "@/app/constants/butterItems/Neutral";
+import Shocked from "@/app/constants/butterItems/Shocked";
+import Smiley from "@/app/constants/butterItems/Smiley";
+import Surprised from "@/app/constants/butterItems/Surprised";
 
 const BASE_USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
 const RECEIVER_ADDRESS = "0xc683F61BFE08bfcCde53A41f4607B4A1B72954Db";
@@ -278,8 +285,7 @@ export function WannaDonate({
       <div className="flex justify-center mt-5">
         <button
           className="w-[116px] h-[30px] text-md text-black rounded-2xl mx-auto bg-white border-2 border-black"
-          // onClick={handleDonate}
-          onClick={onNext}
+          onClick={handleDonate}
           disabled={isPending}
         >
           {isPending ? "Sending..." : "Donate!"}
@@ -492,6 +498,16 @@ export function ButterCreationMain({
   const [showSpeechBubble, setShowSpeechBubble] = useState(false);
   const [showSurprisedButter, setShowSurprisedButter] = useState(false);
 
+  const butterComponents = [
+    { component: Angry, type: "Angry" },
+    { component: Confused, type: "Confused" },
+    { component: Happy, type: "Happy" },
+    { component: Neutral, type: "Neutral" },
+    { component: Shocked, type: "Shocked" },
+    { component: Smiley, type: "Smiley" },
+    { component: Surprised, type: "Surprised" },
+  ];
+
   useEffect(() => {
     if (step === 4) {
       // 0.5초마다 다음 버터 표시
@@ -551,8 +567,16 @@ export function ButterCreationMain({
   const walletLastTwo = address?.slice(-2);
   const numericValue = parseInt(walletLastTwo, 16);
   const butterType = (numericValue % 7) + 1;
-  const ButterItemComponent =
+  const { component: ButterItemComponent, type: butterTypeName } =
     butterComponents[butterType - 1] || butterComponents[0];
+
+  const isAngry = butterTypeName === "Angry";
+  const isHappy = butterTypeName === "Happy";
+  const isSmiley = butterTypeName === "Smiley";
+  const isNeutral = butterTypeName === "Neutral";
+  const isConfused = butterTypeName === "Confused";
+  const isShocked = butterTypeName === "Shocked";
+  const isSurprised = butterTypeName === "Surprised";
 
   if (step === 4 && !showMainUI) {
     return (
@@ -560,7 +584,10 @@ export function ButterCreationMain({
         <p className="text-black pb-5 text-3xl">creating{dots}</p>
         {currentButterIndex >= 0 && (
           <div className="animate-fadeIn">
-            {butterComponents[currentButterIndex]({ fill: "#fbf6ca" })}
+            {React.createElement(
+              butterComponents[currentButterIndex].component,
+              { fill: "#fbf6ca" }
+            )}
           </div>
         )}
       </div>
@@ -596,7 +623,28 @@ export function ButterCreationMain({
         </div>
         <div className="pt-[11px] flex flex-col items-center relative">
           <div className="-mr-[-10px]">
-            <div className={showMainUI ? "animate-butterDrop" : ""}>
+            <div
+              className={showMainUI ? "animate-butterDrop" : ""}
+              style={{
+                marginBottom: isSmiley
+                  ? "-7px"
+                  : isNeutral
+                  ? "-6px"
+                  : isHappy
+                  ? "-11px"
+                  : isAngry
+                  ? "-8px"
+                  : isConfused
+                  ? "-7px"
+                  : isShocked
+                  ? "-6px"
+                  : isSurprised
+                  ? "-4px"
+                  : "",
+                zIndex: 10,
+                position: "relative",
+              }}
+            >
               <ButterItemComponent fill={color || ""} />
             </div>
           </div>
@@ -612,6 +660,8 @@ export function ButterCreationMain({
             className="z-10 -mt-[4px] animate-fadeIn"
             style={{
               marginTop: "-4px",
+              zIndex: 5,
+              position: "relative",
             }}
           />
           {showSurprisedButter && (
@@ -620,7 +670,7 @@ export function ButterCreationMain({
               width={36}
               height={43}
               alt="exclamation mark"
-              className="absolute right-1/4 -translate-x-1/2 top-1/4 -translate-y-1/2 z-50"
+              className="absolute right-[75px] -translate-x-1/2 top-1/4 -translate-y-1/2 z-50"
             />
           )}
           <Image

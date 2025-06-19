@@ -26,7 +26,7 @@ export function useWagmiConfig() {
       : connectorsForWallets(
           [
             {
-              groupName: "추천 지갑",
+              groupName: "Recommended Wallets",
               wallets: [
                 metaMaskWallet,
                 rainbowWallet,

@@ -1,11 +1,14 @@
+import { usePathname } from "next/navigation";
+
 export default function Confused({ fill }: { fill?: string }) {
+  const pathname = usePathname();
   return (
     <>
       <svg
         id="_레이어_1"
         data-name="레이어_1"
-        width={77}
-        height={53}
+        width={pathname === "/donate" || "/mybutter" ? 92 : 77}
+        height={pathname === "/donate" || "/mybutter" ? 68 : 53}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 219.77 150"
       >

@@ -1,17 +1,21 @@
+"use client";
 // interface ButterItemProps {
 //   fill?: string;
 //   userInfo: any;
 //   args: any;
 // }
 
+import { usePathname } from "next/navigation";
+
 export default function Neutral({ fill }: { fill?: string }) {
+  const pathname = usePathname();
   return (
     <>
       <svg
         id="_레이어_1"
         data-name="레이어_1"
-        width={79}
-        height={55}
+        width={pathname === "/donate" || "/mybutter" ? 87 : 79}
+        height={pathname === "/donate" || "/mybutter" ? 63 : 55}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 223.08 150"
       >

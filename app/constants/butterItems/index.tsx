@@ -10,8 +10,8 @@ export const butterComponents = [
   Angry,
   Confused,
   Happy,
+  Smiley,
   Neutral,
   Shocked,
-  Smiley,
   Surprised,
 ];

@@ -1,11 +1,16 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function Shocked({ fill }: { fill?: string }) {
+  const pathname = usePathname();
   return (
     <>
       <svg
         id="_레이어_1"
         data-name="레이어_1"
-        width={74}
-        height={50}
+        width={pathname === "/donate" || "/mybutter" ? 87 : 74}
+        height={pathname === "/donate" || "/mybutter" ? 63 : 50}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 218.88 150"
       >

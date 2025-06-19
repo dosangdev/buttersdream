@@ -1,11 +1,16 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function Happy({ fill }: { fill?: string }) {
+  const pathname = usePathname();
   return (
     <>
       <svg
         id="_레이어_1"
         data-name="레이어_1"
-        width={74}
-        height={66}
+        width={pathname === "/donate" || "/mybutter" ? 90 : 74}
+        height={pathname === "/donate" || "/mybutter" ? 79 : 66}
         // width={69}
         // height={61}
         xmlns="http://www.w3.org/2000/svg"

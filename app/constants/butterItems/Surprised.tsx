@@ -1,4 +1,9 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 export default function Surprised({ fill }: { fill: string }) {
+  const pathname = usePathname();
   return (
     <>
       <svg
@@ -6,8 +11,8 @@ export default function Surprised({ fill }: { fill: string }) {
         data-name="레이어_1"
         // width={74}
         // height={61}
-        width={74}
-        height={66}
+        width={pathname === "/donate" || "/mybutter" ? 81 : 74}
+        height={pathname === "/donate" || "/mybutter" ? 73 : 66}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 198.62 173.88"
       >
