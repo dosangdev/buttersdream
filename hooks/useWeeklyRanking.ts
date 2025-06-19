@@ -33,10 +33,35 @@ export function useWeeklyRanking() {
   // 1. 1차 필터링 + 이번주(UTC)만
   const donationLogs = useMemo(() => {
     if (!result) return [];
+
+    // 이번주(UTC) 월요일 날짜 구하기
+    const now = new Date();
+    const nowUTCYear = now.getUTCFullYear();
+    const nowUTCMonth = now.getUTCMonth();
+    const nowUTCDay = now.getUTCDate();
+    const nowUTCDayOfWeek = now.getUTCDay(); // 0: 일요일, 1: 월요일, ..., 6: 토요일
+    const daysSinceMonday = nowUTCDayOfWeek === 0 ? 6 : nowUTCDayOfWeek - 1;
+
+    // 이번주 월요일(UTC) 날짜 객체
+    const monday = new Date(
+      Date.UTC(nowUTCYear, nowUTCMonth, nowUTCDay - daysSinceMonday)
+    );
+    // 이번주 월요일부터 오늘까지의 날짜 문자열(YYYY-MM-DD) 배열 만들기
+    const weekDates: string[] = [];
+    for (let i = 0; i <= daysSinceMonday; i++) {
+      const d = new Date(monday);
+      d.setUTCDate(monday.getUTCDate() + i);
+      const y = d.getUTCFullYear();
+      const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+      const day = String(d.getUTCDate()).padStart(2, "0");
+      weekDates.push(`${y}-${m}-${day}`);
+    }
+
     const filtered = processDonationLogs(result).filter((log) => {
-      const date = new Date(log.timestamp + "T00:00:00Z");
-      return isThisWeek(date);
+      // log.timestamp가 이번주 날짜 배열에 포함되는지 확인
+      return weekDates.includes(log.timestamp);
     });
+
     return filtered;
   }, [result]);
 
