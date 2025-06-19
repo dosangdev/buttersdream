@@ -4,8 +4,8 @@ export default function Confused({ fill }: { fill?: string }) {
       <svg
         id="_레이어_1"
         data-name="레이어_1"
-        width={74}
-        height={50}
+        width={77}
+        height={53}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 219.77 150"
       >

@@ -78,7 +78,7 @@ const config: Config = {
         coinDisappear: "coinDisappear 0.5s ease-in forwards",
         coinRotate: "coinRotate 2s ease-in-out",
         fadeIn: "fadeIn 0.5s ease-out forwards",
-        moveBackground: "moveBackground 20s linear infinite",
+        moveBackground: "moveBackground 130s linear infinite",
         initialBackgroundMove: "initialBackgroundMove 3.5s ease-out forwards",
         butterDrop: "butterDrop 1s ease-out forwards",
         butterReturn: "butterReturn 1s ease-out forwards",

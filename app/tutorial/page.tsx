@@ -10,46 +10,44 @@ export default function TutorialPage() {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {}, [currentPage]);
-
+  console.log(currentPage, tutorialPages.length - 1);
   const handleNext = () => {
     if (currentPage === tutorialPages.length - 1) {
-      router.push("/donate");
+      return;
     } else {
       setCurrentPage((prev) => prev + 1);
     }
   };
 
-  const handleSkip = () => {
-    const lastPageIndex = Math.max(0, tutorialPages.length - 1);
-    setCurrentPage(lastPageIndex);
-  };
+  // const handleSkip = () => {
+  //   const lastPageIndex = Math.max(0, tutorialPages.length - 1);
+  //   setCurrentPage(lastPageIndex);
+  // };
 
-  // currentPage가 유효한 범위 내에 있는지 확인
-  const validPageIndex = Math.min(
-    Math.max(0, currentPage),
-    tutorialPages.length - 1
-  );
-  const currentTutorialData = tutorialPages[validPageIndex];
+  // // currentPage가 유효한 범위 내에 있는지 확인
+  // const validPageIndex = Math.min(
+  //   Math.max(0, currentPage),
+  //   tutorialPages.length - 1
+  // );
+  // const currentTutorialData = tutorialPages[validPageIndex];
 
-  if (!currentTutorialData) {
-    return null;
-  }
+  // if (!currentTutorialData) {
+  //   return null;
+  // }
 
   return (
-    <main
-      className="flex flex-col items-center pt-[109px] relative select-none"
-      onClick={handleNext}
-    >
-      <TutorialPageComponent {...currentTutorialData} />
-      {currentPage === 0 && (
-        <div className="text-black text-base text-center">
-          click anywhere
-          <br /> to start
-        </div>
+    <main className="flex flex-col items-center pt-[109px] relative select-none">
+      {currentPage !== tutorialPages.length - 1 && (
+        <div className="fixed w-full h-full" onClick={handleNext} />
       )}
-      {currentPage !== tutorialPages.length && (
+      <TutorialPageComponent />
+
+      {/* {currentPage !== tutorialPages.length - 1 && (
         <button
-          onClick={handleSkip}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleSkip();
+          }}
           className="fixed bottom-20 left-4 bg-white rounded-3xl"
         >
           <div
@@ -66,7 +64,18 @@ export default function TutorialPage() {
             <span>Skip</span>
           </div>
         </button>
-      )}
+      )} */}
+      {/* {currentPage === tutorialPages.length - 1 && (
+        <button
+          className="bg-white rounded-3xl px-[30px] py-[10px] text-black text-md border-4 border-black"
+          onClick={() => {
+            console.log("clicked");
+            router.push("/donate");
+          }}
+        >
+          Let's Goooo
+        </button>
+      )} */}
     </main>
   );
 }

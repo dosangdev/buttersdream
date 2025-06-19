@@ -10,8 +10,8 @@ export default function Neutral({ fill }: { fill?: string }) {
       <svg
         id="_레이어_1"
         data-name="레이어_1"
-        width={74}
-        height={50}
+        width={79}
+        height={55}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 223.08 150"
       >

@@ -132,7 +132,7 @@ export function DonateConnectWallet({
         className="object-contain"
         priority
       />
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
         <AnimatedSpeechBubbleText
           text={
             address
@@ -198,7 +198,7 @@ export function WannaDonate({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // 숫자와 소수점만 허용하는 정규식, 소수점 6자리로 제한
-    if (/^\d*\.?\d{0,6}$/.test(value)) {
+    if (/^\d*\.?\d{0,1}$/.test(value)) {
       setDonateAmount(value);
     }
   };
@@ -223,7 +223,7 @@ export function WannaDonate({
         className="object-contain"
         priority
       />
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
         <AnimatedSpeechBubbleText
           text={`How much $Butter\n do you wanna donate?`}
           className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center"
@@ -350,7 +350,7 @@ export function DonateSuccess({
               className="object-contain animate-fadeIn"
               priority
             />
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
               <AnimatedSpeechBubbleText
                 text={`You've successfully donated\n ${donateAmount} $USDC`}
                 className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center animate-fadeIn"
@@ -429,7 +429,7 @@ export function ButterCreationIntro({ onNext }: { onNext: () => void }) {
         className="object-contain"
         priority
       />
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
         <AnimatedSpeechBubbleText
           text={`I think\n something is happening.!`}
           className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center"
@@ -584,7 +584,7 @@ export function ButterCreationMain({
                 className="object-contain animate-speechBubbleAppear"
                 priority
               />
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
                 <AnimatedSpeechBubbleText
                   text={getSpeechText(step)}
                   className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center animate-speechBubbleAppear"

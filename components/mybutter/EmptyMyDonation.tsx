@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import AnimatedSpeechBubbleText from "../animations/AnimatedSpeechBubbleText";
 
 export default function EmptyMyDonation() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function EmptyMyDonation() {
               opacity: [0, 1, 0],
             }}
             transition={{
-              duration: 1,
+              duration: 2,
               repeat: Infinity,
               ease: "easeInOut",
               repeatType: "loop",

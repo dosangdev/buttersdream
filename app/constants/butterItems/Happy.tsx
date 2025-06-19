@@ -4,8 +4,10 @@ export default function Happy({ fill }: { fill?: string }) {
       <svg
         id="_레이어_1"
         data-name="레이어_1"
-        width={69}
-        height={61}
+        width={74}
+        height={66}
+        // width={69}
+        // height={61}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 227.18 170"
       >

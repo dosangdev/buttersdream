@@ -21,11 +21,11 @@ export default function MyButterNftStatus({
         <div className=" flex justify-center mr-2">
           <ButterItemComponent fill={userData?.farcasterUserData?.color} />
         </div>
-        <div className="relative flex flex-col items-center mt-[-5px]">
+        <div className="relative flex flex-col items-center mt-[-8px]">
           <Image
             src="/butter-melting.png"
-            width={122}
-            height={77}
+            width={113}
+            height={68}
             alt="butter-melting"
             className="z-10"
           />

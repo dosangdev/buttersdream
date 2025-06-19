@@ -65,11 +65,33 @@ export default function Home() {
                 const ButterItemComponent =
                   butterComponents[butterType - 1] || butterComponents[0];
 
+                const isAngry = ButterItemComponent.name === "Angry";
+                const isHappy = ButterItemComponent.name === "Happy";
+                const isSmiley = ButterItemComponent.name === "Smiley";
+                const isNeutral = ButterItemComponent.name === "Neutral";
+
                 const isArrow =
                   item.from.toLowerCase() === address?.toLowerCase();
 
                 return (
-                  <div key={index} className="relative -mt-[8px]">
+                  <div
+                    key={index}
+                    className="relative -mt-[8px]"
+                    style={{
+                      zIndex: -index,
+                      paddingTop: isAngry
+                        ? "2px"
+                        : isNeutral
+                        ? "2px"
+                        : undefined, // Angry일 때만 24px
+                      marginTop: isHappy ? "-14px" : undefined, // Happy일 때만 24px
+                      marginBottom: isHappy
+                        ? "-5px"
+                        : isSmiley
+                        ? "-3px"
+                        : undefined, // Happy일 때만 24px
+                    }}
+                  >
                     <motion.div
                       animate={
                         isArrow
@@ -110,6 +132,32 @@ export default function Home() {
                 );
               })
             )}
+
+            {/* {butterComponents.map((ButterItemComponent, index) => {
+              const isAngry = ButterItemComponent.name === "Angry";
+              const isHappy = ButterItemComponent.name === "Happy";
+              const isSurprised = ButterItemComponent.name === "Surprised";
+              const isSmiley = ButterItemComponent.name === "Smiley";
+              const isNeutral = ButterItemComponent.name === "Neutral";
+              return (
+                <div
+                  key={index}
+                  className={`${index !== 0 ? "-mt-[9px]" : ""}`}
+                  style={{
+                    zIndex: -index,
+                    paddingTop: isAngry ? "2px" : isNeutral ? "2px" : undefined, // Angry일 때만 24px
+                    marginTop: isHappy ? "-14px" : undefined, // Happy일 때만 24px
+                    marginBottom: isHappy
+                      ? "-5px"
+                      : isSmiley
+                      ? "-3px"
+                      : undefined, // Happy일 때만 24px
+                  }}
+                >
+                  <ButterItemComponent fill="#fbf6ca" />
+                </div>
+              );
+            })} */}
           </div>
 
           <Image
