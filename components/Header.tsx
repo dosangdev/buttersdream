@@ -38,7 +38,7 @@ export default function Header() {
           </button>
         )}
         <CustomConnectButton />
-        {pathname === "/donate" && !address && (
+        {(pathname === "/donate" || pathname === "/mybutter") && !address && (
           <div className="absolute top-10 -left-6">
             <ConnectWalletEffect />
           </div>
