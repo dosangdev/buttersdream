@@ -235,7 +235,7 @@ export default function Home() {
               <p>their butter so far</p>
             </div>
             <button
-              className="absolute top-8 right-14 px-2 py-1 text-black font-bold"
+              className="absolute top-8 right-20 px-2 py-1 text-black font-bold"
               onClick={() => setIsDonateInfoOpen(false)}
             >
               ×
