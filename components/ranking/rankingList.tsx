@@ -62,6 +62,7 @@ export default function RankingList({
   const { all: dailyDonateLog, top3: dailyTop3 } = useDailyRanking();
   const { all: weeklyDonateLog, top3: weeklyTop3 } = useWeeklyRanking();
   const { address } = useAccount();
+  console.log(dailyDonateLog);
 
   // 현재 선택된 탭에 따라 데이터 선택
   const currentData =

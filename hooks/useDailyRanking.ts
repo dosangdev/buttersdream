@@ -34,17 +34,18 @@ export function useDailyRanking() {
   const donationLogs = useMemo(() => {
     if (!result) return [];
 
-    // 한국 시간 기준 오늘 시작을 UTC timestamp로 변환
-    const todayKoreaStart = new Date();
-    todayKoreaStart.setHours(0, 0, 0, 0);
-    const todayUTCStart = Math.floor(
-      (todayKoreaStart.getTime() - 9 * 60 * 60 * 1000) / 1000
-    );
+    // 현재 시간을 UTC로 변환해서 년/월/일 추출
+    const now = new Date();
+    const nowUTCYear = now.getUTCFullYear();
+    const nowUTCMonth = String(now.getUTCMonth() + 1).padStart(2, "0");
+    const nowUTCDay = String(now.getUTCDate()).padStart(2, "0");
+    const todayUTCString = `${nowUTCYear}-${nowUTCMonth}-${nowUTCDay}`;
 
     const filtered = processDonationLogs(result).filter((log) => {
-      // BaseScan timestamp는 이미 UTC이므로 직접 비교
-      return parseInt(log.timestamp) >= todayUTCStart;
+      // log.timestamp가 "YYYY-MM-DD" 형식이므로 문자열로 비교
+      return log.timestamp === todayUTCString;
     });
+
     return filtered;
   }, [result]);
 
