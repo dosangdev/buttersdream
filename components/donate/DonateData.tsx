@@ -278,7 +278,8 @@ export function WannaDonate({
       <div className="flex justify-center mt-5">
         <button
           className="w-[116px] h-[30px] text-md text-black rounded-2xl mx-auto bg-white border-2 border-black"
-          onClick={handleDonate}
+          // onClick={handleDonate}
+          onClick={onNext}
           disabled={isPending}
         >
           {isPending ? "Sending..." : "Donate!"}
@@ -593,7 +594,7 @@ export function ButterCreationMain({
             </>
           ) : null}
         </div>
-        <div className="pt-[11px] flex flex-col items-center ">
+        <div className="pt-[11px] flex flex-col items-center relative">
           <div className="-mr-[-10px]">
             <div className={showMainUI ? "animate-butterDrop" : ""}>
               <ButterItemComponent fill={color || ""} />
@@ -606,14 +607,22 @@ export function ButterCreationMain({
                 : "/butter-melting.png"
             }
             alt="wallet image"
-            width={showSurprisedButter ? 149 : 121}
-            height={showSurprisedButter ? 100 : 81}
+            width={121}
+            height={81}
             className="z-10 -mt-[4px] animate-fadeIn"
             style={{
-              marginTop: showSurprisedButter ? "-35px" : "-4px",
-              marginRight: showSurprisedButter ? "-25px" : "0px",
+              marginTop: "-4px",
             }}
           />
+          {showSurprisedButter && (
+            <Image
+              src="/donate/exclamation-mark.png"
+              width={36}
+              height={43}
+              alt="exclamation mark"
+              className="absolute right-1/4 -translate-x-1/2 top-1/4 -translate-y-1/2 z-50"
+            />
+          )}
           <Image
             src="/donate/bread.png"
             alt="bread image"
