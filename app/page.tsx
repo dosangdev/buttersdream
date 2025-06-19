@@ -74,6 +74,7 @@ export default function Home() {
                 const isHappy = ButterItemComponent.name === "Happy";
                 const isSmiley = ButterItemComponent.name === "Smiley";
                 const isNeutral = ButterItemComponent.name === "Neutral";
+                console.log(isAngry, isHappy, isSmiley, isNeutral);
 
                 const isArrow =
                   item.from.toLowerCase() === address?.toLowerCase();
