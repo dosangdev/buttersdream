@@ -3,8 +3,9 @@
 import ProgressBar from "@/components/donate/ProgressBar";
 import { useDonationProgress } from "@/hooks/useDonationProgress";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { butterComponents } from "./constants/butterItems";
+import { sdk } from "@farcaster/frame-sdk";
 
 import { useAccount } from "wagmi";
 import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
@@ -24,6 +25,10 @@ export default function Home() {
         typeof item.farcasterUserData?.color === "string" &&
         item.farcasterUserData?.color.startsWith("#")
     );
+
+  useEffect(() => {
+    sdk.actions.ready();
+  }, []);
 
   return (
     <main className="flex flex-col items-center pt-[25px] relative select-none">
