@@ -32,9 +32,16 @@ export default function Header() {
         {address && chainId !== BASE_CHAIN_ID && (
           <button
             onClick={switchToBase}
-            className="px-3 py-1 bg-yellow-200 border border-black rounded-lg text-black text-[8px]"
+            className="flex items-center justify-center w-10 h-10 bg-white border-2 border-[#0052FF] rounded-full shadow-md hover:bg-[#e6f0ff] transition"
+            title="Switch to Base"
           >
-            Switch to Base
+            <Image
+              src="/base.webp"
+              alt="Switch to Base"
+              className="w-6 h-6"
+              width={24}
+              height={24}
+            />
           </button>
         )}
         <CustomConnectButton />
