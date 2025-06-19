@@ -5,7 +5,7 @@ import Logo from "@/public/logo.png";
 import CustomConnectButton from "./CustomConnectButton";
 import ConnectWalletEffect from "./ConnectWalletEffect";
 import { usePathname } from "next/navigation";
-import { useAccount, useWalletClient, useChainId } from "wagmi";
+import { useAccount, useWalletClient, useChainId, useConnect } from "wagmi";
 import { useState } from "react";
 
 export default function Header() {

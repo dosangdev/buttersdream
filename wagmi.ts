@@ -1,23 +1,55 @@
-import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import {
-  mainnet,
-  polygon,
-  optimism,
-  arbitrum,
-  base,
-  sepolia,
-} from "wagmi/chains";
+  connectorsForWallets,
+  RainbowKitProvider,
+} from "@rainbow-me/rainbowkit";
+import {
+  metaMaskWallet,
+  rainbowWallet,
+  walletConnectWallet,
+  injectedWallet,
+  zerionWallet,
+  coinbaseWallet,
+  trustWallet,
+} from "@rainbow-me/rainbowkit/wallets";
+import { base } from "wagmi/chains";
+import { farcasterFrame as miniAppConnector } from "@farcaster/frame-wagmi-connector";
+import { useMemo } from "react";
+import { createConfig, http } from "wagmi";
 
-export const config = getDefaultConfig({
-  appName: "Butter's Dream",
-  projectId: "8df563a8c13c0286ecd207457282333d",
-  chains: [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [sepolia] : []),
-  ],
-  ssr: true,
-});
+export function useWagmiConfig() {
+  return useMemo(() => {
+    const isMiniApp =
+      typeof window !== "undefined" && (window as any)?.farcaster?.isMiniApp;
+
+    const connectors = isMiniApp
+      ? [miniAppConnector()]
+      : connectorsForWallets(
+          [
+            {
+              groupName: "추천 지갑",
+              wallets: [
+                metaMaskWallet,
+                rainbowWallet,
+                walletConnectWallet,
+                injectedWallet,
+                zerionWallet,
+                coinbaseWallet,
+                trustWallet,
+              ],
+            },
+          ],
+          {
+            appName: "Butter's Dream",
+            projectId: "8df563a8c13c0286ecd207457282333d",
+          }
+        );
+
+    return createConfig({
+      chains: [base],
+      transports: {
+        [base.id]: http(),
+      },
+      connectors,
+    });
+  }, []);
+}
