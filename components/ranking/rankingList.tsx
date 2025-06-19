@@ -62,7 +62,6 @@ export default function RankingList({
   const { all: dailyDonateLog, top3: dailyTop3 } = useDailyRanking();
   const { all: weeklyDonateLog, top3: weeklyTop3 } = useWeeklyRanking();
   const { address } = useAccount();
-  console.log(totalDonateLog);
 
   // 현재 선택된 탭에 따라 데이터 선택
   const currentData =
@@ -80,8 +79,6 @@ export default function RankingList({
         (item) => item.from.toLowerCase() === address.toLowerCase()
       ) || (address ? { from: address } : null)
     : null;
-
-  console.log(myCard);
 
   const router = useRouter();
 

@@ -33,9 +33,17 @@ export function useDailyRanking() {
   // 1. 1차 필터링 + 오늘(UTC)만
   const donationLogs = useMemo(() => {
     if (!result) return [];
+
+    // 한국 시간 기준 오늘 시작을 UTC timestamp로 변환
+    const todayKoreaStart = new Date();
+    todayKoreaStart.setHours(0, 0, 0, 0);
+    const todayUTCStart = Math.floor(
+      (todayKoreaStart.getTime() - 9 * 60 * 60 * 1000) / 1000
+    );
+
     const filtered = processDonationLogs(result).filter((log) => {
-      const date = new Date(log.timestamp + "T00:00:00Z");
-      return isToday(date);
+      // BaseScan timestamp는 이미 UTC이므로 직접 비교
+      return parseInt(log.timestamp) >= todayUTCStart;
     });
     return filtered;
   }, [result]);
