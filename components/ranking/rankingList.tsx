@@ -62,6 +62,7 @@ export default function RankingList({
   const { all: dailyDonateLog, top3: dailyTop3 } = useDailyRanking();
   const { all: weeklyDonateLog, top3: weeklyTop3 } = useWeeklyRanking();
   const { address } = useAccount();
+  console.log(totalDonateLog);
 
   // 현재 선택된 탭에 따라 데이터 선택
   const currentData =
@@ -77,8 +78,10 @@ export default function RankingList({
   const myCard = address
     ? currentData.find(
         (item) => item.from.toLowerCase() === address.toLowerCase()
-      )
+      ) || (address ? { from: address } : null)
     : null;
+
+  console.log(myCard);
 
   const router = useRouter();
 
@@ -95,8 +98,8 @@ export default function RankingList({
     <div className="flex flex-col items-center">
       <div className="pb-[5px]">
         <div className="relative w-full flex items-center justify-around">
-          {/* 2등 이미지 - 2명 이상일 때만 표시 */}
-          {currentTop3.length >= 2 && (
+          {/* 2등 이미지 - 1명 이상일 때 표시 */}
+          {currentTop3.length >= 1 && (
             <Image
               src="/ranking/ranking-2st.png"
               width={21}
@@ -105,7 +108,7 @@ export default function RankingList({
               className="absolute left-8 -top-10"
             />
           )}
-          {/* 1등 이미지 - 1명 이상일 때만 표시 */}
+          {/* 1등 이미지 - 1명 이상일 때 표시 */}
           {currentTop3.length >= 1 && (
             <Image
               src="/ranking/ranking-1st.png"
@@ -115,8 +118,8 @@ export default function RankingList({
               className="absolute -top-20"
             />
           )}
-          {/* 3등 이미지 - 3명 이상일 때만 표시 */}
-          {currentTop3.length >= 3 && (
+          {/* 3등 이미지 - 1명 이상일 때 표시 */}
+          {currentTop3.length >= 1 && (
             <Image
               src="/ranking/ranking-3st.png"
               width={19}
@@ -137,7 +140,7 @@ export default function RankingList({
                 key={index}
                 className={cn(
                   "absolute ",
-                  index === 1 && "left-3 top-0",
+                  index === 1 && "left-0 top-0",
                   index === 2 && "right-1 top-1"
                 )}
                 onClick={() =>

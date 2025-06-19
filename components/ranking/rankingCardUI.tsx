@@ -1,5 +1,6 @@
 import { butterComponents } from "@/app/constants/butterItems";
 import { cn } from "@/app/utils/cn";
+import { formatAddress } from "@/app/utils/strings";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
@@ -65,7 +66,9 @@ export default function RankingCardUI({
           )}
         >
           <div className="flex-shrink-0 basis-[40px] text-lg text-start">
-            {userData?.type !== "default" ? (
+            {cardType === "my" && !userData?.farcasterUserData ? (
+              <div className="pl-2 ">?</div>
+            ) : userData?.type !== "default" ? (
               cardType === "my" ? (
                 <div className="pl-2 ">{userData?.ranking}</div>
               ) : (
@@ -84,37 +87,31 @@ export default function RankingCardUI({
             )}
           </div>
           <div className="flex-shrink-0 basis-[52px] flex justify-center items-center py-[7px] w-[15px] h-[15px]">
-            <ButterItemComponent fill={userData?.farcasterUserData?.color} />
+            {cardType === "my" && !userData?.farcasterUserData ? (
+              <Image
+                src="/mybutter/empty-my-butter.png"
+                width={35}
+                height={24}
+                alt="empty-my-butter"
+              />
+            ) : (
+              <ButterItemComponent fill={userData?.farcasterUserData?.color} />
+            )}
           </div>
           <div className="flex-1 px-2 truncate text-start">
-            @{userData?.farcasterUserData?.username}
+            {cardType === "my" && !userData?.farcasterUserData ? (
+              <div className="pl-2 ">@{formatAddress(userData?.from)}</div>
+            ) : (
+              <div className="pl-2 ">
+                @{userData?.farcasterUserData?.username}
+              </div>
+            )}
           </div>
           <div className="flex-shrink-0 basis-[80px] text-right">
             {userData?.value} USDC
           </div>
         </div>
       </div>
-
-      {/* my 카드 */}
-      {/* <div className="flex items-center w-full border-4 border-[#d6d6d6] rounded-2xl shadow-[0_2px_2px_0_rgba(0,0,0,0.25)]">
-        <div className="flex items-center justify-between bg-white rounded-xl px-4  h-[42px] text-black w-full text-sm ">
-          <div className="flex-shrink-0 basis-[40px] text-lg text-center">
-            <Image
-              src="/ranking/ranking-2st.png"
-              width={19}
-              height={26}
-              alt="ranking"
-            />
-          </div>
-          <div className="flex-shrink-0 basis-[52px] flex justify-center items-center">
-            이미지
-          </div>
-          <div className="flex-1 px-2 truncate">farcaster 아이디</div>
-          <div className="flex-shrink-0 basis-[80px] text-right">
-            기부금액 USDC
-          </div>
-        </div>
-      </div> */}
     </>
   );
 }
