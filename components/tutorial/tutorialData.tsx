@@ -85,7 +85,6 @@ const ButterSurprised = {
 export default function TutorialFlow() {
   const [step, setStep] = useState(0);
   const router = useRouter();
-  console.log(step);
 
   // 현재 단계에 해당하는 speechText 가져오기
   const currentTutorialData = tutorialPages[step];

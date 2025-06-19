@@ -22,9 +22,6 @@ export default function RankingCardUI({
 }) {
   const router = useRouter();
 
-  //   console.log(address);
-  //   console.log(userData?.from);
-  //   console.log(address?.toLowerCase() === userData?.from.toLowerCase());
   const handleClick = (path: string) => {
     router.push(path);
   };

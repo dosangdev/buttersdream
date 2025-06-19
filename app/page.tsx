@@ -4,12 +4,29 @@ import ProgressBar from "@/components/donate/ProgressBar";
 import { useDonationProgress } from "@/hooks/useDonationProgress";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { butterComponents } from "./constants/butterItems";
+// import { butterComponents } from "./constants/butterItems";
 import { sdk } from "@farcaster/frame-sdk";
 
 import { useAccount } from "wagmi";
 import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
 import { motion } from "framer-motion";
+import Angry from "./constants/butterItems/Angry";
+import Happy from "./constants/butterItems/Happy";
+import Smiley from "./constants/butterItems/Smiley";
+import Neutral from "./constants/butterItems/Neutral";
+import Shocked from "./constants/butterItems/Shocked";
+import Surprised from "./constants/butterItems/Surprised";
+import Confused from "./constants/butterItems/Confused";
+
+const butterComponents = [
+  { component: Angry, type: "Angry" },
+  { component: Confused, type: "Confused" },
+  { component: Happy, type: "Happy" },
+  { component: Neutral, type: "Neutral" },
+  { component: Shocked, type: "Shocked" },
+  { component: Smiley, type: "Smiley" },
+  { component: Surprised, type: "Surprised" },
+];
 
 export default function Home() {
   const { isLoading } = useDonationProgress();
@@ -67,13 +84,13 @@ export default function Home() {
                 const walletLastTwo = item?.from?.slice(-2);
                 const numericValue = parseInt(walletLastTwo, 16);
                 const butterType = (numericValue % 7) + 1;
-                const ButterItemComponent =
+                const { component: ButterItemComponent, type: butterTypeName } =
                   butterComponents[butterType - 1] || butterComponents[0];
 
-                const isAngry = ButterItemComponent.name === "Angry";
-                const isHappy = ButterItemComponent.name === "Happy";
-                const isSmiley = ButterItemComponent.name === "Smiley";
-                const isNeutral = ButterItemComponent.name === "Neutral";
+                const isAngry = butterTypeName === "Angry";
+                const isHappy = butterTypeName === "Happy";
+                const isSmiley = butterTypeName === "Smiley";
+                const isNeutral = butterTypeName === "Neutral";
                 console.log(isAngry, isHappy, isSmiley, isNeutral);
 
                 const isArrow =

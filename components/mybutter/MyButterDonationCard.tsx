@@ -12,7 +12,6 @@ export function MyButterDonationCard({
   const handleClick = (path: string) => {
     router.push(path);
   };
-  console.log();
   return (
     <div
       className="w-full h-[50px] flex justify-between items-center text-black bg-white border-[1px]  pl-[22px] pr-[16px] border-black rounded-2xl text-md mt-[10px] cursor-pointer"

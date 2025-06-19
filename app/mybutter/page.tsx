@@ -9,7 +9,6 @@ import { useAccount } from "wagmi";
 
 export default function MyButterPage() {
   const { myDonationLogs, totalValue } = useMyButterDonateLog();
-  console.log(myDonationLogs);
   const { address } = useAccount();
   return (
     <main className="w-full max-w-md mx-auto flex flex-col items-center pt-[29px] pb-[20px] relative select-none text-black text-base">

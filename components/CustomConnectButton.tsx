@@ -11,7 +11,6 @@ export default function CustomConnectButton() {
   const { address, isConnected } = useAccount();
   const { openConnectModal } = useConnectModal();
   const { openAccountModal } = useAccountModal();
-  // console.log("address : ", address);
 
   return (
     <>
