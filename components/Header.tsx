@@ -6,13 +6,14 @@ import CustomConnectButton from "./CustomConnectButton";
 import ConnectWalletEffect from "./ConnectWalletEffect";
 import { usePathname } from "next/navigation";
 import { useAccount, useWalletClient, useChainId } from "wagmi";
+import { useState } from "react";
 
 export default function Header() {
   const pathname = usePathname();
   const { address } = useAccount();
   const { data: walletClient } = useWalletClient();
   const chainId = useChainId();
-
+  const [showToast, setShowToast] = useState(false);
   // Base Mainnet ID
   const BASE_CHAIN_ID = 8453;
 
@@ -20,6 +21,8 @@ export default function Header() {
     if (!walletClient) return;
     try {
       await walletClient.switchChain({ id: BASE_CHAIN_ID });
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 2000); // 2초 후 알림 사라짐
     } catch (e) {
       alert("Failed to switch network. Please try manually in your wallet.");
     }
@@ -43,6 +46,11 @@ export default function Header() {
               height={24}
             />
           </button>
+        )}
+        {showToast && (
+          <div className="fixed top-6 left-1/2 -translate-x-1/2 bg-[#0052FF] text-white px-4 py-2 rounded-xl shadow-lg text-sm z-50 animate-fadeIn">
+            Switched to Base chain
+          </div>
         )}
         <CustomConnectButton />
         {(pathname === "/donate" || pathname === "/mybutter") && !address && (
