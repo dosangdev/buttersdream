@@ -43,7 +43,7 @@ export default function RankingCardUI({
             "border-4 border-[#6c6c6c] rounded-2xl",
           userData?.type === "third" && "border-4 border-[#985323] rounded-2xl",
           cardType === "my" &&
-            " border-4 border-[#d6d6d6] rounded-2xl shadow-[0_2px_2px_0_rgba(0,0,0,0.25)] mb-[25px]"
+            " border-4 border-[#d6d6d6] rounded-2xl shadow-[0_2px_2px_0_rgba(0,0,0,0.25)] mb-[5px]"
         )}
         onClick={() =>
           handleClick(

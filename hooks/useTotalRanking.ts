@@ -150,5 +150,11 @@ export function useTotalRanking() {
       item.type === "first" || item.type === "second" || item.type === "third"
   );
 
-  return { all: processedData, top3 };
+  // basicCardData는 top3를 제외한 나머지 데이터
+  const basicCardData = processedData.filter(
+    (item) =>
+      item.type !== "first" && item.type !== "second" && item.type !== "third"
+  );
+
+  return { all: processedData, top3, basicCardData };
 }

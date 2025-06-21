@@ -7,6 +7,7 @@ import ConnectWalletEffect from "./ConnectWalletEffect";
 import { usePathname } from "next/navigation";
 import { useAccount, useWalletClient, useChainId, useConnect } from "wagmi";
 import { useState } from "react";
+import { cn } from "@/app/utils/cn";
 
 export default function Header() {
   const pathname = usePathname();
@@ -29,7 +30,12 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-transparent flex w-full justify-between items-center">
+    <header
+      className={cn(
+        "bg-transparent flex w-full justify-between items-center",
+        pathname === "/ranking" ? "max-w-md mx-auto px-4 pt-4" : ""
+      )}
+    >
       <Image src={Logo} alt="logo" className="w-[105px] h-[58px]" />
       <div className="relative flex items-center gap-2">
         {address && chainId !== BASE_CHAIN_ID && (

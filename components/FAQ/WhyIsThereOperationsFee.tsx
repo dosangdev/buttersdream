@@ -2,7 +2,7 @@ export default function WhyIsThereOperationsFee() {
   return (
     <div className=" flex flex-col gap-4 text-xs ">
       <p className="break-words whitespace-pre-line font-bold">
-        We charge a 5% operations fee from each donation.
+        We charge a 10% operations fee from each donation.
       </p>
       <p className="break-words whitespace-pre-line">
         This small portion helps us cover essential costs like maintaining the
@@ -10,7 +10,7 @@ export default function WhyIsThereOperationsFee() {
         and keeping things running smoothly.
       </p>
       <p className="break-words whitespace-pre-line">
-        The remaining 95% of all donations go directly to the nonprofit
+        The remaining 90% of all donations go directly to the nonprofit
         organization selected through our community vote at the end of each
         season.
       </p>

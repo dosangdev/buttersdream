@@ -3,11 +3,13 @@
 import { butterComponents } from "@/app/constants/butterItems";
 import { cn } from "@/app/utils/cn";
 import { useTotalRanking } from "@/hooks/useTotalRanking";
+import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import RankingCardUI from "./rankingCardUI";
 import { useAccount } from "wagmi";
-import { useDailyRanking } from "@/hooks/useDailyRanking";
+import { useEffect, useState } from "react";
+// import { useDailyRanking } from "@/hooks/useDailyRanking";
 import { useWeeklyRanking } from "@/hooks/useWeeklyRanking";
 
 const EmptyStateMessage = ({
@@ -42,13 +44,7 @@ const EmptyStateMessage = ({
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-8">
       <p className="text-lg font-medium text-gray-600">{messages[type]}</p>
-      <Image
-        src="/butter-cry.png"
-        width={120}
-        height={120}
-        alt="butter-cry"
-        className=""
-      />
+      <Image src="/butter-cry.png" width={120} height={120} alt="butter-cry" />
     </div>
   );
 };
@@ -58,21 +54,84 @@ export default function RankingList({
 }: {
   type: "daily" | "weekly" | "total";
 }) {
-  const { all: totalDonateLog, top3: totalTop3 } = useTotalRanking();
-  const { all: dailyDonateLog, top3: dailyTop3 } = useDailyRanking();
-  const { all: weeklyDonateLog, top3: weeklyTop3 } = useWeeklyRanking();
+  const {
+    all: totalDonateLog,
+    top3: totalTop3,
+    basicCardData: totalBasicCardData,
+  } = useTotalRanking();
+  // const { all: dailyDonateLog, top3: dailyTop3 } = useDailyRanking();
+  const {
+    all: weeklyDonateLog,
+    top3: weeklyTop3,
+    basicCardData: weeklyBasicCardData,
+  } = useWeeklyRanking();
   const { address } = useAccount();
+  const router = useRouter();
+
+  const totalDonateLogForColor = useTotaldonateLog();
+  const [showContent, setShowContent] = useState(false);
+
+  const isAllColorReady =
+    totalDonateLogForColor.length > 0 &&
+    totalDonateLogForColor.every(
+      (item) =>
+        typeof item.farcasterUserData?.color === "string" &&
+        item.farcasterUserData?.color.startsWith("#")
+    );
+
+  useEffect(() => {
+    if (isAllColorReady) {
+      const timer = setTimeout(() => {
+        setShowContent(true);
+      }, 500);
+      return () => clearTimeout(timer);
+    } else {
+      setShowContent(false);
+    }
+  }, [isAllColorReady]);
 
   // 현재 선택된 탭에 따라 데이터 선택
   const currentData =
-    type === "daily"
-      ? dailyDonateLog
-      : type === "weekly"
-      ? weeklyDonateLog
-      : totalDonateLog;
+    // type === "daily"
+    //   ? dailyDonateLog
+    //   :
+    type === "weekly" ? weeklyDonateLog : totalDonateLog;
 
   const currentTop3 =
-    type === "daily" ? dailyTop3 : type === "weekly" ? weeklyTop3 : totalTop3;
+    // type === "daily" ? dailyTop3 :
+    type === "weekly" ? weeklyTop3 : totalTop3;
+
+  const basicCardData =
+    type === "weekly" ? weeklyBasicCardData : totalBasicCardData;
+
+  // color 정보가 로딩되지 않았거나 0.5초 대기 시간이 지나지 않았을 때 로딩 상태 표시
+  if (!isAllColorReady || !showContent) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 py-8">
+        <svg
+          className="animate-spin h-8 w-8 text-yellow-400 mb-2"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8z"
+          ></path>
+        </svg>
+        <span className="text-gray-400">Loading Ranking information...</span>
+      </div>
+    );
+  }
 
   const myCard = address
     ? currentData.find(
@@ -80,7 +139,8 @@ export default function RankingList({
       ) || (address ? { from: address } : null)
     : null;
 
-  const router = useRouter();
+  // totalDonateLog랑 weeklyDonateLog 불러오는 데이터를 변경
+  // 1.
 
   const handleClick = (path: string) => {
     router.push(path);
@@ -92,9 +152,9 @@ export default function RankingList({
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="pb-[5px]">
-        <div className="relative w-full flex items-center justify-around">
+    <div className="flex flex-col items-center flex-grow">
+      <div className="flex-shrink-0">
+        <div className="relative w-full flex items-center justify-around ">
           {/* 2등 이미지 - 1명 이상일 때 표시 */}
           {currentTop3.length >= 1 && (
             <Image
@@ -122,7 +182,7 @@ export default function RankingList({
               width={19}
               height={32}
               alt="ranking-3rd"
-              className="absolute right-6 -top-10"
+              className="absolute right-8 -top-10"
             />
           )}
 
@@ -137,8 +197,8 @@ export default function RankingList({
                 key={index}
                 className={cn(
                   "absolute ",
-                  index === 1 && "left-0 top-0",
-                  index === 2 && "right-1 top-1"
+                  index === 1 && "-left-2 top-0",
+                  index === 2 && "-right-4 top-1"
                 )}
                 onClick={() =>
                   handleClick(
@@ -149,6 +209,17 @@ export default function RankingList({
                 <ButterItemComponent
                   fill={item?.farcasterUserData?.color as string}
                 />
+                <div
+                  className={cn(
+                    "absolute -top-11 flex flex-col text-start w-full text-black text-[8px]",
+                    index === 0 && "-right-16",
+                    index === 1 && "-left-14 text-end -top-9",
+                    index === 2 && "-right-[50px] -top-10"
+                  )}
+                >
+                  <p className="">@{item?.farcasterUserData?.username}</p>
+                  <p>{item?.value} USDC</p>
+                </div>
               </div>
             );
           })}
@@ -158,20 +229,28 @@ export default function RankingList({
           width={248}
           height={112}
           alt="ranking-bread"
+          priority={true}
         />
       </div>
-      <div className="w-full flex flex-col items-center gap-[9px] pt-[25px]">
-        {myCard && (
-          <RankingCardUI userData={myCard} cardType="my" key={myCard.from} />
+      <div
+        className={cn(
+          "w-full flex justify-center bg-primary -mt-[30px] -z-10 border-t-4 border-black flex-grow pb-[90px]"
         )}
-        {currentData.map((item, index) => (
-          <RankingCardUI
-            userData={item}
-            cardType={undefined}
-            index={index}
-            key={index}
-          />
-        ))}
+      >
+        <div className="w-full max-w-md px-4 flex flex-col  items-center gap-[10px] pt-[50px] overflow-y-auto">
+          {myCard && (
+            <RankingCardUI userData={myCard} cardType="my" key={myCard.from} />
+          )}
+          {basicCardData &&
+            basicCardData.map((item, index) => (
+              <RankingCardUI
+                userData={item || undefined}
+                cardType={undefined}
+                index={index + currentTop3.length}
+                key={item.from || index}
+              />
+            ))}
+        </div>
       </div>
     </div>
   );
