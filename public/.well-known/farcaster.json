@@ -9,7 +9,7 @@
     "name": "Butter's Dream",
     "iconUrl": "https://www.buttersdream.xyz/butter-coin.png",
     "homeUrl": "https://www.buttersdream.xyz/",
-    "splashImageUrl": "https://www.buttersdream.xyz/logo.png",
+    "splashImageUrl": "https://www.buttersdream.xyz/butter-coin.png",
     "splashBackgroundColor": "#ffdfec",
     "webhookUrl": "https://www.buttersdream.xyz/api/webhook",
     "subtitle": "Donate and make your butter",
