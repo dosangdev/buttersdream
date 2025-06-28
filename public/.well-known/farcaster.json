@@ -1,4 +1,9 @@
 {
+  "accountAssociation": {
+    "header": "eyJmaWQiOjg2NzAxMSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDBkRThmRDk3OTdkOTEzOTFDMWRhNkMwODg2ZGE1MDlmOTg4YTM1ODQifQ",
+    "payload": "eyJkb21haW4iOiJ3d3cuYnV0dGVyc2RyZWFtLnh5eiJ9",
+    "signature": "MHgzZTRiNDU4NmJjM2U3NmMwN2VjN2NmMTUyYmYyMTQ1M2E3ZTA1NjRjMTJiNWFkMjhlNmQ0MzgzMzM1ZmYzOTAwMzIxYWNjMjkzNjg2ZTgyMDAxOGU1MDYwNmJkODFlYjJjYmVhNmU0Yzk5MDc4MjFjNWNjZGFjYTRjZTRkN2FiZTFi"
+  },
   "frame": {
     "version": "1",
     "name": "Butter's Dream",

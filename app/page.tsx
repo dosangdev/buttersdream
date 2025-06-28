@@ -70,6 +70,7 @@ export default function Home() {
           })}
         />
       </Head>
+
       <main className="flex flex-col items-center pt-[25px] relative select-none">
         <div className="w-full max-w-md">
           {!isLoading && <ProgressBar />}

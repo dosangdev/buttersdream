@@ -294,8 +294,8 @@ export function WannaDonate({
       <div className="flex justify-center mt-5">
         <button
           className="w-[116px] h-[30px] text-md text-black rounded-2xl mx-auto bg-white border-2 border-black"
-          onClick={handleDonate}
-          // onClick={onNext}
+          // onClick={handleDonate}
+          onClick={onNext}
           disabled={isPending}
         >
           {isPending ? "Sending..." : "Donate!"}
@@ -630,7 +630,7 @@ export function ButterCreationMain({
 
   const handleShare = () => {
     const shareText = encodeURIComponent(
-      `I created my own butter! 🧈 #ButterDream\n\nI donated ${donateAmount} $USDC\n\nhttps://www.buttersdream.xyz/
+      `I created my own butter! 🧈 @buttersdream\n\nI donated ${donateAmount} $USDC\n\nhttps://www.buttersdream.xyz/
       `
     );
     window.open(`https://twitter.com/intent/tweet?text=${shareText}`, "_blank");
@@ -731,15 +731,34 @@ export function ButterCreationMain({
             className="-mt-[50px] z-0"
           />
         </div>
-        {/* <button
-          onClick={handleDownload}
-          className="mt-4 px-4 py-2 bg-[#1da1f2] text-white rounded-xl font-bold"
-        >
-          Save Image
-        </button> */}
-        {/* <button className="text-black ml-20 " onClick={handleShare}>
-          x
-        </button> */}
+        {step === 8 && (
+          <div className="flex justify-between mx-auto pt-[20px] ml-[103px]  w-[138px] items-center">
+            <button className="cursor-pointer" onClick={handleShare}>
+              <Image
+                src="/donate/x-icon.png"
+                width={40}
+                height={40}
+                alt="x icon"
+              />
+            </button>
+            <button className="cursor-pointer">
+              <Image
+                src="/donate/farcaster-icon.png"
+                width={40}
+                height={40}
+                alt="farcaster icon"
+              />
+            </button>
+            <button className=" cursor-pointer" onClick={handleDownload}>
+              <Image
+                src="/donate/download-icon.png"
+                width={40}
+                height={40}
+                alt="download icon"
+              />
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
