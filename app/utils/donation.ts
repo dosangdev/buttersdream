@@ -4,6 +4,7 @@ const MIN_DONATION_AMOUNT = BigInt(100000); // 0.1 USDC (6 decimals)
 const DONATION_WALLET = "0xc683f61bfe08bfccde53a41f4607b4a1b72954db";
 
 export function processDonationLogs(logs: any[]): DonationLog[] {
+  const deadline = new Date(Date.UTC(2025, 7, 1, 0, 0, 0)); // 2025-08-01T00:00:00Z
   return logs
     .map((log) => {
       const { from, tokenName, to, value, timeStamp, functionName } = log;
@@ -28,78 +29,22 @@ export function processDonationLogs(logs: any[]): DonationLog[] {
         return null;
       }
 
+      // 2025년 8월 1일(UTC) 미만인지 확인
+      const logDate = new Date(parseInt(timeStamp) * 1000);
+      if (logDate >= deadline) {
+        return null;
+      }
+
       return {
         from,
         tokenName,
         value: Number(BigInt(value)) / 1000000, // USDC 단위로 변환 (6 decimals)
-        timestamp: new Date(parseInt(timeStamp) * 1000)
-          .toISOString()
-          .split("T")[0],
+        timestamp: logDate.toISOString().split("T")[0],
         functionName,
       };
     })
     .filter((log): log is DonationLog => log !== null);
 }
-
-// export function aggregateDonations(logs: DonationLog[]): DonationStats {
-//   const donorMap = new Map<string, DonorInfo>();
-
-//   logs.forEach((log) => {
-//     if (log.value < MIN_DONATION_AMOUNT) return;
-
-//     const existingDonor = donorMap.get(log.from);
-//     if (existingDonor) {
-//       existingDonor.totalDonated += log.value;
-//       existingDonor.donations.push({
-//         amount: log.value,
-//         timestamp: log.timestamp,
-//         transactionHash: log.functionName,
-//       });
-//     } else {
-//       donorMap.set(log.from, {
-//         walletAddress: log.from,
-//         totalDonated: log.value,
-//         donations: [
-//           {
-//             amount: log.value,
-//             timestamp: log.timestamp,
-//             transactionHash: log.functionName,
-//           },
-//         ],
-//       });
-//     }
-//   });
-
-//   const donors = Array.from(donorMap.values());
-//   const totalDonated = donors.reduce(
-//     (sum, donor) => sum + donor.totalDonated,
-//     0n
-//   );
-
-//   return {
-//     totalDonated,
-//     donorCount: donors.length,
-//     donors,
-//   };
-// }
-
-// export function getDonorStats(
-//   walletAddress: string,
-//   logs: DonationLog[]
-// ): DonorInfo | null {
-//   const donorLogs = logs.filter((log) => log.from === walletAddress);
-//   if (donorLogs.length === 0) return null;
-
-//   return {
-//     walletAddress,
-//     totalDonated: donorLogs.reduce((sum, log) => sum + log.value, 0n),
-//     donations: donorLogs.map((log) => ({
-//       amount: log.value,
-//       timestamp: log.timestamp,
-//       transactionHash: log.functionName,
-//     })),
-//   };
-// }
 
 // 지갑별로 기부 내역을 합산하는 함수
 export function getDonateLogTotal(logs: DonationLog[]): DonationLog[] {

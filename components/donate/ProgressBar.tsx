@@ -20,8 +20,8 @@ function getTimeLeft(deadline: Date) {
 }
 
 export default function ProgressBar() {
-  // 2025년 10월 31일 마감일
-  const deadline = new Date(2025, 9, 31, 23, 59, 59); // 월은 0부터 시작하므로 9=10월
+  // 2025년 8월 1일 00:00:00 UTC 마감일
+  const deadline = new Date(Date.UTC(2025, 7, 1, 0, 0, 0)); // 7=8월 (UTC 기준)
   const [timeLeft, setTimeLeft] = useState(getTimeLeft(deadline));
 
   useEffect(() => {

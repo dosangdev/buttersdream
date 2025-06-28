@@ -12,6 +12,32 @@ export const metadata: Metadata = {
   icons: {
     icon: { url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" },
   },
+  openGraph: {
+    title: "Butter's Dream",
+    description:
+      "Create adorable butter characters through donations and compete in rankings with other donors. Join the movement to 'Let Butter Fly'!",
+    url: "https://www.buttersdream.xyz",
+    siteName: "Butter's Dream",
+    images: [
+      {
+        url: "/share-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Butter's Dream - Donation-based NFT Project",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Butter's Dream",
+    description:
+      "Create adorable butter characters through donations and compete in rankings with other donors. Join the movement to 'Let Butter Fly'!",
+    images: ["/share-image.png"],
+    creator: "@buttersdream",
+    site: "@buttersdream",
+  },
 };
 
 const inter = Inter({

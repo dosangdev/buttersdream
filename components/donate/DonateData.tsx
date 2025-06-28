@@ -22,6 +22,7 @@ import Neutral from "@/app/constants/butterItems/Neutral";
 import Shocked from "@/app/constants/butterItems/Shocked";
 import Smiley from "@/app/constants/butterItems/Smiley";
 import Surprised from "@/app/constants/butterItems/Surprised";
+import html2canvas from "html2canvas";
 
 const BASE_USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
 const RECEIVER_ADDRESS = "0xc683F61BFE08bfcCde53A41f4607B4A1B72954Db";
@@ -45,6 +46,8 @@ export default function DonateFlow() {
   const router = useRouter();
   const { address } = useAccount();
   const [color, setColor] = useState<string | null>(null);
+  const [showSpeechBubble, setShowSpeechBubble] = useState(false);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   const { data: userData } = useSWR(
     `/api/lookup-user?walletAddress=${address}`
@@ -92,11 +95,17 @@ export default function DonateFlow() {
           router={router}
           color={color}
           address={address || ""}
+          showSpeechBubble={showSpeechBubble}
+          setShowSpeechBubble={setShowSpeechBubble}
+          donateAmount={donateAmount}
         />
       )}
       {showSkip && (
         <button
-          onClick={() => setStep(8)}
+          onClick={() => {
+            setStep(8);
+            setShowSpeechBubble(true);
+          }}
           className="fixed bottom-20 left-4 bg-white rounded-3xl z-50"
         >
           <div
@@ -286,6 +295,7 @@ export function WannaDonate({
         <button
           className="w-[116px] h-[30px] text-md text-black rounded-2xl mx-auto bg-white border-2 border-black"
           onClick={handleDonate}
+          // onClick={onNext}
           disabled={isPending}
         >
           {isPending ? "Sending..." : "Donate!"}
@@ -485,18 +495,24 @@ export function ButterCreationMain({
   router,
   color,
   address,
+  showSpeechBubble,
+  setShowSpeechBubble,
+  donateAmount,
 }: {
   step: number;
   onNext: () => void;
   router: AppRouterInstance;
   color: string | null;
   address: string;
+  showSpeechBubble: boolean;
+  setShowSpeechBubble: React.Dispatch<React.SetStateAction<boolean>>;
+  donateAmount: string;
 }) {
   const [currentButterIndex, setCurrentButterIndex] = useState(-1);
   const [showMainUI, setShowMainUI] = useState(false);
   const [dots, setDots] = useState("");
-  const [showSpeechBubble, setShowSpeechBubble] = useState(false);
   const [showSurprisedButter, setShowSurprisedButter] = useState(false);
+  const [isCapturing, setIsCapturing] = useState(false);
 
   const butterComponents = [
     { component: Angry, type: "Angry" },
@@ -594,13 +610,41 @@ export function ButterCreationMain({
     );
   }
 
+  const handleDownload = async () => {
+    setIsCapturing(true);
+    // 렌더링이 반영될 때까지 기다림
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    const element = document.getElementById("butter-share-area");
+    if (!element) return;
+    const canvas = await html2canvas(element, { useCORS: true });
+    const dataUrl = canvas.toDataURL("image/png");
+
+    // 다운로드 트리거
+    const link = document.createElement("a");
+    link.href = dataUrl;
+    link.download = "my-butter.png";
+    link.click();
+
+    setIsCapturing(false);
+  };
+
+  const handleShare = () => {
+    const shareText = encodeURIComponent(
+      `I created my own butter! 🧈 #ButterDream\n\nI donated ${donateAmount} $USDC\n\nhttps://www.buttersdream.xyz/
+      `
+    );
+    window.open(`https://twitter.com/intent/tweet?text=${shareText}`, "_blank");
+  };
+
   return (
     <>
       <div className="relative w-[358px] h-[105px] mb-[11px] mx-auto">
-        <div
-          className="fixed min-w-full min-h-full z-50"
-          onClick={showSpeechBubble ? onNext : undefined}
-        />
+        {step !== 8 && (
+          <div
+            className="fixed min-w-full min-h-full z-50"
+            onClick={showSpeechBubble ? onNext : undefined}
+          />
+        )}
         <div className="h-[105px]">
           {showSpeechBubble ? (
             <>
@@ -621,7 +665,13 @@ export function ButterCreationMain({
             </>
           ) : null}
         </div>
-        <div className="pt-[11px] flex flex-col items-center relative">
+        <div
+          id="butter-share-area"
+          style={{
+            background: isCapturing ? "#ffe4ef" : "transparent",
+          }}
+          className="pt-[11px] flex flex-col items-center relative"
+        >
           <div className="-mr-[-10px]">
             <div
               className={showMainUI ? "animate-butterDrop" : ""}
@@ -648,7 +698,7 @@ export function ButterCreationMain({
               <ButterItemComponent fill={color || ""} />
             </div>
           </div>
-          <Image
+          <img
             src={
               showSurprisedButter
                 ? "/donate/donate-surprised-butter.png"
@@ -657,7 +707,7 @@ export function ButterCreationMain({
             alt="wallet image"
             width={121}
             height={81}
-            className="z-10 -mt-[4px] animate-fadeIn"
+            className="z-10 -mt-[4px] "
             style={{
               marginTop: "-4px",
               zIndex: 5,
@@ -673,7 +723,7 @@ export function ButterCreationMain({
               className="absolute right-[75px] -translate-x-1/2 top-1/4 -translate-y-1/2 z-50"
             />
           )}
-          <Image
+          <img
             src="/donate/bread.png"
             alt="bread image"
             width={220}
@@ -681,6 +731,15 @@ export function ButterCreationMain({
             className="-mt-[50px] z-0"
           />
         </div>
+        {/* <button
+          onClick={handleDownload}
+          className="mt-4 px-4 py-2 bg-[#1da1f2] text-white rounded-xl font-bold"
+        >
+          Save Image
+        </button> */}
+        {/* <button className="text-black ml-20 " onClick={handleShare}>
+          x
+        </button> */}
       </div>
     </>
   );

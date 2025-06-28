@@ -17,6 +17,7 @@
     "clsx": "^2.1.1",
     "color-thief-browser": "^2.0.2",
     "framer-motion": "^12.12.1",
+    "html2canvas": "^1.4.1",
     "ky": "^1.8.1",
     "next": "15.3.0",
     "pino-pretty": "^13.0.0",

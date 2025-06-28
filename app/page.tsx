@@ -56,15 +56,15 @@ export default function Home() {
           name="fc:frame"
           content={JSON.stringify({
             version: "next",
-            imageUrl: "/butter-coin.png", // 카드에 보일 이미지
+            imageUrl: "/butter-coin.png",
             button: {
-              title: "Open App", // 카드에 보일 버튼 텍스트
+              title: "Open App",
               action: {
                 type: "launch_frame",
-                url: "https://www.buttersdream.xyz/", // 클릭 시 이동할 URL
+                url: "https://www.buttersdream.xyz/",
                 name: "butter's dream",
                 splashImageUrl: "/butter-coin.png",
-                splashBackgroundColor: "#f5f0ec",
+                splashBackgroundColor: "#ffdfec",
               },
             },
           })}
@@ -196,7 +196,6 @@ export default function Home() {
               priority={true}
               className="min-w-[210px] mt-[-60px] z-10"
             />
-            {/* <div className=""> */}
             <Image
               src="/home/plate.png"
               width={294}
