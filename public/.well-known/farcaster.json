@@ -16,10 +16,10 @@
     "description": "Create adorable butter characters through donations and compete in rankings with other donors.",
     "primaryCategory": "social",
     "tags": ["donation", "charity", "social", "butter", "ranking"],
-    "heroImageUrl": "/share-image.png",
+    "heroImageUrl": "https://www.buttersdream.xyz/share-image.png",
     "tagline": "Creating Butter's Dream Together",
     "ogTitle": "Butter Dream",
     "ogDescription": "Create adorable butter characters through donations and compete with other donors",
-    "ogImageUrl": "/share-image.png"
+    "ogImageUrl": "https://www.buttersdream.xyz/share-image.png"
   }
 }
