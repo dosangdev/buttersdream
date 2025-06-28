@@ -51,26 +51,6 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <meta
-          name="fc:frame"
-          content={JSON.stringify({
-            version: "next",
-            imageUrl: "/butter-coin.png",
-            button: {
-              title: "Open App",
-              action: {
-                type: "launch_frame",
-                url: "https://www.buttersdream.xyz/",
-                name: "butter's dream",
-                splashImageUrl: "/butter-coin.png",
-                splashBackgroundColor: "#ffdfec",
-              },
-            },
-          })}
-        />
-      </Head>
-
       <main className="flex flex-col items-center pt-[25px] relative select-none">
         <div className="w-full max-w-md">
           {!isLoading && <ProgressBar />}
