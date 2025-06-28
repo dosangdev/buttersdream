@@ -6,6 +6,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.buttersdream.xyz"),
   title: "Butter's Dream",
   description:
     "Butter's Dream is a donation-based NFT project with a mission to 'Let Butter Fly'. Buy and donate Butter Tokens to stack butter on toast and showcase collective generosity. Receive unique Butter Tower NFTs as thank-you gifts.",
