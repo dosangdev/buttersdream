@@ -300,8 +300,8 @@ export function WannaDonate({
       <div className="flex justify-center mt-5">
         <button
           className="w-[116px] h-[30px] text-md text-black rounded-2xl mx-auto bg-white border-2 border-black"
-          // onClick={handleDonate}
-          onClick={onNext}
+          onClick={handleDonate}
+          // onClick={onNext}
           disabled={isPending}
         >
           {isPending ? "Sending..." : "Donate!"}
