@@ -7,8 +7,8 @@
   "frame": {
     "version": "1",
     "name": "Butter's Dream",
-    "iconUrl": "https://buttersdream.xyz/butter-coin.png",
-    "homeUrl": "https://buttersdream.xyz/",
+    "iconUrl": "https://buttersdream.xyz/iconUrl.png",
+    "homeUrl": "https://buttersdream.xyz",
     "splashImageUrl": "https://buttersdream.xyz/butter-coin.png",
     "splashBackgroundColor": "#ffdfec",
     "webhookUrl": "https://buttersdream.xyz/api/webhook",
