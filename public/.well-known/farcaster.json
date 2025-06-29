@@ -11,7 +11,6 @@
     "homeUrl": "https://buttersdream.xyz",
     "splashImageUrl": "https://buttersdream.xyz/butter-coin.png",
     "splashBackgroundColor": "#ffdfec",
-    "webhookUrl": "https://buttersdream.xyz/api/webhook",
     "subtitle": "Donate and make your butter",
     "description": "Create adorable butter characters through donations and compete in rankings with other donors.",
     "primaryCategory": "social",
