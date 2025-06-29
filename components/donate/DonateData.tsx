@@ -638,12 +638,14 @@ export function ButterCreationMain({
     setIsCapturing(false);
   };
 
+  const shareText = encodeURIComponent(
+    `I created my own butter! 🧈 @buttersdream\n\nI donated ${donateAmount} $USDC\n\nhttps://buttersdream.xyz/`
+  );
   const handleShare = () => {
-    const shareText = encodeURIComponent(
-      `I created my own butter! 🧈 @buttersdream\n\nI donated ${donateAmount} $USDC\n\nhttps://www.buttersdream.xyz/
-      `
-    );
     window.open(`https://twitter.com/intent/tweet?text=${shareText}`, "_blank");
+  };
+  const handleFarcasterShare = () => {
+    window.open(`https://warpcast.com/~/compose?text=${shareText}`, "_blank");
   };
 
   return (
@@ -744,7 +746,7 @@ export function ButterCreationMain({
           />
         </div>
         {step === 8 && (
-          <div className="flex justify-between mx-auto pt-[20px] ml-[103px]  w-[138px] items-center">
+          <div className="flex justify-between mx-auto pt-[20px]  w-[138px] items-center">
             <button className="cursor-pointer" onClick={handleShare}>
               <Image
                 src="/donate/x-icon.png"
@@ -753,7 +755,7 @@ export function ButterCreationMain({
                 alt="x icon"
               />
             </button>
-            <button className="cursor-pointer">
+            <button className="cursor-pointer" onClick={handleFarcasterShare}>
               <Image
                 src="/donate/farcaster-icon.png"
                 width={40}
@@ -761,7 +763,7 @@ export function ButterCreationMain({
                 alt="farcaster icon"
               />
             </button>
-            <button className=" cursor-pointer" onClick={handleDownload}>
+            <button className="cursor-pointer" onClick={handleDownload}>
               <Image
                 src="/donate/download-icon.png"
                 width={40}
