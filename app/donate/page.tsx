@@ -13,10 +13,7 @@ export default function DonatePage() {
   };
 
   return (
-    <main
-      className="flex flex-col items-center pt-[109px] relative select-none w-full h-full"
-      onClick={handleNext}
-    >
+    <main className="flex flex-col items-center pt-[109px] relative select-none">
       <DonatePageComponent />
     </main>
   );

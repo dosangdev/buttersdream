@@ -135,50 +135,54 @@ export function DonateConnectWallet({
   address: string;
 }) {
   return (
-    <div className="relative w-[358px] h-[105px] mb-[11px] mx-auto">
+    <>
       <div
         className="fixed min-w-full min-h-full z-50"
         onClick={address ? onNext : undefined}
       />
-      <Image
-        src="/tutorial/eee.png"
-        width={358}
-        height={105}
-        alt="speech bubble Image"
-        className="object-contain"
-        priority
-      />
-      <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
-        <AnimatedSpeechBubbleText
-          text={
-            address
-              ? `Your wallet is connected:\n${formatAddress(address)}`
-              : `Connect\n your wallet`
-          }
-          className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center"
-        />
+      <div className="relative  mb-[11px]">
+        <div className="relative  mb-[11px]">
+          <Image
+            src="/tutorial/eee.png"
+            width={358}
+            height={105}
+            alt="speech bubble Image"
+            className="object-contain"
+            priority
+          />
+          <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
+            <AnimatedSpeechBubbleText
+              text={
+                address
+                  ? `Your wallet is connected:\n${formatAddress(address)}`
+                  : `Connect\n your wallet`
+              }
+              className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center"
+            />
+          </div>
+        </div>
+        <div className="pt-[11px] flex flex-col items-center ">
+          <Image
+            src={
+              address
+                ? "/butter-melting.png"
+                : "/tutorial/tutorial-butter-basic.png"
+            }
+            alt="wallet image"
+            width={address ? 121 : 100}
+            height={address ? 80 : 75}
+            className="z-10"
+          />
+          <Image
+            src="/donate/bread.png"
+            alt="bread image"
+            width={220}
+            height={106}
+            className="-mt-[50px] z-0"
+          />
+        </div>
       </div>
-      <div className="pt-[11px] flex flex-col items-center ">
-        <Image
-          src={
-            address
-              ? "/butter-melting.png"
-              : "/tutorial/tutorial-butter-basic.png"
-          }
-          alt="wallet image"
-          width={address ? 121 : 100}
-          height={address ? 80 : 75}
-          className="z-10"
-        />
-        <Image
-          src="/donate/bread.png"
-          alt="bread image"
-          width={220}
-          height={106}
-          className="-mt-[50px] z-0"
-        />
-      </div>
-    </div>
+    </>
   );
 }
 
@@ -230,20 +234,22 @@ export function WannaDonate({
   }
 
   return (
-    <div className="relative w-[358px] h-[105px] mb-[11px] mx-auto">
-      <Image
-        src="/tutorial/eee.png"
-        width={358}
-        height={105}
-        alt="speech bubble Image"
-        className="object-contain"
-        priority
-      />
-      <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
-        <AnimatedSpeechBubbleText
-          text={`How much $Butter\n do you wanna donate?`}
-          className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center"
+    <div className="relative   mb-[11px]">
+      <div className="relative   ">
+        <Image
+          src="/tutorial/eee.png"
+          width={358}
+          height={105}
+          alt="speech bubble Image"
+          className="object-contain"
+          priority
         />
+        <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
+          <AnimatedSpeechBubbleText
+            text={`How much $Butter\n do you wanna donate?`}
+            className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center"
+          />
+        </div>
       </div>
       <div className="pt-[11px] flex flex-col items-center ">
         <Image
@@ -294,8 +300,8 @@ export function WannaDonate({
       <div className="flex justify-center mt-5">
         <button
           className="w-[116px] h-[30px] text-md text-black rounded-2xl mx-auto bg-white border-2 border-black"
-          onClick={handleDonate}
-          // onClick={onNext}
+          // onClick={handleDonate}
+          onClick={onNext}
           disabled={isPending}
         >
           {isPending ? "Sending..." : "Donate!"}
@@ -351,7 +357,7 @@ export function DonateSuccess({
   }, []);
 
   return (
-    <div className="relative w-[358px] mb-[11px] mx-auto">
+    <div className="relative  mb-[11px] ">
       <div
         className="fixed min-w-full min-h-full z-50"
         onClick={showSpeechBubble ? onNext : undefined}
@@ -359,19 +365,21 @@ export function DonateSuccess({
       <div className="h-[105px] relative">
         {showSpeechBubble && (
           <>
-            <Image
-              src="/tutorial/eee.png"
-              width={358}
-              height={105}
-              alt="speech bubble Image"
-              className="object-contain animate-fadeIn"
-              priority
-            />
-            <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
-              <AnimatedSpeechBubbleText
-                text={`You've successfully donated\n ${donateAmount} $USDC`}
-                className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center animate-fadeIn"
+            <div className="relative  ">
+              <Image
+                src="/tutorial/eee.png"
+                width={358}
+                height={105}
+                alt="speech bubble Image"
+                className="object-contain animate-fadeIn"
+                priority
               />
+              <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
+                <AnimatedSpeechBubbleText
+                  text={`You've successfully donated\n ${donateAmount} $USDC`}
+                  className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center animate-fadeIn"
+                />
+              </div>
             </div>
           </>
         )}
@@ -436,21 +444,23 @@ export function DonateSuccess({
 
 export function ButterCreationIntro({ onNext }: { onNext: () => void }) {
   return (
-    <div className="relative w-[358px] h-[105px] mb-[11px] mx-auto">
+    <div className="relative  mb-[11px]">
       <div className="fixed min-w-full min-h-full z-50" onClick={onNext} />
-      <Image
-        src="/tutorial/eee.png"
-        width={358}
-        height={105}
-        alt="speech bubble Image"
-        className="object-contain"
-        priority
-      />
-      <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
-        <AnimatedSpeechBubbleText
-          text={`I think\n something is happening.!`}
-          className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center"
+      <div className="relative  mb-[11px]">
+        <Image
+          src="/tutorial/eee.png"
+          width={358}
+          height={105}
+          alt="speech bubble Image"
+          className="object-contain"
+          priority
         />
+        <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
+          <AnimatedSpeechBubbleText
+            text={`I think\n something is happening.!`}
+            className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center"
+          />
+        </div>
       </div>
       <div className="pt-[11px] flex flex-col items-center ">
         <Image
@@ -638,7 +648,7 @@ export function ButterCreationMain({
 
   return (
     <>
-      <div className="relative w-[358px] h-[105px] mb-[11px] mx-auto">
+      <div className="relative  mb-[11px]">
         {step !== 8 && (
           <div
             className="fixed min-w-full min-h-full z-50"
@@ -648,19 +658,21 @@ export function ButterCreationMain({
         <div className="h-[105px]">
           {showSpeechBubble ? (
             <>
-              <Image
-                src="/tutorial/eee.png"
-                width={358}
-                height={105}
-                alt="speech bubble Image"
-                className="object-contain animate-speechBubbleAppear"
-                priority
-              />
-              <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
-                <AnimatedSpeechBubbleText
-                  text={getSpeechText(step)}
-                  className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center animate-speechBubbleAppear"
+              <div className="relative  ">
+                <Image
+                  src="/tutorial/eee.png"
+                  width={358}
+                  height={105}
+                  alt="speech bubble Image"
+                  className="object-contain animate-speechBubbleAppear"
+                  priority
                 />
+                <div className="absolute inset-0 -top-[10px] flex items-center justify-center">
+                  <AnimatedSpeechBubbleText
+                    text={getSpeechText(step)}
+                    className="text-black text-xl leading-7 whitespace-pre-line z-50 text-center animate-speechBubbleAppear"
+                  />
+                </div>
               </div>
             </>
           ) : null}
@@ -720,7 +732,7 @@ export function ButterCreationMain({
               width={36}
               height={43}
               alt="exclamation mark"
-              className="absolute right-[75px] -translate-x-1/2 top-1/4 -translate-y-1/2 z-50"
+              className="absolute right-1 -translate-x-1/2 top-1/4 -translate-y-1/2 z-50"
             />
           )}
           <img
