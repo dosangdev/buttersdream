@@ -6,7 +6,7 @@ import "@rainbow-me/rainbowkit/styles.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.buttersdream.xyz"),
+  metadataBase: new URL("https://buttersdream.xyz"),
   title: "Butter's Dream",
   description:
     "Butter's Dream is a donation-based NFT project with a mission to 'Let Butter Fly'. Buy and donate Butter Tokens to stack butter on toast and showcase collective generosity. Receive unique Butter Tower NFTs as thank-you gifts.",
@@ -17,11 +17,11 @@ export const metadata: Metadata = {
     title: "Butter's Dream",
     description:
       "Create adorable butter characters through donations and compete in rankings with other donors. Join the movement to 'Let Butter Fly'!",
-    url: "https://www.buttersdream.xyz",
+    url: "https://buttersdream.xyz",
     siteName: "Butter's Dream",
     images: [
       {
-        url: "https://www.buttersdream.xyz/share-image.png",
+        url: "https://buttersdream.xyz/share-image.png",
         width: 1200,
         height: 630,
         alt: "Butter's Dream - Donation-based NFT Project",
@@ -35,21 +35,21 @@ export const metadata: Metadata = {
     title: "Butter's Dream",
     description:
       "Create adorable butter characters through donations and compete in rankings with other donors. Join the movement to 'Let Butter Fly'!",
-    images: ["https://www.buttersdream.xyz/share-image.png"],
+    images: ["https://buttersdream.xyz/share-image.png"],
     creator: "@buttersdream",
     site: "@buttersdream",
   },
   other: {
     "fc:frame": JSON.stringify({
       version: "next",
-      imageUrl: "https://www.buttersdream.xyz/share-image.png",
+      imageUrl: "https://buttersdream.xyz/share-image.png",
       button: {
         title: "Open App",
         action: {
           type: "launch_frame",
-          url: "https://www.buttersdream.xyz/",
+          url: "https://buttersdream.xyz/",
           name: "Butter's Dream",
-          splashImageUrl: "https://www.buttersdream.xyz/logo.png",
+          splashImageUrl: "https://buttersdream.xyz/logo.png",
           splashBackgroundColor: "#ffdfec",
         },
       },
