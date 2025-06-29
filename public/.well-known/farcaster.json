@@ -7,19 +7,19 @@
   "frame": {
     "version": "1",
     "name": "Butter's Dream",
-    "iconUrl": "https://www.buttersdream.xyz/butter-coin.png",
-    "homeUrl": "https://www.buttersdream.xyz/",
-    "splashImageUrl": "https://www.buttersdream.xyz/butter-coin.png",
+    "iconUrl": "https://buttersdream.xyz/butter-coin.png",
+    "homeUrl": "https://buttersdream.xyz/",
+    "splashImageUrl": "https://buttersdream.xyz/butter-coin.png",
     "splashBackgroundColor": "#ffdfec",
-    "webhookUrl": "https://www.buttersdream.xyz/api/webhook",
+    "webhookUrl": "https://buttersdream.xyz/api/webhook",
     "subtitle": "Donate and make your butter",
     "description": "Create adorable butter characters through donations and compete in rankings with other donors.",
     "primaryCategory": "social",
     "tags": ["donation", "charity", "social", "butter", "ranking"],
-    "heroImageUrl": "https://www.buttersdream.xyz/share-image.png",
+    "heroImageUrl": "https://buttersdream.xyz/share-image.png",
     "tagline": "Make Butter's Dream Real",
     "ogTitle": "Butter's Dream",
     "ogDescription": "Create adorable butter characters through donations and compete with other donors",
-    "ogImageUrl": "https://www.buttersdream.xyz/share-image.png"
+    "ogImageUrl": "https://buttersdream.xyz/share-image.png"
   }
 }
