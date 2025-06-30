@@ -40,7 +40,7 @@ export async function generateMetadata({
   };
 }
 
-export default function SharePage({ params }: { params: { id: string } }) {
+export default function SharePage({ params }: any) {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-2xl font-bold mb-4">Butter's Dream - Share</h1>
