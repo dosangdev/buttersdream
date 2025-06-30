@@ -5,11 +5,7 @@ import firebaseApp from "@/app/utils/firebase";
 // Firestore 인스턴스 생성
 const db = getFirestore(firebaseApp);
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { id: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: any): Promise<Metadata> {
   const docRef = doc(db, "butter-share", params.id);
   const docSnap = await getDoc(docRef);
   let imageUrl = "https://buttersdream.xyz/share-image.png"; // 기본 이미지
