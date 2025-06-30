@@ -47,6 +47,7 @@ export default function Home() {
   useEffect(() => {
     sdk.actions.ready();
     sdk.actions.ready({ disableNativeGestures: true });
+    sdk.actions.addMiniApp();
   }, []);
 
   return (
