@@ -23,6 +23,10 @@ import Shocked from "@/app/constants/butterItems/Shocked";
 import Smiley from "@/app/constants/butterItems/Smiley";
 import Surprised from "@/app/constants/butterItems/Surprised";
 import html2canvas from "html2canvas";
+import {
+  uploadImageToFirebase,
+  saveImageUrlToFirestore,
+} from "@/app/utils/firebase";
 
 const BASE_USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913";
 const RECEIVER_ADDRESS = "0xc683F61BFE08bfcCde53A41f4607B4A1B72954Db";
@@ -300,8 +304,8 @@ export function WannaDonate({
       <div className="flex justify-center mt-5">
         <button
           className="w-[116px] h-[30px] text-md text-black rounded-2xl mx-auto bg-white border-2 border-black"
-          onClick={handleDonate}
-          // onClick={onNext}
+          // onClick={handleDonate}
+          onClick={onNext}
           disabled={isPending}
         >
           {isPending ? "Sending..." : "Donate!"}
@@ -644,7 +648,31 @@ export function ButterCreationMain({
   const handleShare = () => {
     window.open(`https://twitter.com/intent/tweet?text=${shareText}`, "_blank");
   };
-  const handleFarcasterShare = () => {
+  // const handleFarcasterShare = () => {
+  //   window.open(`https://warpcast.com/~/compose?text=${shareText}`, "_blank");
+  // };
+  const handleFarcasterShare = async () => {
+    // 1. 이미지 캡처
+    setIsCapturing(true);
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    const element = document.getElementById("butter-share-area");
+    if (!element) return;
+    const canvas = await html2canvas(element, { useCORS: true });
+    const dataUrl = canvas.toDataURL("image/png");
+    setIsCapturing(false);
+
+    // 2. Firebase Storage에 업로드
+    const fileName = `butter-${Date.now()}`;
+    const imageUrl = await uploadImageToFirebase(dataUrl, fileName);
+
+    // 3. Firestore에 저장
+    await saveImageUrlToFirestore(fileName, imageUrl);
+
+    // /share/[id] URL로 Farcaster 공유
+    const shareUrl = `https://buttersdream.xyz/share/${fileName}`;
+    const shareText = encodeURIComponent(
+      `I created my own butter! 🧈 @buttersdream\n\nI donated ${donateAmount} $USDC\n\n${shareUrl}`
+    );
     window.open(`https://warpcast.com/~/compose?text=${shareText}`, "_blank");
   };
 
