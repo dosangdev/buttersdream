@@ -79,7 +79,7 @@ export default function FAQpage() {
     <main className="flex flex-col items-center pt-4">
       <div className="w-full max-w-md mb-4 rounded-2xl overflow-hidden ">
         <video
-          src="/faq/faq-video.mp4"
+          src="/FAQ/faq-video.mp4"
           controls
           style={{
             width: "100%",
