@@ -77,6 +77,20 @@ export default function FAQpage() {
 
   return (
     <main className="flex flex-col items-center pt-4">
+      <div className="w-full max-w-md mb-4 rounded-2xl overflow-hidden ">
+        <video
+          src="/faq/faq-video.mp4"
+          controls
+          style={{
+            width: "100%",
+            height: "240px",
+            objectFit: "cover",
+            background: "black",
+            display: "block",
+          }}
+          className="rounded-2xl"
+        />
+      </div>
       {/* FAQ 아코디언 */}
       <section className="flex flex-col gap-3 w-full max-w-md text-xs">
         {faqs.map((faq, idx) => (
