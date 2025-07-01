@@ -107,7 +107,10 @@ export default function RankingList({
   // color 정보가 로딩되지 않았거나 0.5초 대기 시간이 지나지 않았을 때 로딩 상태 표시
   if (!isAllColorReady || !showContent) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 py-8">
+      <div
+        className="flex flex-col items-center justify-center gap-4 py-8"
+        onClick={() => console.log("clicked")}
+      >
         <svg
           className="animate-spin h-8 w-8 text-yellow-400 mb-2"
           xmlns="http://www.w3.org/2000/svg"
@@ -196,7 +199,7 @@ export default function RankingList({
               <div
                 key={index}
                 className={cn(
-                  "absolute ",
+                  "absolute z-50",
                   index === 1 && "-left-2 top-0",
                   index === 2 && "-right-4 top-1"
                 )}
@@ -230,14 +233,15 @@ export default function RankingList({
           height={112}
           alt="ranking-bread"
           priority={true}
+          className="relative z-10"
         />
       </div>
       <div
         className={cn(
-          "w-full flex justify-center bg-primary -mt-[30px] -z-10 border-t-4 border-black flex-grow pb-[90px]"
+          "w-full flex justify-center bg-primary -mt-[30px]  border-t-4 border-black flex-grow pb-[90px]"
         )}
       >
-        <div className="w-full max-w-md px-4 flex flex-col  items-center gap-[10px] pt-[50px] overflow-y-auto">
+        <div className="w-full max-w-md px-4 flex flex-col  items-center gap-[10px] pt-[50px] hide-scrollbar">
           {myCard && (
             <RankingCardUI userData={myCard} cardType="my" key={myCard.from} />
           )}

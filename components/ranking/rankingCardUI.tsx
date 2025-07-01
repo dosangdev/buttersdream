@@ -37,19 +37,22 @@ export default function RankingCardUI({
       {/* 기본카드 */}
       <div
         className={cn(
-          " flex items-center w-full  rounded-2xl border-2 border-[#D6D6D6] shadow-[0_2px_2px_0_rgba(0,0,0,0.25)]", // 공통 클래스
+          " flex items-center w-full  rounded-2xl border-2 border-[#D6D6D6] shadow-[0_2px_2px_0_rgba(0,0,0,0.25)] z-50", // 공통 클래스
           userData?.type === "first" && "border-4 border-[#D7AE00] rounded-2xl",
           userData?.type === "second" &&
             "border-4 border-[#6c6c6c] rounded-2xl",
           userData?.type === "third" && "border-4 border-[#985323] rounded-2xl",
           cardType === "my" &&
-            " border-4 border-[#d6d6d6] rounded-2xl shadow-[0_2px_2px_0_rgba(0,0,0,0.25)] mb-[5px]"
+            " border-4 border-[#d6d6d6]  rounded-2xl mb-[5px]"
         )}
-        onClick={() =>
-          handleClick(
-            `https://farcaster.xyz/${userData?.farcasterUserData?.username}`
-          )
-        }
+        {...(userData?.farcasterUserData?.username
+          ? {
+              onClick: () =>
+                handleClick(
+                  `https://farcaster.xyz/${userData.farcasterUserData.username}`
+                ),
+            }
+          : {})}
       >
         <div
           className={cn(
@@ -59,10 +62,11 @@ export default function RankingCardUI({
             userData?.type === "first" && "bg-[#FFF1B4]",
             userData?.type === "second" && "bg-[#DCDCDC]",
             userData?.type === "third" && "bg-[#FFCCA9]",
-            cardType === "my" && "bg-white"
+            cardType === "my" &&
+              "bg-white shadow-[0_2px_2px_0_rgba(0,0,0,0.25)]"
           )}
         >
-          <div className="flex-shrink-0 basis-[40px] text-lg text-start">
+          <div className="flex-shrink-0 basis-[40px] text-lg text-start ">
             {cardType === "my" && !userData?.farcasterUserData ? (
               <div className="pl-2 ">?</div>
             ) : userData?.type !== "default" ? (
