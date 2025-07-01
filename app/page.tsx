@@ -122,6 +122,8 @@ export default function Home() {
                           ? "-5px"
                           : isAngry
                           ? "-6px"
+                          : isNeutral
+                          ? "-5px"
                           : undefined, // Happy일 때만 24px
                       }}
                     >
