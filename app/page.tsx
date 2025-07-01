@@ -97,6 +97,9 @@ export default function Home() {
                   const isHappy = butterTypeName === "Happy";
                   const isSmiley = butterTypeName === "Smiley";
                   const isNeutral = butterTypeName === "Neutral";
+                  const isShocked = butterTypeName === "Shocked";
+                  const isSurprised = butterTypeName === "Surprised";
+                  const isConfused = butterTypeName === "Confused";
 
                   const isArrow =
                     item.from.toLowerCase() === address?.toLowerCase();
@@ -117,6 +120,14 @@ export default function Home() {
                           ? "-5px"
                           : isSmiley
                           ? "-5px"
+                          : isShocked
+                          ? "-5px"
+                          : isSurprised
+                          ? "-5px"
+                          : isConfused
+                          ? "-5px"
+                          : isAngry
+                          ? "-6px"
                           : undefined, // Happy일 때만 24px
                       }}
                     >
