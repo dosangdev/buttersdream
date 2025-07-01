@@ -107,10 +107,7 @@ export default function RankingList({
   // color 정보가 로딩되지 않았거나 0.5초 대기 시간이 지나지 않았을 때 로딩 상태 표시
   if (!isAllColorReady || !showContent) {
     return (
-      <div
-        className="flex flex-col items-center justify-center gap-4 py-8"
-        onClick={() => console.log("clicked")}
-      >
+      <div className="flex flex-col items-center justify-center gap-4 py-8">
         <svg
           className="animate-spin h-8 w-8 text-yellow-400 mb-2"
           xmlns="http://www.w3.org/2000/svg"

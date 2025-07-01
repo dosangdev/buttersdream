@@ -105,21 +105,42 @@ export function useTotaldonateLog() {
             item.hasFarcasterData &&
             typeof item.farcasterUserData.color !== "string"
           ) {
-            const color = await item.farcasterUserData.color;
-            return {
-              ...item,
-              farcasterUserData: {
-                ...item.farcasterUserData,
-                color: rgbToHex(...(color as [number, number, number])),
-              },
-            };
+            try {
+              const color = await item.farcasterUserData.color;
+
+              return {
+                ...item,
+                farcasterUserData: {
+                  ...item.farcasterUserData,
+                  color: rgbToHex(...(color as [number, number, number])),
+                },
+              };
+            } catch (error) {
+              console.error(
+                "Color processing error for",
+                item.farcasterUserData.display_name,
+                ":",
+                error
+              );
+              return {
+                ...item,
+                farcasterUserData: {
+                  ...item.farcasterUserData,
+                  color: walletToHex(item.from),
+                },
+              };
+            }
           }
           return item;
         })
       );
+
       setProcessedData(processed);
     };
-    processColors();
+
+    if (combinedData.length > 0) {
+      processColors();
+    }
   }, [combinedData]);
 
   return processedData;

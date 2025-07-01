@@ -110,14 +110,8 @@ export default function Home() {
                       className="relative -mt-[8px]"
                       style={{
                         zIndex: -index,
-                        paddingTop: isAngry
-                          ? "2px"
-                          : isNeutral
-                          ? "2px"
-                          : undefined, // Angry일 때만 24px
-                        marginTop: isHappy ? "-14px" : undefined, // Happy일 때만 24px
                         marginBottom: isHappy
-                          ? "-5px"
+                          ? "-7px"
                           : isSmiley
                           ? "-5px"
                           : isShocked
