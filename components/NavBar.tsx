@@ -16,7 +16,10 @@ export default function NavBar() {
       className={`fixed bottom-0 left-0 right-0 z-50 flex justify-between items-center max-w-md w-full h-[47px] mx-auto bg-[url('/nav/navBar.png')] bg-contain sm:bg-cover  bg-center bg-no-repeat`}
     >
       <div className="flex justify-around w-full max-w-md items-center relative text-black">
-        <div className="cursor-pointer " onClick={() => handleClick("/")}>
+        <div
+          className="cursor-pointer w-[10%] h-[47px] flex items-center justify-center"
+          onClick={() => handleClick("/")}
+        >
           <Image
             src={pathname === "/" ? "/nav/home-focus.png" : "/nav/home.png"}
             alt="home image"
@@ -26,7 +29,10 @@ export default function NavBar() {
             priority
           />
         </div>
-        <div className="cursor-pointer" onClick={() => handleClick("/ranking")}>
+        <div
+          className="cursor-pointer w-[10%] h-[47px] flex items-center justify-center"
+          onClick={() => handleClick("/ranking")}
+        >
           <Image
             src={
               pathname === "/ranking"
@@ -43,7 +49,7 @@ export default function NavBar() {
         <div></div>
 
         {/* 코인 아이콘 */}
-        <div className="absolute left-1/2 -translate-x-1/2 -top-10 z-10">
+        <div className="absolute left-1/2 -translate-x-1/2 -top-8 z-10">
           <button
             onClick={() => handleClick("/tutorial")}
             className="rounded-full bg-transparent p-2 flex items-center justify-center cursor-pointer"
@@ -58,7 +64,10 @@ export default function NavBar() {
             />
           </button>
         </div>
-        <div className="cursor-pointer" onClick={() => handleClick("/FAQ")}>
+        <div
+          className="cursor-pointer w-[10%] h-[47px] flex items-center justify-center"
+          onClick={() => handleClick("/FAQ")}
+        >
           <Image
             src={pathname === "/FAQ" ? "/nav/FAQ-focus.png" : "/nav/FAQ.png"}
             alt="about image"
@@ -69,7 +78,7 @@ export default function NavBar() {
           />
         </div>
         <div
-          className="cursor-pointer"
+          className="cursor-pointer w-[10%] h-[47px] flex items-center justify-center"
           onClick={() => handleClick("/mybutter")}
         >
           <Image
