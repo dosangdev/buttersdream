@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   other: {
     "fc:frame": JSON.stringify({
       version: "next",
-      imageUrl: "https://buttersdream.xyz/share-image.png",
+      imageUrl: "https://buttersdream.xyz/farcaster-share-image.png",
       button: {
         title: "Open App",
         action: {
