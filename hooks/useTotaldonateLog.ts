@@ -57,23 +57,41 @@ export function useTotaldonateLog() {
     return mergedArr;
   }, [donationLogs]);
 
-  // 3. farcaster 데이터 fetch
+  // 3. farcaster 데이터 fetch (bulk API 사용)
   const { data: farcasterUserDataArray } = useSWR(
     mergedDonationLogs.length > 0
-      ? mergedDonationLogs.map(
-          (log) => `/api/lookup-user?walletAddress=${log.from}`
-        )
+      ? `/api/lookup-user?walletAddresses=${mergedDonationLogs
+          .map((log) => log.from)
+          .join(",")}`
       : null,
-    (urls) =>
-      Promise.all(urls.map((url) => fetch(url).then((res) => res.json())))
+    (url) => fetch(url).then((res) => res.json())
   );
 
   // 4. 합치기
   const combinedData = useMemo<ProcessedDonationLog[]>(() => {
     if (!farcasterUserDataArray)
       return mergedDonationLogs as ProcessedDonationLog[];
+
     const combined = mergedDonationLogs.map((log, index) => {
-      const farcasterData = farcasterUserDataArray[index]?.[0];
+      // bulk API 응답에서 해당 지갑 주소의 데이터 찾기
+      const farcasterData = (() => {
+        // 객체 형태의 응답에서 해당 지갑 주소의 데이터 찾기
+        const userArray = farcasterUserDataArray[log.from];
+        if (!userArray || userArray.length === 0) {
+          return null;
+        }
+
+        // 여러 계정이 있으면 display_name이 있는 계정 우선 선택
+        const userWithDisplayName = userArray.find(
+          (user: any) => user.display_name
+        );
+        if (userWithDisplayName) {
+          return userWithDisplayName;
+        }
+
+        return userArray[0];
+      })();
+
       const hasFarcasterData = !!farcasterData;
       return {
         ...log,

@@ -110,10 +110,11 @@ export default function Home() {
                       className="relative -mt-[8px]"
                       style={{
                         zIndex: -index,
+                        marginTop: isHappy ? "-10px" : undefined,
                         marginBottom: isHappy
                           ? "-7px"
                           : isSmiley
-                          ? "-5px"
+                          ? "-8px"
                           : isShocked
                           ? "-5px"
                           : isSurprised
