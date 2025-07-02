@@ -108,7 +108,7 @@ export default function Home() {
                   return (
                     <div
                       key={index}
-                      className="relative -mt-[8px]"
+                      className="relative -mt-[8px] cursor-pointer"
                       style={{
                         zIndex: -index,
                         marginTop: isHappy ? "-10px" : undefined,
@@ -127,6 +127,11 @@ export default function Home() {
                           : isNeutral
                           ? "-5px"
                           : undefined, // Happy일 때만 24px
+                      }}
+                      onClick={() => {
+                        window.open(
+                          `https://farcaster.xyz/${item.farcasterUserData?.username}`
+                        );
                       }}
                     >
                       <motion.div
