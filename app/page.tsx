@@ -18,6 +18,7 @@ import Shocked from "./constants/butterItems/Shocked";
 import Surprised from "./constants/butterItems/Surprised";
 import Confused from "./constants/butterItems/Confused";
 import Head from "next/head";
+import { useRouter } from "next/navigation";
 
 const butterComponents = [
   { component: Angry, type: "Angry" },
@@ -33,7 +34,7 @@ export default function Home() {
   const { isLoading } = useDonationProgress();
   const [isDonateInfoOpen, setIsDonateInfoOpen] = useState(false);
   const { address } = useAccount();
-
+  const router = useRouter();
   const totalDonateLog = useTotaldonateLog();
 
   const isAllColorReady =
@@ -248,7 +249,15 @@ export default function Home() {
                 </p>
                 <p>gonna be donated</p>
 
-                <p className="relative flex justify-center mt-[23px]">
+                <p
+                  className="relative flex justify-center mt-[23px] cursor-pointer"
+                  onClick={() => {
+                    window.open(
+                      "https://docs.google.com/forms/d/e/1FAIpQLScstj_yD_zGpVJ22ZBINMgVNwFQB0MJLVDwdrNBQ8e_A2uDgA/viewform",
+                      "_blank"
+                    );
+                  }}
+                >
                   <Image
                     src="/home/where-to-donate-border.png"
                     width={259}
