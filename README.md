@@ -1,3 +1,41 @@
+# 🧈 Butter's Dream
+
+[buttersdream.xyz](https://buttersdream.xyz)
+
+Butter's Dream is a Web3 and Farcaster-based donation and NFT project. The platform allows anyone to participate in transparent donations and receive special NFTs (such as Butter Tower NFTs) based on their contributions. It features wallet connection, donation ranking, personal NFT status, and community voting, all integrated with the Farcaster ecosystem. Experience the value of Web3 through social features and interactive events.
+
+---
+
+## 🚀 Tech Stack
+
+- **Next.js** (App Router)
+- **TypeScript**
+- **Tailwind CSS**
+- **Wagmi** (Web3 wallet integration)
+- **Farcaster API**
+
+## 📁 Project Structure
+
+- `app/` : Pages and API routes
+- `components/` : UI components
+- `hooks/` : Custom React hooks
+- `public/` : Static files and images
+- `store/` : State management
+- `utils/` : Utility functions
+
+## 🌐 Deployment
+
+- Recommended: [Vercel](https://vercel.com/)
+- Live: [buttersdream.xyz](https://buttersdream.xyz)
+- For deployment instructions, see the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying)
+
+## 🙋‍♂️ Contributing & Contact
+
+- Issues and PRs are welcome!
+- Farcaster channel: [butters-dream](https://farcaster.xyz/~/channel/butters-dream)
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
