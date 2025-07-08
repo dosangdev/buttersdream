@@ -127,28 +127,30 @@ export default function Home() {
                   // 거리 기반 스타일 계산
                   const isCenter = index === centerIndex;
                   const distance = Math.abs(index - centerIndex);
-                  let scale = 1,
-                    opacity = 1,
-                    fontWeight = 700,
-                    fontSize = "text-base";
+                  // scale, opacity를 연속 수식으로 계산
+                  const maxScale = 1.25;
+                  const minScale = 0.4;
+                  const maxOpacity = 1;
+                  const minOpacity = 0;
+                  const maxDistance = 4;
+                  const normDist = Math.min(distance, maxDistance);
+                  const scale =
+                    maxScale - ((maxScale - minScale) / maxDistance) * normDist;
+                  const opacity =
+                    maxOpacity -
+                    ((maxOpacity - minOpacity) / maxDistance) * normDist;
+                  let fontWeight = 700;
+                  let fontSize = "text-base";
                   if (distance === 0) {
-                    scale = 1.25;
-                    opacity = 1;
                     fontWeight = 900;
                     fontSize = "text-lg";
                   } else if (distance === 1) {
-                    scale = 1.1;
-                    opacity = 0.7;
                     fontWeight = 700;
                     fontSize = "text-base";
                   } else if (distance === 2) {
-                    scale = 1;
-                    opacity = 0.3;
                     fontWeight = 400;
                     fontSize = "text-sm";
                   } else {
-                    scale = 0.8;
-                    opacity = 0;
                     fontWeight = 400;
                     fontSize = "text-xs";
                   }
