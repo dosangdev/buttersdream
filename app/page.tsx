@@ -3,7 +3,7 @@
 import ProgressBar from "@/components/donate/ProgressBar";
 import { useDonationProgress } from "@/hooks/useDonationProgress";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import { butterComponents } from "./constants/butterItems";
 import { sdk } from "@farcaster/frame-sdk";
 
@@ -36,6 +36,8 @@ export default function Home() {
   const { address } = useAccount();
   const router = useRouter();
   const totalDonateLog = useTotaldonateLog();
+  const butterRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [centerIndex, setCenterIndex] = useState(0);
 
   const isAllColorReady =
     totalDonateLog.length > 0 &&
@@ -51,12 +53,29 @@ export default function Home() {
     sdk.actions.addMiniApp();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const centerY = window.innerHeight / 2;
+      const distances = butterRefs.current.map((ref) => {
+        if (!ref) return Infinity;
+        const rect = ref.getBoundingClientRect();
+        return Math.abs(rect.top + rect.height / 2 - centerY);
+      });
+      const minIndex = distances.indexOf(Math.min(...distances));
+      setCenterIndex(minIndex);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [totalDonateLog.length]);
+
   return (
     <>
       <main className="flex flex-col items-center pt-[25px] relative select-none">
         <div className="w-full max-w-md">
           {!isLoading && <ProgressBar />}
-          <div className="relative flex flex-col items-center pt-[51px]">
+          {/* <div className="relative flex flex-col items-center pt-[51px]"> */}
+          <div className="relative flex flex-col items-center pt-[80px] pb-[50px]">
             <div className="flex flex-col items-center  z-30">
               {!isAllColorReady ? (
                 <div className="flex flex-col items-center py-8">
@@ -105,10 +124,42 @@ export default function Home() {
                   const isArrow =
                     item.from.toLowerCase() === address?.toLowerCase();
 
+                  // 거리 기반 스타일 계산
+                  const isCenter = index === centerIndex;
+                  const distance = Math.abs(index - centerIndex);
+                  let scale = 1,
+                    opacity = 1,
+                    fontWeight = 700,
+                    fontSize = "text-base";
+                  if (distance === 0) {
+                    scale = 1.25;
+                    opacity = 1;
+                    fontWeight = 900;
+                    fontSize = "text-lg";
+                  } else if (distance === 1) {
+                    scale = 1.1;
+                    opacity = 0.7;
+                    fontWeight = 700;
+                    fontSize = "text-base";
+                  } else if (distance === 2) {
+                    scale = 1;
+                    opacity = 0.3;
+                    fontWeight = 400;
+                    fontSize = "text-sm";
+                  } else {
+                    scale = 0.8;
+                    opacity = 0;
+                    fontWeight = 400;
+                    fontSize = "text-xs";
+                  }
+
                   return (
                     <div
                       key={index}
-                      className="relative -mt-[8px] cursor-pointer"
+                      ref={(el) => {
+                        butterRefs.current[index] = el;
+                      }}
+                      className="relative -mt-[8px] cursor-pointer flex flex-col items-center"
                       style={{
                         zIndex: -index,
                         marginTop: isHappy ? "-10px" : undefined,
@@ -126,7 +177,7 @@ export default function Home() {
                           ? "-6px"
                           : isNeutral
                           ? "-5px"
-                          : undefined, // Happy일 때만 24px
+                          : undefined,
                       }}
                       onClick={() => {
                         window.open(
@@ -135,17 +186,65 @@ export default function Home() {
                       }}
                     >
                       <motion.div
+                        className={`w-20 h-12 absolute -top-5 text-xs ${fontSize} z-10 bg-transparent
+                          ${
+                            index % 2 === 0
+                              ? "right-[-90px] text-left items-start"
+                              : "left-[-115px] text-left items-start"
+                          }
+                        `}
+                        style={{
+                          opacity,
+                          fontWeight,
+                          transform: `scale(${scale})`,
+                          transition: "all 0.2s cubic-bezier(0.4,0,0.2,1)",
+                          pointerEvents: opacity === 0 ? "none" : "auto",
+                          color: "#222",
+                          textShadow: isCenter
+                            ? "0 2px 8px #fff, 0 0px 1px #0002"
+                            : "none",
+                        }}
+                      >
+                        <div
+                          className="relative w-[100px] h-12"
+                          style={{
+                            transform: `rotate(${
+                              index % 2 === 0 ? "22deg" : "-22deg"
+                            })`,
+                          }}
+                        >
+                          <Image
+                            src={`/${
+                              index % 2 === 0 ? "bubble-right" : "bubble-left"
+                            }.png`}
+                            width={100}
+                            height={47}
+                            alt="bubble"
+                            className="absolute top-0 left-0 z-10"
+                            style={{ objectFit: "contain" }}
+                          />
+                          <div className="absolute inset-0 flex flex-col pt-2  z-20 truncate overflow-hidden whitespace-nowrap">
+                            <span className="truncate block text-center">
+                              Hi, i'm
+                            </span>
+                            <span className="text-[8px] truncate block text-center">
+                              @{item.farcasterUserData?.username}
+                            </span>
+                          </div>
+                        </div>
+                      </motion.div>
+                      <motion.div
                         animate={
                           isArrow
-                            ? { x: [0, index % 2 === 0 ? 4 : -4, 0] } // 조건이 true일 때
-                            : { x: 0 } // 조건이 false일 때(움직이지 않음)
+                            ? { x: [0, index % 2 === 0 ? 4 : -4, 0] }
+                            : { x: 0 }
                         }
                         transition={{
-                          duration: 2, // 한 번 왕복하는 데 걸리는 시간(초)
-                          repeat: Infinity, // 무한 반복
+                          duration: 2,
+                          repeat: Infinity,
                           repeatType: "loop",
                           ease: "easeInOut",
-                          delay: index * 0.1, // 각 버터마다 살짝 딜레이 주면 자연스러움
+                          delay: index * 0.1,
                         }}
                       >
                         <ButterItemComponent
@@ -155,14 +254,14 @@ export default function Home() {
                       {isArrow ? (
                         <div
                           className={`absolute ${
-                            index % 2 === 0
+                            index % 2 === 1
                               ? "top-[-10px] right-[-70px]"
                               : "top-[-20px] left-[-70px]"
                           }`}
                         >
                           <Image
                             src={`/home/your-butter-${
-                              index % 2 === 0 ? "left" : "right"
+                              index % 2 === 1 ? "left" : "right"
                             }.png`}
                             width={62}
                             height={39}
