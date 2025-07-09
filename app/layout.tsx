@@ -49,7 +49,7 @@ export const metadata: Metadata = {
           type: "launch_frame",
           url: "https://buttersdream.xyz/",
           name: "Butter's Dream",
-          splashImageUrl: "https://buttersdream.xyz/logo.png",
+          splashImageUrl: "https://buttersdream.xyz/butter-coin.png",
           splashBackgroundColor: "#ffdfec",
         },
       },
