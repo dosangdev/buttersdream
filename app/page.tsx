@@ -217,7 +217,13 @@ export default function Home() {
                         >
                           <Image
                             src={`/${
-                              index % 2 === 0 ? "bubble-right" : "bubble-left"
+                              isArrow
+                                ? index % 2 === 0
+                                  ? "my-bubble-right"
+                                  : "my-bubble-left"
+                                : index % 2 === 0
+                                ? "bubble-right"
+                                : "bubble-left"
                             }.png`}
                             width={100}
                             height={47}
@@ -229,8 +235,14 @@ export default function Home() {
                             <span className="truncate block text-center">
                               Hi, i'm
                             </span>
-                            <span className="text-[8px] truncate block text-center">
-                              @{item.farcasterUserData?.username}
+                            <span
+                              className={`truncate block text-center ${
+                                isArrow ? "text-[10px]" : "text-[8px]"
+                              }`}
+                            >
+                              {isArrow
+                                ? "Yours!!!"
+                                : `@${item.farcasterUserData?.username}`}
                             </span>
                           </div>
                         </div>
@@ -253,24 +265,6 @@ export default function Home() {
                           fill={item?.farcasterUserData?.color as string}
                         />
                       </motion.div>
-                      {isArrow ? (
-                        <div
-                          className={`absolute ${
-                            index % 2 === 1
-                              ? "top-[-10px] right-[-70px]"
-                              : "top-[-20px] left-[-70px]"
-                          }`}
-                        >
-                          <Image
-                            src={`/home/your-butter-${
-                              index % 2 === 1 ? "left" : "right"
-                            }.png`}
-                            width={62}
-                            height={39}
-                            alt="arrow"
-                          />
-                        </div>
-                      ) : null}
                     </div>
                   );
                 })
