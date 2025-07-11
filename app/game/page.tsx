@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const TILE_VALUES = [0, 1, 2, 3, 4, 5, 6];
 // const TOTAL_TIME = 180; // 3분
-const TOTAL_TIME = 0; // 1분
+const TOTAL_TIME = 60; // 1분
 const BOARD_SIZES = [4, 6, 8];
 
 const BOARD_MAX_WIDTH: Record<number, string> = {
