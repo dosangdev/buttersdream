@@ -127,6 +127,11 @@ export default function GamePage() {
   const [showStartModal, setShowStartModal] = useState(true);
   const [startModalImage, setStartModalImage] = useState<string>("");
 
+  // 아이템 사용 횟수 추적
+  const [shuffleCount, setShuffleCount] = useState(0);
+  const [timeAddCount, setTimeAddCount] = useState(0);
+  const [boostCount, setBoostCount] = useState(0);
+
   // 초기 로딩 시에만 모달을 띄움
   useEffect(() => {
     setShowStartModal(true);
@@ -144,6 +149,10 @@ export default function GamePage() {
     setTimeLeft(TOTAL_TIME);
     setIsGameOver(false);
     setClearTime(null);
+    // 아이템 사용 횟수 초기화
+    setShuffleCount(0);
+    setTimeAddCount(0);
+    setBoostCount(0);
   }, [boardSize]);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -241,6 +250,10 @@ export default function GamePage() {
     setIsGameOver(false);
     setClearTime(null);
     setShowStartModal(false);
+    // 아이템 사용 횟수 초기화
+    setShuffleCount(0);
+    setTimeAddCount(0);
+    setBoostCount(0);
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
@@ -252,6 +265,100 @@ export default function GamePage() {
         return prev - 1;
       });
     }, 1000);
+  };
+
+  // 카드 섞기 기능
+  const shuffleBoard = () => {
+    if (showStartModal || isGameOver || clearTime !== null) return;
+    if (shuffleCount >= 2) return; // 최대 2번만 사용 가능
+
+    // 현재 보드에서 null이 아닌 값들만 추출
+    const remainingCards = board.flat().filter((tile) => tile !== null);
+
+    if (remainingCards.length === 0) return; // 섞을 카드가 없으면 리턴
+
+    // 카드들을 무작위로 섞기
+    const shuffledCards = [...remainingCards].sort(() => Math.random() - 0.5);
+
+    // 새로운 보드 생성
+    const newBoard = board.map((row) => [...row]);
+    let cardIndex = 0;
+
+    // 기존 카드 위치에 섞인 카드들을 배치
+    for (let r = 0; r < boardSize; r++) {
+      for (let c = 0; c < boardSize; c++) {
+        if (newBoard[r][c] !== null) {
+          newBoard[r][c] = shuffledCards[cardIndex++];
+        }
+      }
+    }
+
+    setBoard(newBoard);
+    setSelected([]); // 선택된 카드 초기화
+    setPath([]); // 경로 초기화
+    setShuffleCount((prev) => prev + 1); // 사용 횟수 증가
+  };
+
+  // 시간 10초 추가 기능
+  const addTime = () => {
+    if (showStartModal || isGameOver || clearTime !== null) return;
+    if (timeAddCount >= 1) return; // 최대 1번만 사용 가능
+
+    setTimeLeft((prev) => prev + 10);
+    setTimeAddCount((prev) => prev + 1); // 사용 횟수 증가
+  };
+
+  // 랜덤으로 카드 1세트 제거 기능
+  const removeRandomSet = () => {
+    if (showStartModal || isGameOver || clearTime !== null) return;
+    if (boostCount >= 1) return; // 최대 1번만 사용 가능
+
+    // 현재 보드에서 null이 아닌 값들만 추출
+    const remainingCards = board.flat().filter((tile) => tile !== null);
+
+    if (remainingCards.length === 0) return; // 제거할 카드가 없으면 리턴
+
+    // 각 카드 타입별로 개수 세기
+    const cardCounts = new Map<number, number>();
+    remainingCards.forEach((card) => {
+      cardCounts.set(card, (cardCounts.get(card) || 0) + 1);
+    });
+
+    // 2개 이상 있는 카드 타입들 찾기
+    const availableSets = Array.from(cardCounts.entries())
+      .filter(([_, count]) => count >= 2)
+      .map(([cardType, _]) => cardType);
+
+    if (availableSets.length === 0) return; // 제거할 세트가 없으면 리턴
+
+    // 랜덤으로 하나의 카드 타입 선택
+    const randomCardType =
+      availableSets[Math.floor(Math.random() * availableSets.length)];
+
+    // 새로운 보드 생성
+    const newBoard = board.map((row) => [...row]);
+    let removedCount = 0;
+    const removedPositions: [number, number][] = [];
+
+    // 선택된 카드 타입의 첫 번째 2개를 제거
+    for (let r = 0; r < boardSize; r++) {
+      for (let c = 0; c < boardSize; c++) {
+        if (newBoard[r][c] === randomCardType && removedCount < 2) {
+          removedPositions.push([r, c]);
+          newBoard[r][c] = null;
+          removedCount++;
+        }
+      }
+    }
+
+    setBoard(newBoard);
+    setSelected([]); // 선택된 카드 초기화
+    setPath([]); // 경로 초기화
+
+    // 매칭 성공 효과 표시 (파티클 효과)
+    setMatchEffect(removedPositions);
+    setTimeout(() => setMatchEffect([]), 800);
+    setBoostCount((prev) => prev + 1); // 사용 횟수 증가
   };
 
   return (
@@ -402,6 +509,34 @@ export default function GamePage() {
               );
             })}
         </svg>
+      </div>
+
+      {/* 버튼들을 게임 보드 밖으로 이동 */}
+      <div className="w-full flex gap-2 justify-center items-center mt-4">
+        <button onClick={shuffleBoard}>
+          <div className="relative">
+            <Image src="/game/mix-icon.png" width={49} height={49} alt="mix" />
+            {shuffleCount < 2 ? (
+              <Image
+                src={shuffleCount === 0 ? "/game/mix-2.png" : "/game/mix-1.png"}
+                width={10}
+                height={15}
+                alt="mix-1"
+                className="absolute bottom-1 left-1/2 -translate-x-1/2"
+              />
+            ) : (
+              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-black font-bold text-xs">
+                0
+              </div>
+            )}
+          </div>
+        </button>
+        <button onClick={addTime}>
+          <Image src="/game/time.png" width={49} height={49} alt="time" />
+        </button>
+        <button onClick={removeRandomSet}>
+          <Image src="/game/boost.png" width={49} height={49} alt="boost" />
+        </button>
       </div>
 
       {/* 통합 모달 */}
