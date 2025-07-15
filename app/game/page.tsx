@@ -368,27 +368,25 @@ export default function GamePage() {
 
   return (
     <main className="flex flex-col items-center justify-center py-4">
-      {/* <div className="flex gap-2 mb-4">
-        {BOARD_SIZES.map((size) => (
-          <button
-            key={size}
-            onClick={() => setBoardSize(size)}
-            className={clsx(
-              "px-4 py-2 rounded font-bold border",
-              boardSize === size
-                ? "bg-green-400 text-white"
-                : "bg-white text-black"
-            )}
-          >
-            {size}x{size}
-          </button>
-        ))}
-      </div> */}
       <div className={clsx("w-full mb-2", BOARD_MAX_WIDTH[boardSize])}>
-        <div className="w-full h-3 bg-gray-300 rounded overflow-hidden">
+        <div className="w-full h-3 bg-gray-300 rounded relative">
           <div
-            className="h-full bg-primary transition-all duration-1000"
+            className="h-full bg-primary transition-all duration-1000 border-2 border-black rounded"
             style={{ width: `${(timeLeft / TIME_LIMITS[boardSize]) * 100}%` }}
+          />
+          <Image
+            src="/butterfly-basic.png"
+            width={38}
+            height={26}
+            alt="butterfly"
+            className="absolute top-1/2 z-10"
+            style={{
+              left: `calc(${
+                (timeLeft / TIME_LIMITS[boardSize]) * 100
+              }% - 19px)`,
+              transform: "translateY(-50%)",
+              animation: "wiggle 1s ease-in-out infinite",
+            }}
           />
         </div>
       </div>
