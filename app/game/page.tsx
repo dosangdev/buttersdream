@@ -124,6 +124,18 @@ export default function GamePage() {
   const [board, setBoard] = useState<(number | null)[][]>([]);
   const [matchEffect, setMatchEffect] = useState<[number, number][]>([]);
   const [shakeEffect, setShakeEffect] = useState<[number, number][]>([]);
+  const [showStartModal, setShowStartModal] = useState(true);
+  const [startModalImage, setStartModalImage] = useState<string>("");
+
+  // 초기 로딩 시에만 모달을 띄움
+  useEffect(() => {
+    setShowStartModal(true);
+    setStartModalImage(
+      Math.random() < 0.5
+        ? "/game/game-angry-butter.png"
+        : "/game/game-smile-butter.png"
+    );
+  }, []);
 
   useEffect(() => {
     setBoard(generateBoard(boardSize));
@@ -137,6 +149,8 @@ export default function GamePage() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    if (showStartModal) return; // 시작 모달이 보이는 동안은 타이머 시작하지 않음
+
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
@@ -148,17 +162,28 @@ export default function GamePage() {
       });
     }, 1000);
     return () => clearInterval(timerRef.current!);
-  }, []);
+  }, [showStartModal]);
 
   useEffect(() => {
-    if (board.flat().every((tile) => tile === null) && !clearTime) {
+    // 게임이 시작되고 보드가 비어있을 때만 클리어 처리
+    if (
+      timeLeft < TOTAL_TIME &&
+      board.flat().every((tile) => tile === null) &&
+      !clearTime
+    ) {
       clearInterval(timerRef.current!);
       setClearTime(TOTAL_TIME - timeLeft);
     }
   }, [board, timeLeft, clearTime]);
 
   const handleSelect = (r: number, c: number) => {
-    if (isGameOver || clearTime !== null || board[r][c] === null) return;
+    if (
+      showStartModal ||
+      isGameOver ||
+      clearTime !== null ||
+      board[r][c] === null
+    )
+      return;
 
     if (selected.length === 0) {
       setSelected([[r, c]]);
@@ -204,6 +229,10 @@ export default function GamePage() {
       .padStart(2, "0")}`;
   };
 
+  const startGame = () => {
+    setShowStartModal(false);
+  };
+
   const restart = () => {
     setBoard(generateBoard(boardSize));
     setSelected([]);
@@ -211,6 +240,7 @@ export default function GamePage() {
     setTimeLeft(TOTAL_TIME);
     setIsGameOver(false);
     setClearTime(null);
+    setShowStartModal(false);
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
@@ -226,7 +256,7 @@ export default function GamePage() {
 
   return (
     <main className="flex flex-col items-center justify-center py-4">
-      <div className="flex gap-2 mb-4">
+      {/* <div className="flex gap-2 mb-4">
         {BOARD_SIZES.map((size) => (
           <button
             key={size}
@@ -241,11 +271,11 @@ export default function GamePage() {
             {size}x{size}
           </button>
         ))}
-      </div>
+      </div> */}
       <div className={clsx("w-full mb-2", BOARD_MAX_WIDTH[boardSize])}>
         <div className="w-full h-3 bg-gray-300 rounded overflow-hidden">
           <div
-            className="h-full bg-green-500 transition-all duration-1000"
+            className="h-full bg-primary transition-all duration-1000"
             style={{ width: `${(timeLeft / TOTAL_TIME) * 100}%` }}
           />
         </div>
@@ -263,7 +293,10 @@ export default function GamePage() {
               key={`${rIdx}-${cIdx}`}
               onClick={() => handleSelect(rIdx, cIdx)}
               className={clsx(
-                "aspect-square w-full flex items-center justify-center rounded border text-sm sm:text-base relative z-10 transition-all duration-200",
+                "w-full flex items-center justify-center rounded text-sm sm:text-base relative z-10 transition-all duration-200",
+                boardSize === 4 && "h-[69.47px]",
+                boardSize === 6 && "h-[69.47px]",
+                boardSize === 8 && "h-[52.6px]",
                 tile !== null ? "bg-white" : "bg-transparent",
                 selected.some(([sr, sc]) => sr === rIdx && sc === cIdx) &&
                   "ring-2 ring-blue-400 scale-105",
@@ -371,20 +404,27 @@ export default function GamePage() {
         </svg>
       </div>
 
-      {(clearTime !== null || isGameOver) && (
+      {/* 통합 모달 */}
+      {(showStartModal || clearTime !== null || isGameOver) && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="relative bg-white rounded-xl p-6 shadow-xl text-center max-w-xs w-full">
             <div className="absolute -top-4 -translate-x-1/2 left-1/2 text-black rounded-3xl bg-primary border-2 border-black px-2 py-1 w-32">
-              {clearTime !== null ? "Clear!" : "Game over"}
+              {showStartModal
+                ? "Start!"
+                : clearTime !== null
+                ? "Clear!"
+                : "Game over"}
             </div>
             <div className="flex justify-center">
               <Image
                 src={
-                  clearTime !== null
+                  showStartModal
+                    ? startModalImage
+                    : clearTime !== null
                     ? "/game/clear-butter.png"
                     : "/game/game-over-butter.png"
                 }
-                alt="clear"
+                alt="modal"
                 width={70}
                 height={70}
                 style={{
@@ -392,36 +432,56 @@ export default function GamePage() {
                 }}
               />
             </div>
-            {clearTime !== null && (
+            {!showStartModal && clearTime !== null && (
               <p className="text-3xl text-black font-mono mb-4">
                 {formatTime(clearTime)}
               </p>
             )}
             <div className="flex justify-center gap-6 mt-4">
-              <button
-                onClick={() => (window.location.href = "/")}
-                className="text-black flex items-center gap-2 bg-background rounded-xl px-4 py-1"
-              >
-                <Image
-                  src="/game/game-home.png"
-                  alt="home"
-                  width={16}
-                  height={15}
-                />
-                <span className="block text-base">Home</span>
-              </button>
-              <button
-                onClick={restart}
-                className="text-black flex items-center gap-2 bg-primary rounded-xl px-4 py-1"
-              >
-                <Image
-                  src="/game/game-retry.png"
-                  alt="retry"
-                  width={18}
-                  height={10}
-                />
-                <span className="block text-base">Retry</span>
-              </button>
+              {showStartModal ? (
+                // 시작 모달 버튼들
+                <div className="flex gap-2 text-black">
+                  {BOARD_SIZES.map((size) => (
+                    <button
+                      key={size}
+                      className="block bg-primary rounded-lg px-4 py-1 cursor-pointer"
+                      onClick={() => {
+                        setBoardSize(size);
+                        setShowStartModal(false);
+                      }}
+                    >
+                      {size}*{size}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setShowStartModal(true)}
+                    className="text-black flex items-center gap-2 bg-background rounded-xl px-4 py-1"
+                  >
+                    <Image
+                      src="/game/game-home.png"
+                      alt="home"
+                      width={16}
+                      height={15}
+                    />
+                    <span className="block text-base">Home</span>
+                  </button>
+                  <button
+                    onClick={restart}
+                    className="text-black flex items-center gap-2 bg-primary rounded-xl px-4 py-1"
+                  >
+                    <Image
+                      src="/game/game-retry.png"
+                      alt="retry"
+                      width={18}
+                      height={10}
+                    />
+                    <span className="block text-base">Retry</span>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
