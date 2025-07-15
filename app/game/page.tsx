@@ -6,9 +6,14 @@ import { Home, RotateCcw } from "lucide-react";
 import Image from "next/image";
 
 const TILE_VALUES = [0, 1, 2, 3, 4, 5, 6];
-// const TOTAL_TIME = 180; // 3분
-const TOTAL_TIME = 60; // 1분
 const BOARD_SIZES = [4, 6, 8];
+
+// 보드 크기별 시간 제한
+const TIME_LIMITS: Record<number, number> = {
+  4: 30, // 4x4: 30초
+  6: 45, // 6x6: 45초
+  8: 60, // 8x8: 60초
+};
 
 const BOARD_MAX_WIDTH: Record<number, string> = {
   4: "max-w-[260px]",
@@ -118,7 +123,7 @@ export default function GamePage() {
   const [boardSize, setBoardSize] = useState(4);
   const [selected, setSelected] = useState<[number, number][]>([]);
   const [path, setPath] = useState<[number, number][]>([]);
-  const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
+  const [timeLeft, setTimeLeft] = useState(TIME_LIMITS[boardSize]);
   const [isGameOver, setIsGameOver] = useState(false);
   const [clearTime, setClearTime] = useState<number | null>(null);
   const [board, setBoard] = useState<(number | null)[][]>([]);
@@ -146,7 +151,7 @@ export default function GamePage() {
     setBoard(generateBoard(boardSize));
     setSelected([]);
     setPath([]);
-    setTimeLeft(TOTAL_TIME);
+    setTimeLeft(TIME_LIMITS[boardSize]);
     setIsGameOver(false);
     setClearTime(null);
     // 아이템 사용 횟수 초기화
@@ -176,14 +181,14 @@ export default function GamePage() {
   useEffect(() => {
     // 게임이 시작되고 보드가 비어있을 때만 클리어 처리
     if (
-      timeLeft < TOTAL_TIME &&
+      timeLeft < TIME_LIMITS[boardSize] &&
       board.flat().every((tile) => tile === null) &&
       !clearTime
     ) {
       clearInterval(timerRef.current!);
-      setClearTime(TOTAL_TIME - timeLeft);
+      setClearTime(TIME_LIMITS[boardSize] - timeLeft);
     }
-  }, [board, timeLeft, clearTime]);
+  }, [board, timeLeft, clearTime, boardSize]);
 
   const handleSelect = (r: number, c: number) => {
     if (
@@ -246,7 +251,7 @@ export default function GamePage() {
     setBoard(generateBoard(boardSize));
     setSelected([]);
     setPath([]);
-    setTimeLeft(TOTAL_TIME);
+    setTimeLeft(TIME_LIMITS[boardSize]);
     setIsGameOver(false);
     setClearTime(null);
     setShowStartModal(false);
@@ -383,7 +388,7 @@ export default function GamePage() {
         <div className="w-full h-3 bg-gray-300 rounded overflow-hidden">
           <div
             className="h-full bg-primary transition-all duration-1000"
-            style={{ width: `${(timeLeft / TOTAL_TIME) * 100}%` }}
+            style={{ width: `${(timeLeft / TIME_LIMITS[boardSize]) * 100}%` }}
           />
         </div>
       </div>
@@ -563,7 +568,7 @@ export default function GamePage() {
                 width={70}
                 height={70}
                 style={{
-                  margin: clearTime !== null ? "" : "1rem 0rem",
+                  margin: clearTime !== null ? "1rem 0rem" : "1rem 0rem",
                 }}
               />
             </div>
