@@ -518,8 +518,15 @@ export default function GamePage() {
       <div className="w-full flex gap-2 justify-center items-center mt-4">
         <button onClick={shuffleBoard}>
           <div className="relative">
-            <Image src="/game/mix-icon.png" width={49} height={49} alt="mix" />
-            {shuffleCount < 2 ? (
+            <Image
+              src={
+                shuffleCount < 2 ? "/game/mix-icon.png" : "/game/mix-used.png"
+              }
+              width={49}
+              height={49}
+              alt="mix"
+            />
+            {shuffleCount < 2 && (
               <Image
                 src={shuffleCount === 0 ? "/game/mix-2.png" : "/game/mix-1.png"}
                 width={10}
@@ -527,18 +534,24 @@ export default function GamePage() {
                 alt="mix-1"
                 className="absolute bottom-1 left-1/2 -translate-x-1/2"
               />
-            ) : (
-              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 text-black font-bold text-xs">
-                0
-              </div>
             )}
           </div>
         </button>
         <button onClick={addTime}>
-          <Image src="/game/time.png" width={49} height={49} alt="time" />
+          <Image
+            src={timeAddCount >= 1 ? "/game/time-used.png" : "/game/time.png"}
+            width={49}
+            height={49}
+            alt="time"
+          />
         </button>
         <button onClick={removeRandomSet}>
-          <Image src="/game/boost.png" width={49} height={49} alt="boost" />
+          <Image
+            src={boostCount >= 1 ? "/game/boost-used.png" : "/game/boost.png"}
+            width={49}
+            height={49}
+            alt="boost"
+          />
         </button>
       </div>
 
