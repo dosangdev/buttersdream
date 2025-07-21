@@ -161,5 +161,32 @@ export function useTotaldonateLog() {
     }
   }, [combinedData]);
 
-  return processedData;
+  // display_name 기준으로 value 합치고, timestamp가 가장 빠른 데이터로 대표값 사용
+  const mergedByDisplayName = useMemo(() => {
+    const map = new Map<string, ProcessedDonationLog>();
+    processedData.forEach((item) => {
+      // farcasterUserData가 없으면 from 주소로 대체
+      const key =
+        item.farcasterUserData && item.farcasterUserData.display_name
+          ? item.farcasterUserData.display_name
+          : item.from;
+
+      if (!map.has(key)) {
+        map.set(key, { ...item });
+      } else {
+        const existing = map.get(key)!;
+        // value 합산
+        const newValue = existing.value + item.value;
+        // timestamp가 더 빠른 쪽으로 대표값 갱신
+        if (new Date(item.timestamp) < new Date(existing.timestamp)) {
+          map.set(key, { ...item, value: newValue });
+        } else {
+          map.set(key, { ...existing, value: newValue });
+        }
+      }
+    });
+    return Array.from(map.values());
+  }, [processedData]);
+
+  return mergedByDisplayName;
 }

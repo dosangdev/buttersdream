@@ -192,8 +192,32 @@ export function useWeeklyRanking() {
           return item;
         })
       );
+      // display_name 기준 value가 가장 높은 항목을 대표로 남기고, 나머지 value를 모두 대표 value에 합산
+      const merged = Object.values(
+        processed.reduce((acc, curr) => {
+          const key =
+            curr.farcasterUserData && curr.farcasterUserData.display_name
+              ? curr.farcasterUserData.display_name
+              : curr.from;
+          if (!acc[key]) {
+            acc[key] = { ...curr };
+          } else {
+            // value가 더 큰 쪽이 대표가 됨
+            if (curr.value > acc[key].value) {
+              acc[key] = {
+                ...curr,
+                value: curr.value + acc[key].value,
+              };
+            } else {
+              acc[key].value += curr.value;
+            }
+          }
+          return acc;
+        }, {} as Record<string, (typeof processed)[0]>)
+      );
+
       // value 기준 내림차순 정렬 및 type 부여, ranking 추가
-      const sorted = [...processed].sort((a, b) => b.value - a.value);
+      const sorted = [...merged].sort((a, b) => b.value - a.value);
       const withTypeAndRanking = sorted.map((item, idx) => {
         let type: "first" | "second" | "third" | "default" = "default";
         if (idx === 0) type = "first";
