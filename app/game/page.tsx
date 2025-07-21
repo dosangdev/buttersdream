@@ -406,7 +406,7 @@ export default function GamePage() {
                 "w-full flex items-center justify-center rounded text-sm sm:text-base relative z-10 transition-all duration-200",
                 boardSize === 4 && "h-[69.47px]",
                 boardSize === 6 && "h-[69.47px]",
-                boardSize === 8 && "h-[52.6px]",
+                boardSize === 8 && "aspect-square",
                 tile !== null ? "bg-white" : "bg-transparent",
                 selected.some(([sr, sc]) => sr === rIdx && sc === cIdx) &&
                   "ring-2 ring-blue-400 scale-105",
