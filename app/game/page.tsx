@@ -142,8 +142,8 @@ export default function GamePage() {
     setShowStartModal(true);
     setStartModalImage(
       Math.random() < 0.5
-        ? "/game/game-angry-butter.png"
-        : "/game/game-smile-butter.png"
+        ? "https://res.cloudinary.com/djxepunc8/image/upload/v1752658657/game-angry-butter_wcvbt9.png"
+        : "https://res.cloudinary.com/djxepunc8/image/upload/v1752658665/game-smile-butter_gjeytr.png"
     );
   }, []);
 
@@ -419,49 +419,49 @@ export default function GamePage() {
               {tile !== null &&
                 (tile === 0 ? (
                   <Image
-                    src="/game/butter-1.png"
+                    src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658655/butter-1_mz6liq.png"
                     alt="butter-1"
                     width={52}
                     height={52}
                   />
                 ) : tile === 1 ? (
                   <Image
-                    src="/game/butter-2.png"
+                    src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658659/butter-2_m6ocpw.png"
                     alt="butter-2"
                     width={52}
                     height={52}
                   />
                 ) : tile === 2 ? (
                   <Image
-                    src="/game/butter-3.png"
+                    src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658655/butter-3_mt08pe.png"
                     alt="butter-3"
                     width={52}
                     height={52}
                   />
                 ) : tile === 3 ? (
                   <Image
-                    src="/game/butter-4.png"
+                    src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658656/butter-4_zniabr.png"
                     alt="butter-4"
                     width={52}
                     height={52}
                   />
                 ) : tile === 4 ? (
                   <Image
-                    src="/game/butter-5.png"
+                    src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658657/butter-5_sfdxxi.png"
                     alt="butter-5"
                     width={52}
                     height={52}
                   />
                 ) : tile === 5 ? (
                   <Image
-                    src="/game/butter-6.png"
+                    src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658659/butter-6_kbahlb.png"
                     alt="butter-6"
                     width={52}
                     height={52}
                   />
                 ) : (
                   <Image
-                    src="/game/butter-7.png"
+                    src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658655/butter-7_olbtww.png"
                     alt="butter-7"
                     width={52}
                     height={52}
@@ -520,7 +520,9 @@ export default function GamePage() {
           <div className="relative">
             <Image
               src={
-                shuffleCount < 2 ? "/game/mix-icon.png" : "/game/mix-used.png"
+                shuffleCount < 2
+                  ? "https://res.cloudinary.com/djxepunc8/image/upload/v1752658659/mix-icon_xkwpxf.png"
+                  : "https://res.cloudinary.com/djxepunc8/image/upload/v1752658659/mix-used_dat0tx.png"
               }
               width={49}
               height={49}
@@ -528,7 +530,11 @@ export default function GamePage() {
             />
             {shuffleCount < 2 && (
               <Image
-                src={shuffleCount === 0 ? "/game/mix-2.png" : "/game/mix-1.png"}
+                src={
+                  shuffleCount === 0
+                    ? "https://res.cloudinary.com/djxepunc8/image/upload/v1752658658/mix-2_lpm4tb.png"
+                    : "https://res.cloudinary.com/djxepunc8/image/upload/v1752658658/mix-1_tltmzc.png"
+                }
                 width={10}
                 height={15}
                 alt="mix-1"
@@ -539,7 +545,11 @@ export default function GamePage() {
         </button>
         <button onClick={addTime}>
           <Image
-            src={timeAddCount >= 1 ? "/game/time-used.png" : "/game/time.png"}
+            src={
+              timeAddCount >= 1
+                ? "https://res.cloudinary.com/djxepunc8/image/upload/v1752658659/time-used_rv2z5a.png"
+                : "https://res.cloudinary.com/djxepunc8/image/upload/v1752658660/time_wobcab.png"
+            }
             width={49}
             height={49}
             alt="time"
@@ -547,7 +557,11 @@ export default function GamePage() {
         </button>
         <button onClick={removeRandomSet}>
           <Image
-            src={boostCount >= 1 ? "/game/boost-used.png" : "/game/boost.png"}
+            src={
+              boostCount >= 1
+                ? "https://res.cloudinary.com/djxepunc8/image/upload/v1752658653/boost-used_hkeovi.png"
+                : "https://res.cloudinary.com/djxepunc8/image/upload/v1752658653/boost_z44gh1.png"
+            }
             width={49}
             height={49}
             alt="boost"
@@ -572,8 +586,8 @@ export default function GamePage() {
                   showStartModal
                     ? startModalImage
                     : clearTime !== null
-                    ? "/game/clear-butter.png"
-                    : "/game/game-over-butter.png"
+                    ? "https://res.cloudinary.com/djxepunc8/image/upload/v1752658654/clear-butter_ochelc.png"
+                    : "https://res.cloudinary.com/djxepunc8/image/upload/v1752658658/game-over-butter_wgn958.png"
                 }
                 alt="modal"
                 width={70}
@@ -612,7 +626,7 @@ export default function GamePage() {
                     className="text-black flex items-center gap-2 bg-background rounded-xl px-4 py-1"
                   >
                     <Image
-                      src="/game/game-home.png"
+                      src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658657/game-home_p5vuyq.png"
                       alt="home"
                       width={16}
                       height={15}
@@ -624,7 +638,7 @@ export default function GamePage() {
                     className="text-black flex items-center gap-2 bg-primary rounded-xl px-4 py-1"
                   >
                     <Image
-                      src="/game/game-retry.png"
+                      src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658658/game-retry_lyvryi.png"
                       alt="retry"
                       width={18}
                       height={10}

@@ -4,13 +4,12 @@ export default function WhatIsButterDream() {
   return (
     <div className="flex flex-col gap-4 text-xs">
       <p className="break-words whitespace-pre-line">
-        Butter&apos;s Dream is a donation-based NFT project with a mission to
-        &quot;
+        Butter&apos;s Dream is a donation-based project with a mission to &quot;
         <span className="font-jjibba-bold">Let Butter Fly</span>&quot;.
       </p>
       <p className="break-words whitespace-pre-line">
-        When you buy and donate Butter Tokens, you&apos;re stacking butter on
-        toast— a fun and adorable way to showcase our collective generosity!
+        Donate 0.1 USDC or more to receive your own Butter, stack it on the
+        Butter Tower, and help us reach our goal!
       </p>
       <p className="break-words whitespace-pre-line">
         At the end of each season, all donations go to a charitable cause, and
