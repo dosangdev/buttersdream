@@ -25,6 +25,7 @@ export function useTotaldonateLog() {
   const [processedData, setProcessedData] = useState<ProcessedDonationLog[]>(
     []
   );
+  const [isProcessing, setIsProcessing] = useState(false);
   const { data: logs } = useSWR(`/api/get-wallet-logs`);
   const { result } = logs || {};
 
@@ -114,11 +115,49 @@ export function useTotaldonateLog() {
     return combined;
   }, [mergedDonationLogs, farcasterUserDataArray]);
 
-  // 5. 컬러 Promise 처리
+  // 5. 컬러 Promise 처리 및 display_name 기준 머지
   useEffect(() => {
-    const processColors = async () => {
+    const processFinalData = async () => {
+      if (combinedData.length === 0) {
+        setProcessedData([]);
+        setIsProcessing(false);
+        return;
+      }
+
+      setIsProcessing(true);
+
+      // 1단계: display_name 기준으로 먼저 머지
+      const map = new Map<string, ProcessedDonationLog>();
+      const duplicateKeys: string[] = [];
+
+      combinedData.forEach((item) => {
+        // farcasterUserData가 없으면 from 주소로 대체
+        const key =
+          item.farcasterUserData && item.farcasterUserData.display_name
+            ? item.farcasterUserData.display_name
+            : item.from;
+
+        if (!map.has(key)) {
+          map.set(key, { ...item });
+        } else {
+          duplicateKeys.push(key);
+          const existing = map.get(key)!;
+          // value 합산
+          const newValue = existing.value + item.value;
+          // timestamp가 더 빠른 쪽으로 대표값 갱신
+          if (new Date(item.timestamp) < new Date(existing.timestamp)) {
+            map.set(key, { ...item, value: newValue });
+          } else {
+            map.set(key, { ...existing, value: newValue });
+          }
+        }
+      });
+
+      const mergedData = Array.from(map.values());
+
+      // 2단계: 컬러 처리
       const processed = await Promise.all(
-        combinedData.map(async (item) => {
+        mergedData.map(async (item) => {
           if (
             item.hasFarcasterData &&
             typeof item.farcasterUserData.color !== "string"
@@ -154,39 +193,16 @@ export function useTotaldonateLog() {
       );
 
       setProcessedData(processed);
+      setIsProcessing(false);
     };
 
-    if (combinedData.length > 0) {
-      processColors();
-    }
+    processFinalData();
   }, [combinedData]);
 
-  // display_name 기준으로 value 합치고, timestamp가 가장 빠른 데이터로 대표값 사용
-  const mergedByDisplayName = useMemo(() => {
-    const map = new Map<string, ProcessedDonationLog>();
-    processedData.forEach((item) => {
-      // farcasterUserData가 없으면 from 주소로 대체
-      const key =
-        item.farcasterUserData && item.farcasterUserData.display_name
-          ? item.farcasterUserData.display_name
-          : item.from;
+  // 처리 중이거나 데이터가 없으면 빈 배열 반환
+  if (isProcessing || processedData.length === 0) {
+    return [];
+  }
 
-      if (!map.has(key)) {
-        map.set(key, { ...item });
-      } else {
-        const existing = map.get(key)!;
-        // value 합산
-        const newValue = existing.value + item.value;
-        // timestamp가 더 빠른 쪽으로 대표값 갱신
-        if (new Date(item.timestamp) < new Date(existing.timestamp)) {
-          map.set(key, { ...item, value: newValue });
-        } else {
-          map.set(key, { ...existing, value: newValue });
-        }
-      }
-    });
-    return Array.from(map.values());
-  }, [processedData]);
-
-  return mergedByDisplayName;
+  return processedData;
 }

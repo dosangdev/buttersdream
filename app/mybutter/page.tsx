@@ -79,17 +79,6 @@ export default function MyButterPage() {
           <ConnectWallet />
         </div>
       )}
-      {/* {myDonationLogs.length === 0 ? (
-        <EmptyMyDonation />
-      ) : (
-        <div className="w-full">
-          <MyButterNftStatus
-            userData={myDonationLogs[0]}
-            totalValue={totalValue}
-          />
-          <MyButterDonationList userData={myDonationLogs} />
-        </div>
-      )} */}
     </main>
   );
 }

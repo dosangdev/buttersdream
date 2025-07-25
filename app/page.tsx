@@ -36,6 +36,7 @@ export default function Home() {
   const { address } = useAccount();
   const router = useRouter();
   const totalDonateLog = useTotaldonateLog();
+
   const butterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [centerIndex, setCenterIndex] = useState(0);
 
@@ -299,21 +300,23 @@ export default function Home() {
         </div>
 
         <div className="">
-          <button
-            className="fixed bottom-14 left-2 cursor-pointer z-50"
-            onClick={() => setIsDonateInfoOpen(!isDonateInfoOpen)}
-          >
-            <Image
-              src={
-                isDonateInfoOpen
-                  ? `/butterfly-basic.png`
-                  : `/home/butterfly-with-folded-wings.png`
-              }
-              width={isDonateInfoOpen ? 79 : 65}
-              height={isDonateInfoOpen ? 56 : 58}
-              alt="Where to donate info button"
-            />
-          </button>
+          {isAllColorReady && (
+            <button
+              className="fixed bottom-14 left-2 cursor-pointer z-50"
+              onClick={() => setIsDonateInfoOpen(!isDonateInfoOpen)}
+            >
+              <Image
+                src={
+                  isDonateInfoOpen
+                    ? `/butterfly-basic.png`
+                    : `/home/butterfly-with-folded-wings.png`
+                }
+                width={isDonateInfoOpen ? 79 : 65}
+                height={isDonateInfoOpen ? 56 : 58}
+                alt="Where to donate info button"
+              />
+            </button>
+          )}
         </div>
         {/* 기부처 모달 */}
         {isDonateInfoOpen && (
