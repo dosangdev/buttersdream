@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Logo from "@/public/logo.png";
+import GameLogo from "@/public/game-logo.png";
 import CustomConnectButton from "./CustomConnectButton";
 import ConnectWalletEffect from "./ConnectWalletEffect";
 import { usePathname } from "next/navigation";
@@ -36,7 +37,11 @@ export default function Header() {
         pathname === "/ranking" ? "max-w-md mx-auto px-4 pt-4" : ""
       )}
     >
-      <Image src={Logo} alt="logo" className="w-[105px] h-[58px]" />
+      <Image
+        src={pathname === "/game" ? GameLogo : Logo}
+        alt="logo"
+        className="w-[105px] h-[58px]"
+      />
       <div className="relative flex items-center gap-2">
         {address && chainId !== BASE_CHAIN_ID && (
           <button
