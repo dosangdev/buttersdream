@@ -36,6 +36,7 @@ export default function Home() {
   const { address } = useAccount();
   const router = useRouter();
   const totalDonateLog = useTotaldonateLog();
+  console.log(totalDonateLog);
 
   const butterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [centerIndex, setCenterIndex] = useState(0);
@@ -72,9 +73,33 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex flex-col items-center pt-[25px] relative select-none">
+      <main className="flex flex-col items-center  relative select-none">
         <div className="w-full max-w-md">
+          {isAllColorReady && (
+            <div className="w-full text-xs text-black px-2 flex justify-end pb-[13px]">
+              <span>total</span>
+              <span className="mx-1">:</span>
+              <span className="pr-1">
+                {totalDonateLog
+                  .reduce((acc, item) => acc + item.value, 0)
+                  .toFixed(1)}
+              </span>
+              <span>USDC</span>
+            </div>
+          )}
+
           {!isLoading && <ProgressBar />}
+          {isAllColorReady && (
+            <button
+              className="rounded-full bg-primary w-full text-md text-center text-black mt-4 py-1 shadow-[0_2px_2px_0_rgba(0,0,0,0.25)] "
+              onClick={() => {
+                router.push("/tutorial");
+              }}
+            >
+              donate to stack up your butter
+            </button>
+          )}
+
           {/* <div className="relative flex flex-col items-center pt-[51px]"> */}
           <div className="relative flex flex-col items-center pt-[80px] pb-[50px]">
             <div className="flex flex-col items-center  z-30">
