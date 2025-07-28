@@ -43,7 +43,7 @@ export default function LayoutWrapper({
     >
       <ClientSWRConfig>
         <Header />
-        <div className={cn(isRankingPage && "flex-grow flex flex-col")}>
+        <div className={cn("mb-4", isRankingPage && "flex-grow flex flex-col")}>
           {children}
         </div>
         <NavBar />

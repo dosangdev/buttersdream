@@ -13,11 +13,11 @@ export default function NavBar() {
 
   return (
     <nav
-      className={`fixed bottom-0 left-0 right-0 z-50 flex justify-between items-center max-w-md w-full h-[47px] mx-auto bg-[url('/nav/navBar.png')] bg-contain sm:bg-cover  bg-center bg-no-repeat`}
+      className={`fixed bottom-0 left-0 right-0 z-50 flex justify-between max-w-md w-full h-[70px] mx-auto bg-[url('/nav/Exclude2.png')] bg-contain sm:bg-cover  bg-center bg-no-repeat`}
     >
-      <div className="flex justify-around w-full max-w-md items-center relative text-black">
+      <div className="flex justify-around w-full max-w-md relative text-black">
         <div
-          className="cursor-pointer w-[10%] h-[47px] flex items-center justify-center"
+          className="cursor-pointer w-[10%] h-[47px] flex justify-center"
           onClick={() => handleClick("/")}
         >
           <Image

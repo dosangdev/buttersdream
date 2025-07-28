@@ -36,7 +36,6 @@ export default function Home() {
   const { address } = useAccount();
   const router = useRouter();
   const totalDonateLog = useTotaldonateLog();
-  console.log(totalDonateLog);
 
   const butterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [centerIndex, setCenterIndex] = useState(0);
@@ -327,7 +326,7 @@ export default function Home() {
         <div className="">
           {isAllColorReady && (
             <button
-              className="fixed bottom-14 left-2 cursor-pointer z-50"
+              className="fixed bottom-16 left-2 cursor-pointer z-50"
               onClick={() => setIsDonateInfoOpen(!isDonateInfoOpen)}
             >
               <Image
