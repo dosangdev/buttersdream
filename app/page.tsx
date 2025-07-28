@@ -326,7 +326,7 @@ export default function Home() {
         <div className="">
           {isAllColorReady && (
             <button
-              className="fixed bottom-16 left-2 cursor-pointer z-50"
+              className="fixed bottom-[4.5rem] left-2 cursor-pointer z-50"
               onClick={() => setIsDonateInfoOpen(!isDonateInfoOpen)}
             >
               <Image
