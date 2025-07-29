@@ -19,10 +19,20 @@ function getTimeLeft(deadline: Date) {
   return { days, hours, minutes, seconds };
 }
 
-export default function ProgressBar() {
+export default function ProgressBar({
+  onComplete,
+}: {
+  onComplete?: (isComplete: boolean) => void;
+}) {
   // 2025년 8월 1일 00:00:00 UTC 마감일
   const deadline = new Date(Date.UTC(2025, 7, 1, 0, 0, 0)); // 7=8월 (UTC 기준)
   const [timeLeft, setTimeLeft] = useState(getTimeLeft(deadline));
+
+  const isComplete =
+    timeLeft.days === 0 &&
+    timeLeft.hours === 0 &&
+    timeLeft.minutes === 0 &&
+    timeLeft.seconds === 0;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -31,12 +41,15 @@ export default function ProgressBar() {
     return () => clearInterval(timer);
   }, [deadline]);
 
+  useEffect(() => {
+    if (onComplete) {
+      onComplete(isComplete);
+    }
+  }, [isComplete, onComplete]);
+
   return (
     <div className="text-black w-full max-w-2xl mx-auto bg-white rounded-xl shadow flex justify-between items-center px-8 py-2 border-2 border-[#EAEAEA] ">
-      {timeLeft.days === 0 &&
-      timeLeft.hours === 0 &&
-      timeLeft.minutes === 0 &&
-      timeLeft.seconds === 0 ? (
+      {isComplete ? (
         // 시간이 모두 00이 되면 완료 메시지 표시
         <div className="w-full flex flex-col items-center text-xs">
           <p className="text-md">Season 1 is Complete!</p>

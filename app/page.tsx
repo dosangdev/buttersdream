@@ -34,6 +34,7 @@ export default function Home() {
   const { isLoading } = useDonationProgress();
   const [isDonateInfoOpen, setIsDonateInfoOpen] = useState(false);
   const [currentModalPage, setCurrentModalPage] = useState(0);
+  const [isSeasonComplete, setIsSeasonComplete] = useState(false);
   const { address } = useAccount();
   const router = useRouter();
   const totalDonateLog = useTotaldonateLog();
@@ -88,7 +89,7 @@ export default function Home() {
             </div>
           )}
 
-          {!isLoading && <ProgressBar />}
+          {!isLoading && <ProgressBar onComplete={setIsSeasonComplete} />}
           {isAllColorReady && (
             <button
               className="rounded-full bg-primary w-full text-md text-center text-black mt-4 py-1 shadow-[0_2px_2px_0_rgba(0,0,0,0.25)] "
@@ -96,7 +97,9 @@ export default function Home() {
                 router.push("/tutorial");
               }}
             >
-              donate to stack up your butter
+              {isSeasonComplete
+                ? "wanna see where your butter flew?"
+                : "donate to stack up your butter"}
             </button>
           )}
 
