@@ -5,13 +5,14 @@ import Logo from "@/public/logo.png";
 import GameLogo from "@/public/game-logo.png";
 import CustomConnectButton from "./CustomConnectButton";
 import ConnectWalletEffect from "./ConnectWalletEffect";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAccount, useWalletClient, useChainId, useConnect } from "wagmi";
 import { useState } from "react";
 import { cn } from "@/app/utils/cn";
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const { address } = useAccount();
   const { data: walletClient } = useWalletClient();
   const chainId = useChainId();
@@ -36,6 +37,14 @@ export default function Header() {
         "bg-transparent flex w-full justify-between items-center",
         pathname === "/ranking" ? "max-w-md mx-auto px-4 pt-4" : ""
       )}
+      onClick={() => {
+        if (pathname === "/game") {
+          window.location.reload();
+        }
+        if (pathname !== "/game") {
+          router.push("/");
+        }
+      }}
     >
       <Image
         src={pathname === "/game" ? GameLogo : Logo}
