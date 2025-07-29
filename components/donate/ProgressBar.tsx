@@ -33,33 +33,47 @@ export default function ProgressBar() {
 
   return (
     <div className="text-black w-full max-w-2xl mx-auto bg-white rounded-xl shadow flex justify-between items-center px-8 py-2 border-2 border-[#EAEAEA] ">
-      <div className="flex flex-col items-center">
-        <span className="text-base font-bold">
-          {String(timeLeft.days).padStart(2, "0")}
-        </span>
-        <span className=" text-xs font-hand">Days</span>
-      </div>
-      <span className="text-base font-bold">:</span>
-      <div className="flex flex-col items-center">
-        <span className="text-base font-bold">
-          {String(timeLeft.hours).padStart(2, "0")}
-        </span>
-        <span className=" text-xs font-hand">Hours</span>
-      </div>
-      <span className="text-base font-bold">:</span>
-      <div className="flex flex-col items-center">
-        <span className="text-base font-bold">
-          {String(timeLeft.minutes).padStart(2, "0")}
-        </span>
-        <span className=" text-xs font-hand">Minutes</span>
-      </div>
-      <span className="text-base font-bold">:</span>
-      <div className="flex flex-col items-center">
-        <span className="text-base font-bold">
-          {String(timeLeft.seconds).padStart(2, "0")}
-        </span>
-        <span className=" text-xs font-hand">Seconds</span>
-      </div>
+      {timeLeft.days === 0 &&
+      timeLeft.hours === 0 &&
+      timeLeft.minutes === 0 &&
+      timeLeft.seconds === 0 ? (
+        // 시간이 모두 00이 되면 완료 메시지 표시
+        <div className="w-full flex flex-col items-center text-xs">
+          <p className="text-md">Season 1 is Complete!</p>
+          <p>Season 2 is already warming up, Stay tuned!</p>
+        </div>
+      ) : (
+        // 카운트다운 표시
+        <>
+          <div className="flex flex-col items-center">
+            <span className="text-base font-bold">
+              {String(timeLeft.days).padStart(2, "0")}
+            </span>
+            <span className="text-xs font-hand">Days</span>
+          </div>
+          <span className="text-base font-bold">:</span>
+          <div className="flex flex-col items-center">
+            <span className="text-base font-bold">
+              {String(timeLeft.hours).padStart(2, "0")}
+            </span>
+            <span className="text-xs font-hand">Hours</span>
+          </div>
+          <span className="text-base font-bold">:</span>
+          <div className="flex flex-col items-center">
+            <span className="text-base font-bold">
+              {String(timeLeft.minutes).padStart(2, "0")}
+            </span>
+            <span className="text-xs font-hand">Minutes</span>
+          </div>
+          <span className="text-base font-bold">:</span>
+          <div className="flex flex-col items-center">
+            <span className="text-base font-bold">
+              {String(timeLeft.seconds).padStart(2, "0")}
+            </span>
+            <span className="text-xs font-hand">Seconds</span>
+          </div>
+        </>
+      )}
     </div>
   );
 }
