@@ -33,6 +33,7 @@ const butterComponents = [
 export default function Home() {
   const { isLoading } = useDonationProgress();
   const [isDonateInfoOpen, setIsDonateInfoOpen] = useState(false);
+  const [currentModalPage, setCurrentModalPage] = useState(0);
   const { address } = useAccount();
   const router = useRouter();
   const totalDonateLog = useTotaldonateLog();
@@ -352,57 +353,129 @@ export default function Home() {
                 height={400}
                 alt="Where to donate modal"
               />
-              <div className="absolute top-0 left-0 w-full h-full text-black text-center pt-[56px] text-xl">
-                <p>This season,</p>
-                <p className="flex justify-center items-center pt-4">
-                  <span>your</span>
-                  <span className="relative w-[35px] h-[24px] inline-block mx-1">
-                    <Image
-                      src="/butter-coin.png"
-                      width={25}
-                      height={24}
-                      alt="coin"
-                      className="absolute left-0 -top-2"
-                    />
-                    <Image
-                      src="/butter-coin.png"
-                      width={25}
-                      height={24}
-                      alt="coin"
-                      className="absolute left-3 top-0 opacity-80"
-                    />
-                  </span>
-                  <span>are</span>
-                </p>
-                <p>gonna be donated</p>
 
-                <p
-                  className="relative flex justify-center mt-[23px] cursor-pointer"
-                  onClick={() => {
-                    window.open(
-                      "https://docs.google.com/forms/d/e/1FAIpQLScstj_yD_zGpVJ22ZBINMgVNwFQB0MJLVDwdrNBQ8e_A2uDgA/viewform",
-                      "_blank"
-                    );
+              {/* 슬라이드 컨테이너 */}
+              <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+                <div
+                  className="flex transition-transform duration-300 ease-in-out"
+                  style={{
+                    transform: `translateX(-${currentModalPage * 100}%)`,
                   }}
                 >
-                  <Image
-                    src="/home/where-to-donate-border.png"
-                    width={259}
-                    height={67}
-                    alt="border"
-                  />
-                  <div className=" w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-bold">
-                    <p>Vote for the</p>
-                    <p>Donation Destination</p>
+                  {/* 첫 번째 페이지 - 게임 소개 */}
+                  <div className="w-full flex-shrink-0 text-black text-center pt-[40px] text-xl">
+                    <p className="mb-2">Hey!</p>
+                    <p className="">Play the cutest game in Web3</p>
+                    <p className="mb-2">Can you match 'em all?</p>
+
+                    {/* 게임 이미지 */}
+                    <div className="flex justify-center">
+                      <Image
+                        src="/match-the-butters-ad.png"
+                        width={182}
+                        height={187}
+                        alt="match-the-butters-ad"
+                      />
+                    </div>
+
+                    {/* Play Now 버튼 */}
+                    <button
+                      onClick={() => {
+                        router.push("/game");
+                        setIsDonateInfoOpen(false);
+                        setCurrentModalPage(0);
+                      }}
+                      className="bg-primary px-10 py-[3px] rounded-full text-md text-black shadow-md hover:bg-yellow-200 transition-colors mt-2 border-2 border-black"
+                    >
+                      Play Now
+                    </button>
+
+                    {/* 다음 페이지로 이동하는 버튼 */}
+
+                    <button
+                      onClick={() => setCurrentModalPage(1)}
+                      className="absolute right-10 top-1/2 "
+                    >
+                      <Image
+                        src="/arrow.png"
+                        width={19}
+                        height={20}
+                        alt="arrow"
+                      />
+                    </button>
                   </div>
-                </p>
-                <p className="pt-[23px]">{totalDonateLog.length} donors</p>
-                <p>have stacked</p>
-                <p>their butter so far</p>
+
+                  {/* 두 번째 페이지 - 기부 내용 */}
+                  <div className="relative w-full flex-shrink-0 text-black text-center pt-[40px] text-xl">
+                    <p>This season,</p>
+                    <p className="flex justify-center items-center pt-4">
+                      <span>your</span>
+                      <span className="relative w-[35px] h-[24px] inline-block mx-1">
+                        <Image
+                          src="/butter-coin.png"
+                          width={25}
+                          height={24}
+                          alt="coin"
+                          className="absolute left-0 -top-2"
+                        />
+                        <Image
+                          src="/butter-coin.png"
+                          width={25}
+                          height={24}
+                          alt="coin"
+                          className="absolute left-3 top-0 opacity-80"
+                        />
+                      </span>
+                      <span>are</span>
+                    </p>
+                    <p>gonna be donated</p>
+
+                    <p
+                      className="relative flex justify-center mt-[23px] cursor-pointer"
+                      onClick={() => {
+                        window.open(
+                          "https://docs.google.com/forms/d/e/1FAIpQLScstj_yD_zGpVJ22ZBINMgVNwFQB0MJLVDwdrNBQ8e_A2uDgA/viewform",
+                          "_blank"
+                        );
+                      }}
+                    >
+                      <Image
+                        src="/home/where-to-donate-border.png"
+                        width={259}
+                        height={67}
+                        alt="border"
+                      />
+                      <div className="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-bold">
+                        <p>Vote for the</p>
+                        <p>Donation Destination</p>
+                      </div>
+                    </p>
+                    <p className="pt-[23px]">{totalDonateLog.length} donors</p>
+                    <p>have stacked</p>
+                    <p>their butter so far</p>
+
+                    {/* 이전 페이지로 이동하는 버튼 */}
+                    <button
+                      onClick={() => setCurrentModalPage(0)}
+                      className="absolute left-8 top-1/2  rotate-180"
+                    >
+                      <Image
+                        src="/arrow.png"
+                        width={19}
+                        height={20}
+                        alt="arrow"
+                      />
+                    </button>
+                  </div>
+                </div>
               </div>
+
               <button
-                className="absolute top-8 right-20 px-2 py-1 text-black font-bold"
-                onClick={() => setIsDonateInfoOpen(false)}
+                className="absolute top-8 right-20 px-2 py-1 text-2xl text-black font-bold"
+                onClick={() => {
+                  setIsDonateInfoOpen(false);
+                  setCurrentModalPage(0);
+                }}
               >
                 ×
               </button>
