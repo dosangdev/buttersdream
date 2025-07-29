@@ -2,14 +2,48 @@
 
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function NavBar() {
   const router = useRouter();
   const pathname = usePathname();
+  const [isGameActive, setIsGameActive] = useState(false);
+
+  // 게임 페이지에서 게임 상태 확인
+  useEffect(() => {
+    if (pathname === "/game") {
+      const checkGameState = () => {
+        // body의 data-game-state 속성 확인
+        const gameState = document.body.getAttribute("data-game-state");
+        setIsGameActive(gameState === "playing");
+      };
+
+      // 초기 상태 확인
+      checkGameState();
+
+      // DOM 변화 감지
+      const observer = new MutationObserver(checkGameState);
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["data-game-state"],
+      });
+
+      return () => observer.disconnect();
+    } else {
+      setIsGameActive(false);
+    }
+  }, [pathname]);
 
   const handleClick = (path: string) => {
     router.push(path);
   };
+
+  // 게임 페이지이고 게임이 활성 상태가 아니면 NavBar 숨기기
+  if (pathname === "/game" && isGameActive) {
+    return null;
+  }
 
   return (
     <nav

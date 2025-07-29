@@ -145,6 +145,13 @@ export default function GamePage() {
         ? "https://res.cloudinary.com/djxepunc8/image/upload/v1752658657/game-angry-butter_wcvbt9.png"
         : "https://res.cloudinary.com/djxepunc8/image/upload/v1752658665/game-smile-butter_gjeytr.png"
     );
+    // 게임 시작 전 상태 설정
+    document.body.setAttribute("data-game-state", "modal");
+
+    // 컴포넌트 언마운트 시 정리
+    return () => {
+      document.body.removeAttribute("data-game-state");
+    };
   }, []);
 
   useEffect(() => {
@@ -165,11 +172,16 @@ export default function GamePage() {
   useEffect(() => {
     if (showStartModal) return; // 시작 모달이 보이는 동안은 타이머 시작하지 않음
 
+    // 게임 시작 상태 설정
+    document.body.setAttribute("data-game-state", "playing");
+
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timerRef.current!);
           setIsGameOver(true);
+          // 게임 오버 상태 설정
+          document.body.setAttribute("data-game-state", "modal");
           return 0;
         }
         return prev - 1;
@@ -187,6 +199,8 @@ export default function GamePage() {
     ) {
       clearInterval(timerRef.current!);
       setClearTime(TIME_LIMITS[boardSize] - timeLeft);
+      // 게임 클리어 상태 설정
+      document.body.setAttribute("data-game-state", "modal");
     }
   }, [board, timeLeft, clearTime, boardSize]);
 
