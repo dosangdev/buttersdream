@@ -20,16 +20,49 @@ export default function LayoutWrapper({
   useEffect(() => {
     if (isGamePage) {
       document.body.style.backgroundColor = "#C1EAFF";
-      document.body.style.backgroundImage = "url('/cloudes.png')";
+      document.body.style.backgroundImage = "url('/mobile-cloudes.png')";
+      // md 브레이크포인트 이상에서 cloudes.png 사용
+      const mediaQuery = window.matchMedia("(min-width: 28rem)");
+      const updateBackground = (e: MediaQueryListEvent | MediaQueryList) => {
+        document.body.style.backgroundImage = e.matches
+          ? "url('/cloudes.png')"
+          : "url('/mobile-cloudes.png')";
+      };
+
+      mediaQuery.addEventListener("change", updateBackground);
+      updateBackground(mediaQuery);
+
+      return () => {
+        mediaQuery.removeEventListener("change", updateBackground);
+      };
     } else {
       document.body.style.backgroundColor = "";
-      document.body.style.backgroundImage = "url('/cloudes.png')";
+      document.body.style.backgroundImage = "url('/mobile-cloudes.png')";
+      // md 브레이크포인트 이상에서 cloudes.png 사용
+      const mediaQuery = window.matchMedia("(min-width: 28rem)");
+      const updateBackground = (e: MediaQueryListEvent | MediaQueryList) => {
+        document.body.style.backgroundImage = e.matches
+          ? "url('/cloudes.png')"
+          : "url('/mobile-cloudes.png')";
+      };
+
+      mediaQuery.addEventListener("change", updateBackground);
+      updateBackground(mediaQuery);
+
+      return () => {
+        mediaQuery.removeEventListener("change", updateBackground);
+      };
     }
 
     // 컴포넌트 언마운트 시 원래 스타일로 복원
     return () => {
       document.body.style.backgroundColor = "";
-      document.body.style.backgroundImage = "url('/cloudes.png')";
+      document.body.style.backgroundImage = "url('/mobile-cloudes.png')";
+      // md 브레이크포인트 이상에서 cloudes.png 사용
+      const mediaQuery = window.matchMedia("(min-width: 28rem)");
+      if (mediaQuery.matches) {
+        document.body.style.backgroundImage = "url('/cloudes.png')";
+      }
     };
   }, [isGamePage]);
 

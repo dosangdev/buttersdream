@@ -70,7 +70,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} w-full min-h-screen bg-background text-foreground  bg-[url('/cloudes.png')]`}
+        className={`${inter.variable} w-full min-h-screen bg-background text-foreground bg-[url('/mobile-cloudes.png')] md:bg-[url('/cloudes.png')]`}
       >
         <Providers>
           <LayoutWrapper>{children}</LayoutWrapper>

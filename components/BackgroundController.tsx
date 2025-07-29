@@ -23,7 +23,7 @@ export default function BackgroundController() {
   useEffect(() => {
     const body = document.body;
     const baseClasses =
-      "w-full min-h-screen bg-background text-foreground bg-[url('/cloudes.png')] bg-cover";
+      "w-full min-h-screen bg-background text-foreground bg-[url('/mobile-cloudes.png')] md:bg-[url('/cloudes.png')] bg-cover";
     const animationClass =
       isInitialAnimation && isCreationPage
         ? "animate-initialBackgroundMove"
