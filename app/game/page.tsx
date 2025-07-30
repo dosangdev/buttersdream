@@ -637,7 +637,7 @@ export default function GamePage() {
                 <>
                   <button
                     onClick={() => setShowStartModal(true)}
-                    className="text-black flex items-center gap-2 bg-background rounded-xl px-4 py-1"
+                    className="text-black flex items-center gap-2 bg-[#DDF3FF] rounded-xl px-4 py-1"
                   >
                     <Image
                       src="https://res.cloudinary.com/djxepunc8/image/upload/v1752658657/game-home_p5vuyq.png"
