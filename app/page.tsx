@@ -94,7 +94,11 @@ export default function Home() {
             <button
               className="rounded-full bg-primary w-full text-md text-center text-black mt-4 py-1 shadow-[0_2px_2px_0_rgba(0,0,0,0.25)] "
               onClick={() => {
-                router.push("/tutorial");
+                if (isSeasonComplete) {
+                  window.open("https://www.savethechildren.net/", "_blank");
+                } else {
+                  router.push("/tutorial");
+                }
               }}
             >
               {isSeasonComplete
@@ -449,8 +453,16 @@ export default function Home() {
                         alt="border"
                       />
                       <div className="w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl font-bold">
-                        <p>Vote for the</p>
-                        <p>Donation Destination</p>
+                        {isSeasonComplete ? (
+                          <>
+                            <p>Save the Children</p>
+                          </>
+                        ) : (
+                          <>
+                            <p>Vote for the</p>
+                            <p>Donation Destination</p>
+                          </>
+                        )}
                       </div>
                     </p>
                     <p className="pt-[23px]">{totalDonateLog.length} donors</p>
