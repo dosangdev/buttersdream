@@ -38,13 +38,13 @@ export function useWagmiConfig() {
       projectId: "8df563a8c13c0286ecd207457282333d",
     }
   );
-  connectors.push(miniAppConnector());
+  // connectors.push(miniAppConnector());
 
   return createConfig({
     chains: [base],
     transports: {
       [base.id]: http(),
     },
-    connectors,
+    connectors: [...connectors, miniAppConnector()],
   });
 }
