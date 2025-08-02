@@ -4,11 +4,7 @@ import ConnectButtonBefore from "@/public/custom-connect-button-before.png";
 import ConnectButtonAfter from "@/public/custom-connect-button-after.png";
 import Image from "next/image";
 import { useAccount } from "wagmi";
-import {
-  useAccountModal,
-  useConnectModal,
-  ConnectButton,
-} from "@rainbow-me/rainbowkit";
+import { useAccountModal, useConnectModal } from "@rainbow-me/rainbowkit";
 import { formatAddress } from "@/app/utils/strings";
 
 export default function CustomConnectButton() {
@@ -19,7 +15,6 @@ export default function CustomConnectButton() {
 
   return (
     <>
-      <ConnectButton />
       {isConnected ? (
         <button
           className="relative w-[120px] h-[32px] text-sm text-black text-center"
