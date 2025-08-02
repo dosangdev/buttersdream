@@ -12,7 +12,7 @@ import {
   trustWallet,
 } from "@rainbow-me/rainbowkit/wallets";
 import { base } from "wagmi/chains";
-import { farcasterFrame as miniAppConnector } from "@farcaster/frame-wagmi-connector";
+import { farcasterFrame as miniAppConnector } from "@farcaster/miniapp-wagmi-connector";
 import { useMemo } from "react";
 import { createConfig, http } from "wagmi";
 

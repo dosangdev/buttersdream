@@ -5,7 +5,7 @@ import { useDonationProgress } from "@/hooks/useDonationProgress";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 // import { butterComponents } from "./constants/butterItems";
-import { sdk } from "@farcaster/frame-sdk";
+import { sdk } from "@farcaster/miniapp-sdk";
 
 import { useAccount } from "wagmi";
 import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
