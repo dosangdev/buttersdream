@@ -19,6 +19,7 @@ import Surprised from "./constants/butterItems/Surprised";
 import Confused from "./constants/butterItems/Confused";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
+import DonationCompleteModal from "@/components/DonationCompleteModal";
 
 const butterComponents = [
   { component: Angry, type: "Angry" },
@@ -35,6 +36,8 @@ export default function Home() {
   const [isDonateInfoOpen, setIsDonateInfoOpen] = useState(false);
   const [currentModalPage, setCurrentModalPage] = useState(0);
   const [isSeasonComplete, setIsSeasonComplete] = useState(false);
+  const [showDonationCompleteModal, setShowDonationCompleteModal] =
+    useState(false);
   const { address } = useAccount();
   const router = useRouter();
   const totalDonateLog = useTotaldonateLog();
@@ -95,7 +98,7 @@ export default function Home() {
               className="rounded-full bg-primary w-full text-md text-center text-black mt-4 py-1 shadow-[0_2px_2px_0_rgba(0,0,0,0.25)] "
               onClick={() => {
                 if (isSeasonComplete) {
-                  window.open("https://www.savethechildren.net/", "_blank");
+                  setShowDonationCompleteModal(true);
                 } else {
                   router.push("/tutorial");
                 }
@@ -441,7 +444,7 @@ export default function Home() {
                       className="relative flex justify-center mt-[23px] cursor-pointer"
                       onClick={() => {
                         window.open(
-                          "https://docs.google.com/forms/d/e/1FAIpQLScstj_yD_zGpVJ22ZBINMgVNwFQB0MJLVDwdrNBQ8e_A2uDgA/viewform",
+                          "https://www.savethechildren.net/",
                           "_blank"
                         );
                       }}
@@ -497,6 +500,12 @@ export default function Home() {
             </div>
           </div>
         )}
+
+        {/* 기부 완료 모달 */}
+        <DonationCompleteModal
+          isOpen={showDonationCompleteModal}
+          onClose={() => setShowDonationCompleteModal(false)}
+        />
       </main>
     </>
   );

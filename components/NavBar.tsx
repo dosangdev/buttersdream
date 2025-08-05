@@ -3,11 +3,14 @@
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import DonationCompleteModal from "./DonationCompleteModal";
 
 export default function NavBar() {
   const router = useRouter();
   const pathname = usePathname();
   const [isGameActive, setIsGameActive] = useState(false);
+  const [showDonationCompleteModal, setShowDonationCompleteModal] =
+    useState(false);
 
   // 게임 페이지에서 게임 상태 확인
   useEffect(() => {
@@ -38,6 +41,10 @@ export default function NavBar() {
 
   const handleClick = (path: string) => {
     router.push(path);
+  };
+
+  const handleCoinClick = () => {
+    setShowDonationCompleteModal(true);
   };
 
   // 게임 페이지이고 게임이 활성 상태가 아니면 NavBar 숨기기
@@ -85,7 +92,7 @@ export default function NavBar() {
         {/* 코인 아이콘 */}
         <div className="absolute left-1/2 -translate-x-1/2 -top-8 z-10">
           <button
-            onClick={() => handleClick("/tutorial")}
+            onClick={handleCoinClick}
             className="rounded-full bg-transparent p-2 flex items-center justify-center cursor-pointer"
           >
             <Image
@@ -129,6 +136,12 @@ export default function NavBar() {
           />
         </div>
       </div>
+
+      {/* 기부 완료 모달 */}
+      <DonationCompleteModal
+        isOpen={showDonationCompleteModal}
+        onClose={() => setShowDonationCompleteModal(false)}
+      />
     </nav>
   );
 }
