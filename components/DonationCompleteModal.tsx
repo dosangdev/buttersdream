@@ -47,7 +47,7 @@ export default function DonationCompleteModal({
         {/* 안내 메시지 */}
         <div className="text-sm text-gray-700 mb-6 leading-relaxed">
           <p className="mb-2">
-            Butter's Dream's season 1 has been successfully completed!
+            Butter's Dream season 1 has been successfully completed!
           </p>
           <p className="mb-2">
             Thanks to your warm hearts, many children can receive help.
