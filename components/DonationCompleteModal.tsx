@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 
 interface DonationCompleteModalProps {
   isOpen: boolean;
@@ -11,6 +12,8 @@ export default function DonationCompleteModal({
   isOpen,
   onClose,
 }: DonationCompleteModalProps) {
+  const [isImageExpanded, setIsImageExpanded] = useState(false);
+
   if (!isOpen) return null;
 
   return (
@@ -36,14 +39,15 @@ export default function DonationCompleteModal({
             alt="donation receipt"
             width={200}
             height={150}
-            className="object-contain w-full max-w-xs"
+            className="object-contain w-full max-w-xs cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={() => setIsImageExpanded(true)}
           />
         </div>
 
         {/* 안내 메시지 */}
         <div className="text-sm text-gray-700 mb-6 leading-relaxed">
           <p className="mb-2">
-            Butter Dream's donation campaign has been successfully completed!
+            Butter's Dream's season 1 has been successfully completed!
           </p>
           <p className="mb-2">
             Thanks to your warm hearts, many children can receive help.
@@ -70,6 +74,27 @@ export default function DonationCompleteModal({
           </button>
         </div>
       </div>
+
+      {/* 이미지 확대 모달 */}
+      {isImageExpanded && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[60] px-4">
+          <div className="relative max-w-4xl max-h-[90vh] w-full">
+            <button
+              className="absolute top-4 right-4 text-black text-3xl font-bold z-10 hover:opacity-80"
+              onClick={() => setIsImageExpanded(false)}
+            >
+              ×
+            </button>
+            <Image
+              src="/donate/donation-receipt.png"
+              alt="donation receipt expanded"
+              width={800}
+              height={600}
+              className="object-contain w-full h-full"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
