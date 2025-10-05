@@ -2,36 +2,16 @@
 
 import { butterComponents } from "@/app/constants/butterItems";
 import { cn } from "@/app/utils/cn";
-import { useTotalRanking } from "@/hooks/useTotalRanking";
-import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
+import { useTotalRankingFromDonors } from "@/hooks/useTotalRankingFromDonors";
+import { donors } from "@/data/donors";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import RankingCardUI from "./rankingCardUI";
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
-// import { useDailyRanking } from "@/hooks/useDailyRanking";
-import { useWeeklyRanking } from "@/hooks/useWeeklyRanking";
 
-const EmptyStateMessage = ({
-  type,
-}: {
-  type: "daily" | "weekly" | "total";
-}) => {
+const EmptyStateMessage = ({ type }: { type: "total" }) => {
   const messages = {
-    daily: (
-      <>
-        No donations today yet!
-        <br />
-        Be the first to make someone's day! 🎉
-      </>
-    ),
-    weekly: (
-      <>
-        This week's donation board is empty!
-        <br />
-        Time to spread some love! 💝
-      </>
-    ),
     total: (
       <>
         No donations yet!
@@ -49,35 +29,26 @@ const EmptyStateMessage = ({
   );
 };
 
-export default function RankingList({
-  type,
-}: {
-  type: "daily" | "weekly" | "total";
-}) {
+export default function RankingList({ type }: { type: "total" }) {
   const {
     all: totalDonateLog,
     top3: totalTop3,
     basicCardData: totalBasicCardData,
-  } = useTotalRanking();
-  // const { all: dailyDonateLog, top3: dailyTop3 } = useDailyRanking();
-  const {
-    all: weeklyDonateLog,
-    top3: weeklyTop3,
-    basicCardData: weeklyBasicCardData,
-  } = useWeeklyRanking();
+  } = useTotalRankingFromDonors();
   const { address } = useAccount();
   const router = useRouter();
 
-  const totalDonateLogForColor = useTotaldonateLog();
+  // const totalDonateLogForColor = useTotaldonateLog();
+  const totalDonateLogForColor = donors;
   const [showContent, setShowContent] = useState(false);
 
-  const isAllColorReady =
-    totalDonateLogForColor.length > 0 &&
-    totalDonateLogForColor.every(
-      (item) =>
-        typeof item.farcasterUserData?.color === "string" &&
-        item.farcasterUserData?.color.startsWith("#")
-    );
+  const isAllColorReady = totalDonateLogForColor.length > 0;
+  // totalDonateLogForColor.length > 0 &&
+  // totalDonateLogForColor.every(
+  //   (item) =>
+  //     typeof item.farcasterUserData?.color === "string" &&
+  //     item.farcasterUserData?.color.startsWith("#")
+  // );
 
   useEffect(() => {
     if (isAllColorReady) {
@@ -90,19 +61,10 @@ export default function RankingList({
     }
   }, [isAllColorReady]);
 
-  // 현재 선택된 탭에 따라 데이터 선택
-  const currentData =
-    // type === "daily"
-    //   ? dailyDonateLog
-    //   :
-    type === "weekly" ? weeklyDonateLog : totalDonateLog;
-
-  const currentTop3 =
-    // type === "daily" ? dailyTop3 :
-    type === "weekly" ? weeklyTop3 : totalTop3;
-
-  const basicCardData =
-    type === "weekly" ? weeklyBasicCardData : totalBasicCardData;
+  // 현재 선택된 탭에 따라 데이터 선택 (Total만 사용)
+  const currentData = totalDonateLog;
+  const currentTop3 = totalTop3;
+  const basicCardData = totalBasicCardData;
 
   // color 정보가 로딩되지 않았거나 0.5초 대기 시간이 지나지 않았을 때 로딩 상태 표시
   if (!isAllColorReady || !showContent) {
@@ -135,8 +97,8 @@ export default function RankingList({
 
   const myCard = address
     ? currentData.find(
-        (item) => item.from.toLowerCase() === address.toLowerCase()
-      ) || (address ? { from: address } : null)
+        (item) => item.walletAddress.toLowerCase() === address.toLowerCase()
+      ) || (address ? { walletAddress: address } : null)
     : null;
 
   // totalDonateLog랑 weeklyDonateLog 불러오는 데이터를 변경
@@ -187,7 +149,7 @@ export default function RankingList({
           )}
 
           {currentTop3.map((item, index) => {
-            const walletLastTwo = item?.from?.slice(-2);
+            const walletLastTwo = item?.walletAddress?.slice(-2);
             const numericValue = parseInt(walletLastTwo, 16);
             const butterType = (numericValue % 7) + 1;
             const ButterItemComponent =
@@ -218,7 +180,7 @@ export default function RankingList({
                   )}
                 >
                   <p className="">@{item?.farcasterUserData?.username}</p>
-                  <p>{item?.value} USDC</p>
+                  <p>{item?.donationAmount} USDC</p>
                 </div>
               </div>
             );
@@ -240,7 +202,11 @@ export default function RankingList({
       >
         <div className="w-full max-w-md px-4 flex flex-col  items-center gap-[10px] pt-[50px] hide-scrollbar">
           {myCard && (
-            <RankingCardUI userData={myCard} cardType="my" key={myCard.from} />
+            <RankingCardUI
+              userData={myCard}
+              cardType="my"
+              key={myCard.walletAddress}
+            />
           )}
           {basicCardData &&
             basicCardData.map((item, index) => (
@@ -248,7 +214,7 @@ export default function RankingList({
                 userData={item || undefined}
                 cardType={undefined}
                 index={index + currentTop3.length}
-                key={item.from || index}
+                key={item.walletAddress || index}
               />
             ))}
         </div>

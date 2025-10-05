@@ -26,7 +26,7 @@ export default function RankingCardUI({
     router.push(path);
   };
 
-  const walletLastTwo = userData?.from?.slice(-2);
+  const walletLastTwo = userData?.walletAddress?.slice(-2);
   const numericValue = parseInt(walletLastTwo, 16);
   const butterType = (numericValue % 7) + 1;
   const ButterItemComponent =
@@ -101,7 +101,9 @@ export default function RankingCardUI({
           </div>
           <div className="flex-1 px-2 truncate text-start">
             {cardType === "my" && !userData?.farcasterUserData ? (
-              <div className="pl-2 ">@{formatAddress(userData?.from)}</div>
+              <div className="pl-2 ">
+                @{formatAddress(userData?.walletAddress)}
+              </div>
             ) : (
               <div className="pl-2 ">
                 @{userData?.farcasterUserData?.username}
@@ -109,7 +111,7 @@ export default function RankingCardUI({
             )}
           </div>
           <div className="flex-shrink-0 basis-[80px] text-right">
-            {userData?.value} USDC
+            {userData?.donationAmount} USDC
           </div>
         </div>
       </div>

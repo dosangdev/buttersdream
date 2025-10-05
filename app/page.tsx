@@ -8,7 +8,8 @@ import { useEffect, useRef, useState } from "react";
 import { sdk } from "@farcaster/miniapp-sdk";
 
 import { useAccount } from "wagmi";
-import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
+// import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
+import { donors, totalDonationAmount } from "@/data/donors";
 import { motion } from "framer-motion";
 import Angry from "./constants/butterItems/Angry";
 import Happy from "./constants/butterItems/Happy";
@@ -40,18 +41,19 @@ export default function Home() {
     useState(false);
   const { address } = useAccount();
   const router = useRouter();
-  const totalDonateLog = useTotaldonateLog();
+  // const totalDonateLog = useTotaldonateLog();
+  const totalDonateLog = donors;
 
   const butterRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [centerIndex, setCenterIndex] = useState(0);
 
-  const isAllColorReady =
-    totalDonateLog.length > 0 &&
-    totalDonateLog.every(
-      (item) =>
-        typeof item.farcasterUserData?.color === "string" &&
-        item.farcasterUserData?.color.startsWith("#")
-    );
+  const isAllColorReady = totalDonateLog.length > 0;
+  // totalDonateLog.length > 0 &&
+  // totalDonateLog.every(
+  //   (item) =>
+  //     typeof item.farcasterUserData?.color === "string" &&
+  //     item.farcasterUserData?.color.startsWith("#")
+  // );
 
   useEffect(() => {
     sdk.actions.ready();
@@ -83,11 +85,7 @@ export default function Home() {
             <div className="w-full text-xs text-black px-2 flex justify-end pb-[13px]">
               <span>total</span>
               <span className="mx-1">:</span>
-              <span className="pr-1">
-                {totalDonateLog
-                  .reduce((acc, item) => acc + item.value, 0)
-                  .toFixed(1)}
-              </span>
+              <span className="pr-1">{totalDonationAmount.toFixed(1)}</span>
               <span>USDC</span>
             </div>
           )}
@@ -141,7 +139,7 @@ export default function Home() {
                 </div>
               ) : (
                 [...totalDonateLog].reverse().map((item, index) => {
-                  const walletLastTwo = item?.from?.slice(-2);
+                  const walletLastTwo = item?.walletAddress?.slice(-2);
                   const numericValue = parseInt(walletLastTwo, 16);
                   const butterType = (numericValue % 7) + 1;
                   const {
@@ -158,7 +156,7 @@ export default function Home() {
                   const isConfused = butterTypeName === "Confused";
 
                   const isArrow =
-                    item.from.toLowerCase() === address?.toLowerCase();
+                    item.walletAddress.toLowerCase() === address?.toLowerCase();
 
                   // 거리 기반 스타일 계산
                   const isCenter = index === centerIndex;
@@ -218,9 +216,10 @@ export default function Home() {
                           : undefined,
                       }}
                       onClick={() => {
-                        window.open(
-                          `https://farcaster.xyz/${item.farcasterUserData?.username}`
-                        );
+                        // Farcaster 프로필 링크는 donors.ts에 정보가 없으므로 주석처리
+                        // window.open(
+                        //   `https://farcaster.xyz/${item.farcasterUserData?.username}`
+                        // );
                       }}
                     >
                       <motion.div
@@ -276,9 +275,7 @@ export default function Home() {
                                 isArrow ? "text-[10px]" : "text-[8px]"
                               }`}
                             >
-                              {isArrow
-                                ? "Yours!!!"
-                                : `@${item.farcasterUserData?.username}`}
+                              {isArrow ? "Yours!!!" : `@${item.nickname}`}
                             </span>
                           </div>
                         </div>
@@ -298,7 +295,7 @@ export default function Home() {
                         }}
                       >
                         <ButterItemComponent
-                          fill={item?.farcasterUserData?.color as string}
+                          fill={item?.butterColor as string}
                         />
                       </motion.div>
                     </div>

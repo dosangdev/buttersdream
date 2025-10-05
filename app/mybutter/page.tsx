@@ -4,30 +4,31 @@ import ConnectWallet from "@/components/ConnectWallet";
 import EmptyMyDonation from "@/components/mybutter/EmptyMyDonation";
 import MyButterDonationList from "@/components/mybutter/MyButterDonationList";
 import MyButterNftStatus from "@/components/mybutter/MyButterNftStatus";
-import { useMyButterDonateLog } from "@/hooks/useMyButterDonateLog";
-import { useTotaldonateLog } from "@/hooks/useTotaldonateLog";
+// import { useMyButterDonateLog } from "@/hooks/useMyButterDonateLog";
+import { useMyButterDonateLogFromDonors } from "@/hooks/useMyButterDonateLogFromDonors";
+import { donors } from "@/data/donors";
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
 
 export default function MyButterPage() {
-  const { myDonationLogs, totalValue } = useMyButterDonateLog();
+  const { myDonationLogs, totalValue } = useMyButterDonateLogFromDonors();
   const { address } = useAccount();
-  const totalDonateLogForColor = useTotaldonateLog();
+  const totalDonateLogForColor = donors;
   const [showContent, setShowContent] = useState(false);
 
-  const isAllColorReady =
-    totalDonateLogForColor.length > 0 &&
-    totalDonateLogForColor.every(
-      (item) =>
-        typeof item.farcasterUserData?.color === "string" &&
-        item.farcasterUserData?.color.startsWith("#")
-    );
+  const isAllColorReady = totalDonateLogForColor.length > 0;
+  // totalDonateLogForColor.length > 0 &&
+  // totalDonateLogForColor.every(
+  //   (item) =>
+  //     typeof item.farcasterUserData?.color === "string" &&
+  //     item.farcasterUserData?.color.startsWith("#")
+  // );
 
   useEffect(() => {
     if (isAllColorReady) {
       const timer = setTimeout(() => {
         setShowContent(true);
-      }, 2000);
+      }, 500); // 로딩 시간을 2초에서 0.5초로 단축
       return () => clearTimeout(timer);
     } else {
       setShowContent(false);
