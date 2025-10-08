@@ -217,9 +217,9 @@ export default function Home() {
                       }}
                       onClick={() => {
                         // Farcaster 프로필 링크는 donors.ts에 정보가 없으므로 주석처리
-                        window.open(
-                          `https://farcaster.xyz/${item.farcasterUserData?.username}`
-                        );
+                        // window.open(
+                        //   `https://farcaster.xyz/${item.farcasterUserData?.username}`
+                        // );
                       }}
                     >
                       <motion.div
